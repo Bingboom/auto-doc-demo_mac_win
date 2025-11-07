@@ -112,7 +112,7 @@ python tools/build_docs.py \
 ### 3) 构建 PDF（如需）
 
 ```bash
-python tools/build_docs.py \
+python tools/build_pdf.py \
   --conf conf_docs/zh_CN_conf.py \
   --sourcedir docs/zh_CN/source \
   --outdir docs/zh_CN/build/pdf \
