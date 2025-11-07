@@ -1,0 +1,22 @@
+
+{% extends "base_page.j2" %}
+
+{% block content %}
+**命令标题：** {{ command_title }}
+
+**命令格式：**
+
+{{ command_format }}
+
+**响应：**
+
+{{ response }}
+
+
+{% if params %}
+{% include "param_table.j2" %}
+{% endif %}
+
+**功能描述：**
+{{ description }}
+{% endblock %}
