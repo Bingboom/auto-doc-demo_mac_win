@@ -1,4 +1,3 @@
-```markdown
 # auto-doc-demo_mac_win
 
 > 学习型示例仓库：用 **“继承与覆盖（Inheritance & Override）”** 的方式，结构化实现  
