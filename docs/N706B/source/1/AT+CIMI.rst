@@ -3,7 +3,7 @@
 AT+CIMI：查询国际移动用户识别码
 --------------------
 
-获取国际移动用户识别码IMSI（international mobile subscriber identification）。
+获取国际移动用户识别码IMSI（international mobile subscriber identification）。
 命令格式
 
 命令格式
@@ -25,7 +25,6 @@ AT+CIMI：查询国际移动用户识别码
 
 ::
 
-
     <CR><LF>OK<CR><LF>
 
 
@@ -37,13 +36,11 @@ AT+CIMI：查询国际移动用户识别码
 
 
 - **<service>**：
-  
-    短信服务模式选择
+  短信服务模式选择
 
 
 - **<mt>,<mo>,<bm>**：
-  
-    下行/上行/广播支持
+  下行/上行/广播支持
 
 
 
@@ -54,10 +51,8 @@ AT+CIMI：查询国际移动用户识别码
 
 示例命令
 ^^^^^^^^
-
 ::
 
-
-    AT+CIMI
-    
+    AT+CIMI
+    
     OK

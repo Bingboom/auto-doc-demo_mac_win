@@ -24,12 +24,11 @@ AT+CSMS：选择短信服务
 
 ::
 
-
-    <CR><LF>+CSMS: <mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>
-    Or
-    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
+    <CR><LF>+CSMS: <mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>
+    Or
+    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
     <CR><LF>OK<CR><LF>
 
 
@@ -50,12 +49,11 @@ AT+CSMS：选择短信服务
 
 ::
 
-
-    <CR><LF>+CSMS: <mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>
-    Or
-    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
+    <CR><LF>+CSMS: <mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>
+    Or
+    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
     <CR><LF>OK<CR><LF>
 
 
@@ -76,12 +74,11 @@ AT+CSMS：选择短信服务
 
 ::
 
-
-    <CR><LF>+CSMS: <mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>
-    Or
-    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
-    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
+    <CR><LF>+CSMS: <mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>
+    Or
+    <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
+    <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
     <CR><LF>OK<CR><LF>
 
 
@@ -93,13 +90,11 @@ AT+CSMS：选择短信服务
 
 
 - **<service>**：
-  
-    短信服务模式选择
+  短信服务模式选择
 
 
 - **<mt>,<mo>,<bm>**：
-  
-    下行/上行/广播支持
+  下行/上行/广播支持
 
 
 
@@ -110,22 +105,20 @@ AT+CSMS：选择短信服务
 
 示例命令
 ^^^^^^^^
-
 ::
 
-
-    AT+CSMS=1
-    
-    +CSMS: 1,1,1
-    OK
-    AT+CSMS=2
-    
-    ERROR
-    AT+CSMS?
-    
-    +CSMS: 1,1,1,1
-    OK
-    AT+CSMS=?
-    
-    +CSMS: (0,1)
+    AT+CSMS=1
+    
+    +CSMS: 1,1,1
+    OK
+    AT+CSMS=2
+    
+    ERROR
+    AT+CSMS?
+    
+    +CSMS: 1,1,1,1
+    OK
+    AT+CSMS=?
+    
+    +CSMS: (0,1)
     OK

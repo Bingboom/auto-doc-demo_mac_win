@@ -105,7 +105,7 @@ latex_documents = [
 ]
 
 # >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-07 10:54:43
+# 自动注入时间：2025-11-08 21:05:44
 latex_engine = 'xelatex'
 latex_additional_files = [
     '../../_common/_static/logo.png',
@@ -123,10 +123,10 @@ latex_elements.update({
     'geometry': r'\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=18pt]{geometry}',
     'fontpkg': r'''
 \usepackage{xeCJK}
-\setCJKmainfont{Microsoft YaHei}
+\setCJKmainfont{PingFang SC}
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
-\setmonofont{Consolas}
+\setmonofont{Menlo}
     ''',
     'preamble': r'''
 \usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
@@ -181,7 +181,7 @@ latex_elements.update({
   \begin{flushleft}
     {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
     {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月07日}
+    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月08日}
   \end{flushleft}
 \end{titlepage}
 \clearpage

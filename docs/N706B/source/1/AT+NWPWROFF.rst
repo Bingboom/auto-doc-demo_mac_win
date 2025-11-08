@@ -3,7 +3,7 @@
 AT+NWPWROFF：模组关机指令
 -------------------
 
-模组关机指令。发送 AT+NWPWROFF 之前,需悬空或拉高模组 POWERKEY 管脚电平。返回 OK 后,若需重新开机,可拉低 POWERKEY 管脚电平。
+模组关机指令。发送 AT+NWPWROFF 之前,需悬空或拉高模组 POWERKEY 管脚电平。返回 OK 后,若需重新开机,可拉低 POWERKEY 管脚电平。
 命令格式
 
 命令格式
@@ -25,7 +25,6 @@ AT+NWPWROFF：模组关机指令
 
 ::
 
-
     <CR><LF>OK<CR><LF>
 
 
@@ -37,13 +36,11 @@ AT+NWPWROFF：模组关机指令
 
 
 - **<service>**：
-  
-    短信服务模式选择
+  短信服务模式选择
 
 
 - **<mt>,<mo>,<bm>**：
-  
-    下行/上行/广播支持
+  下行/上行/广播支持
 
 
 
@@ -54,10 +51,8 @@ AT+NWPWROFF：模组关机指令
 
 示例命令
 ^^^^^^^^
-
 ::
 
-
-    AT+NWPWROFF
-    
+    AT+NWPWROFF
+    
     OK

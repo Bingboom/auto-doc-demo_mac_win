@@ -3,7 +3,7 @@
 AT+CGSN：获取通信模组IMEI号
 --------------------
 
-获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
+获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
 命令格式
 
 命令格式
@@ -25,7 +25,6 @@ AT+CGSN：获取通信模组IMEI号
 
 ::
 
-
     <CR><LF>OK<CR><LF>
 
 
@@ -37,13 +36,11 @@ AT+CGSN：获取通信模组IMEI号
 
 
 - **<service>**：
-  
-    短信服务模式选择
+  短信服务模式选择
 
 
 - **<mt>,<mo>,<bm>**：
-  
-    下行/上行/广播支持
+  下行/上行/广播支持
 
 
 
@@ -54,10 +51,8 @@ AT+CGSN：获取通信模组IMEI号
 
 示例命令
 ^^^^^^^^
-
 ::
 
-
-    AT+CGSN
-    
+    AT+CGSN
+    
     OK

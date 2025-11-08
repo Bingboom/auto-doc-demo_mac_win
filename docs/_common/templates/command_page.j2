@@ -1,22 +1,62 @@
+.. _cmd-{{ cmd_name|lower }}:
 
-{% extends "base_page.j2" %}
+{{ cmd_name }}：{{ cmd_title }}
+{{ "-" * max((cmd_name|length + cmd_title|length + 2), 10) }}
 
-{% block content %}
-**命令标题：** {{ command_title }}
+{{ desc }}
 
-**命令格式：**
+命令格式
+^^^^^^^^
+{% set formats = cmd_format.split(';') if ';' in cmd_format else [cmd_format] %}
+{% for f in formats %}
+{% set f_clean = f.strip() %}
+{% if f_clean %}
+**{{ ["执行命令", "查询命令", "测试命令", "设置命令"][loop.index0] if loop.index0 < 4 else "命令" }}**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-{{ command_format }}
+**命令：**
+
+::
+
+    {{ f_clean }}
 
 **响应：**
 
-{{ response }}
-
-
-{% if params %}
-{% include "param_table.j2" %}
+::
+{% if cmd_response.strip() %}
+    {{ cmd_response.strip().replace('\n', '\n    ') }}
+{% else %}
+    OK
 {% endif %}
 
-**功能描述：**
-{{ description }}
-{% endblock %}
+{% endif %}
+{% endfor %}
+
+参数
+^^^^
+{% if params %}
+{% for k, v in params.items() %}
+- **{{ k }}**：
+  {{ v.get('__desc__', '') }}
+{% if v.get('__options__') %}
+{% for opt, text in v['__options__'].items() %}
+  - {{ opt }}：{{ text }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
+(无参数)
+{% endif %}
+
+说明
+^^^^
+{{ note.strip() if note else "(无说明)" }}
+
+示例命令
+^^^^^^^^
+::
+{% if example.strip() %}
+    {{ example.strip().replace('\n', '\n    ') }}
+{% else %}
+    （无示例）
+{% endif %}
