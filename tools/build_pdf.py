@@ -1,5 +1,5 @@
 # ================================================================
-# 📘 Neoway Build PDF v7.5 — 统一封面注入 + 平台字体 + 自动导出
+# 📘 Neoway Build PDF v7.7 — 最终版：封面路径修复 + LaTeX缓存清理 + 字体安全
 # ================================================================
 import os, re, shutil, subprocess, platform, sys
 from pathlib import Path
@@ -48,6 +48,11 @@ PDF_DIR = BUILD_DIR / "pdf"
 PDF_DIR.mkdir(parents=True, exist_ok=True)
 conf_path = ROOT_DIR / "conf.py"
 
+# ✅ 构建前清理旧 LaTeX 文件，防止缓存导致空白页
+if LATEX_DIR.exists():
+    shutil.rmtree(LATEX_DIR)
+    print("🧹 已清理旧的 LaTeX 构建目录。")
+
 # ✅ 自动生成 RST 步骤
 print("🧩 生成 RST 文件中（CSV → RST）...")
 subprocess.run(["python", "tools/render_rst.py"], check=True)
@@ -65,6 +70,16 @@ else:
     zh_font = "Noto Sans CJK SC"
     mono_font = "DejaVu Sans Mono"
 
+# === 拷贝背景图到 LaTeX 输出目录，确保路径可见 ===
+bg_src = PROJECT_ROOT / "docs" / "_common" / "_static" / "background.png"
+bg_dst = LATEX_DIR / "background.png"
+bg_dst.parent.mkdir(parents=True, exist_ok=True)
+if bg_src.exists():
+    shutil.copy2(bg_src, bg_dst)
+    print(f"✅ 已复制背景图到 {bg_dst}")
+else:
+    print(f"⚠️ 警告：未找到背景图 {bg_src}")
+
 # === 封面模板 ===
 cover_block = rf"""
 %% -------- Neoway 封面 --------
@@ -73,7 +88,7 @@ cover_block = rf"""
 \begin{{titlepage}}
   \begin{{tikzpicture}}[remember picture, overlay]
     \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {{\includegraphics[width=\paperwidth,height=\paperheight]{{_common/_static/background.png}}}};
+      {{\includegraphics[width=\paperwidth,height=\paperheight]{{background.png}}}};
   \end{{tikzpicture}}
   \vspace*{{8cm}}
   \begin{{flushleft}}
@@ -98,8 +113,8 @@ latex_block = f"""{marker_begin}
 latex_engine = 'xelatex'
 latex_additional_files = [
     '../../_common/_static/logo.png',
-    '../../_common/_static/background.png',
-    '../../_common/_static/header-logo.png'
+    '../../_common/_static/header-logo.png',
+    'background.png'
 ]
 latex_documents = [('index', 'Neoway_{MODEL_NAME}_Manual.tex', '{TITLE}', '{AUTHOR}', 'manual')]
 
@@ -109,7 +124,7 @@ latex_elements.update({{
     'papersize': 'a4paper',
     'pointsize': '11pt',
     'extraclassoptions': 'openany,oneside',
-    'geometry': r'\\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=18pt]{{geometry}}',
+    'geometry': r'\\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=25pt]{{geometry}}',
     'fontpkg': r'''
 \\usepackage{{xeCJK}}
 \\setCJKmainfont{{{zh_font}}}
@@ -119,8 +134,8 @@ latex_elements.update({{
     ''',
     'preamble': r'''
 \\usepackage{{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}}
-\\graphicspath{{{{./}}{{../../_common/_static/}}{{_common/_static/}}}}
-\\setlength{{\\headheight}}{{24pt}}
+\\graphicspath{{{{./}}{{../../_common/_static/}}{{../../../_common/_static/}}}}
+\\setlength{{\\headheight}}{{25pt}}
 \\setlength{{\\headsep}}{{12pt}}
 
 \\hypersetup{{
