@@ -99,7 +99,7 @@
     
 
 \title{Neoway N706B AT 命令手册}
-\date{2025-11-08}
+\date{2025-11-09}
 \release{v1.4}
 \author{Neoway 文档工程组}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -126,7 +126,7 @@
   \begin{flushleft}
     {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
     {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月08日}
+    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月09日}
   \end{flushleft}
 \end{titlepage}
 \clearpage
@@ -144,7 +144,7 @@
 
 \sphinxlineitem{Date}
 \sphinxAtStartPar
-2025\sphinxhyphen{}11\sphinxhyphen{}08
+2025\sphinxhyphen{}11\sphinxhyphen{}09
 
 \sphinxlineitem{Version}
 \sphinxAtStartPar
@@ -183,6 +183,9 @@ v1.4
 \sphinxstylestrong{响应：}
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{manufacturer}\PYG{o}{\PYGZgt{}}
+\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{module\PYGZus{}version}\PYG{o}{\PYGZgt{}}
+\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{soft\PYGZus{}version}\PYG{o}{\PYGZgt{}}
 \PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
 \end{sphinxVerbatim}
 
@@ -191,13 +194,31 @@ v1.4
 \label{\detokenize{1/ATI:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -206,15 +227,6 @@ v1.4
 \label{\detokenize{1/ATI:id4}}
 \sphinxAtStartPar
 说明示例1
-
-
-\subsection{示例命令}
-\label{\detokenize{1/ATI:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{ATI}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -242,6 +254,7 @@ v1.4
 \sphinxstylestrong{响应：}
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{GMR}\PYG{p}{:} \PYG{o}{\PYGZlt{}}\PYG{n}{reversion}\PYG{o}{\PYGZgt{}}
 \PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
 \end{sphinxVerbatim}
 
@@ -250,13 +263,31 @@ v1.4
 \label{\detokenize{1/AT+GMR:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -265,16 +296,6 @@ v1.4
 \label{\detokenize{1/AT+GMR:id4}}
 \sphinxAtStartPar
 说明示例2
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+GMR:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSMS}\PYG{o}{=}\PYG{l+m+mi}{1}
-
-\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{1}
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -310,13 +331,31 @@ v1.4
 \label{\detokenize{1/AT+CSQ:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -325,15 +364,6 @@ v1.4
 \label{\detokenize{1/AT+CSQ:id4}}
 \sphinxAtStartPar
 说明示例3
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CSQ:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSQ}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -369,13 +399,31 @@ v1.4
 \label{\detokenize{1/AT+CREG:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -384,15 +432,6 @@ v1.4
 \label{\detokenize{1/AT+CREG:id4}}
 \sphinxAtStartPar
 说明示例4
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CREG:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CREG}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -428,13 +467,31 @@ v1.4
 \label{\detokenize{1/AT+CEREG:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -443,15 +500,6 @@ v1.4
 \label{\detokenize{1/AT+CEREG:id4}}
 \sphinxAtStartPar
 说明示例5
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CEREG:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CEREG}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -487,13 +535,31 @@ v1.4
 \label{\detokenize{1/AT+COPS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -502,15 +568,6 @@ v1.4
 \label{\detokenize{1/AT+COPS:id4}}
 \sphinxAtStartPar
 说明示例6
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+COPS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{COPS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -546,13 +603,31 @@ v1.4
 \label{\detokenize{1/AT+CIMI:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -561,15 +636,6 @@ v1.4
 \label{\detokenize{1/AT+CIMI:id4}}
 \sphinxAtStartPar
 说明示例7
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CIMI:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CIMI}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -605,13 +671,31 @@ v1.4
 \label{\detokenize{1/AT+CGSN:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -620,15 +704,6 @@ v1.4
 \label{\detokenize{1/AT+CGSN:id4}}
 \sphinxAtStartPar
 说明示例8
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CGSN:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CGSN}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -664,13 +739,31 @@ v1.4
 \label{\detokenize{1/AT+GSN:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -679,15 +772,6 @@ v1.4
 \label{\detokenize{1/AT+GSN:id4}}
 \sphinxAtStartPar
 说明示例9
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+GSN:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{GSN}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -723,13 +807,31 @@ v1.4
 \label{\detokenize{1/AT+CCID:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -738,15 +840,6 @@ v1.4
 \label{\detokenize{1/AT+CCID:id4}}
 \sphinxAtStartPar
 说明示例10
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CCID:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CCID}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -782,13 +875,31 @@ v1.4
 \label{\detokenize{1/AT+CGMM:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -797,15 +908,6 @@ v1.4
 \label{\detokenize{1/AT+CGMM:id4}}
 \sphinxAtStartPar
 说明示例11
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CGMM:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CGMM}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -841,13 +943,31 @@ v1.4
 \label{\detokenize{1/AT+GMM:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -856,15 +976,6 @@ v1.4
 \label{\detokenize{1/AT+GMM:id4}}
 \sphinxAtStartPar
 说明示例12
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+GMM:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{GMM}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -901,13 +1012,31 @@ v1.4
 \label{\detokenize{1/AT+IPR:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -916,15 +1045,6 @@ v1.4
 \label{\detokenize{1/AT+IPR:id4}}
 \sphinxAtStartPar
 说明示例13
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+IPR:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{IPR}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -961,13 +1081,31 @@ v1.4
 \label{\detokenize{1/AT+CFUN:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -976,15 +1114,6 @@ v1.4
 \label{\detokenize{1/AT+CFUN:id4}}
 \sphinxAtStartPar
 说明示例14
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CFUN:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CFUN}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1022,13 +1151,31 @@ v1.4
 \label{\detokenize{1/AT+CMUX:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1037,15 +1184,6 @@ v1.4
 \label{\detokenize{1/AT+CMUX:id4}}
 \sphinxAtStartPar
 说明示例15
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CMUX:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMUX}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1082,13 +1220,31 @@ v1.4
 \label{\detokenize{1/AT+CCLK:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1097,15 +1253,6 @@ v1.4
 \label{\detokenize{1/AT+CCLK:id4}}
 \sphinxAtStartPar
 说明示例16
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CCLK:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CCLK}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1142,13 +1289,31 @@ v1.4
 \label{\detokenize{1/AT+CPIN:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1157,15 +1322,6 @@ v1.4
 \label{\detokenize{1/AT+CPIN:id4}}
 \sphinxAtStartPar
 说明示例17
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CPIN:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CPIN}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1201,13 +1357,31 @@ v1.4
 \label{\detokenize{1/AT+CLCK:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1216,15 +1390,6 @@ v1.4
 \label{\detokenize{1/AT+CLCK:id4}}
 \sphinxAtStartPar
 说明示例18
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CLCK:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CLCK}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1261,13 +1426,31 @@ v1.4
 \label{\detokenize{1/AT+CPWD:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1276,15 +1459,6 @@ v1.4
 \label{\detokenize{1/AT+CPWD:id4}}
 \sphinxAtStartPar
 说明示例19
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CPWD:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CPWD}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1320,13 +1494,31 @@ v1.4
 \label{\detokenize{1/AT+CGDCONT:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1335,15 +1527,6 @@ v1.4
 \label{\detokenize{1/AT+CGDCONT:id4}}
 \sphinxAtStartPar
 说明示例20
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CGDCONT:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CGDCONT}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1383,13 +1566,31 @@ PDP认证。
 \label{\detokenize{1/AT+XGAUTH:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1398,15 +1599,6 @@ PDP认证。
 \label{\detokenize{1/AT+XGAUTH:id4}}
 \sphinxAtStartPar
 说明示例21
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+XGAUTH:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{XGAUTH}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1445,13 +1637,31 @@ PDP认证。
 \label{\detokenize{1/AT+CGATT:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1460,15 +1670,6 @@ PDP认证。
 \label{\detokenize{1/AT+CGATT:id4}}
 \sphinxAtStartPar
 说明示例22
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CGATT:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CGATT}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1506,13 +1707,31 @@ PDP认证。
 \label{\detokenize{1/ATE1:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1521,15 +1740,6 @@ PDP认证。
 \label{\detokenize{1/ATE1:id4}}
 \sphinxAtStartPar
 说明示例23
-
-
-\subsection{示例命令}
-\label{\detokenize{1/ATE1:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{ATE1}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1566,13 +1776,31 @@ PDP认证。
 \label{\detokenize{1/ATD:id5}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1581,15 +1809,6 @@ PDP认证。
 \label{\detokenize{1/ATD:id6}}
 \sphinxAtStartPar
 说明示例24
-
-
-\subsection{示例命令}
-\label{\detokenize{1/ATD:id7}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{ATD}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1624,13 +1843,31 @@ PDP认证。
 \label{\detokenize{1/AT+CESQ:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1639,15 +1876,6 @@ PDP认证。
 \label{\detokenize{1/AT+CESQ:id4}}
 \sphinxAtStartPar
 说明示例25
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+CESQ:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CESQ}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1685,13 +1913,31 @@ PDP认证。
 \label{\detokenize{1/AT+NWDNS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1700,15 +1946,6 @@ PDP认证。
 \label{\detokenize{1/AT+NWDNS:id4}}
 \sphinxAtStartPar
 说明示例26
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+NWDNS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{NWDNS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1746,13 +1983,31 @@ PDP认证。
 \label{\detokenize{1/AT+NWENPWRSAVE:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1761,15 +2016,6 @@ PDP认证。
 \label{\detokenize{1/AT+NWENPWRSAVE:id4}}
 \sphinxAtStartPar
 说明示例27
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+NWENPWRSAVE:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{NWENPWRSAVE}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1805,13 +2051,31 @@ PDP认证。
 \label{\detokenize{1/AT+NWPWROFF:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1820,15 +2084,6 @@ PDP认证。
 \label{\detokenize{1/AT+NWPWROFF:id4}}
 \sphinxAtStartPar
 说明示例28
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+NWPWROFF:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{NWPWROFF}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1865,13 +2120,31 @@ PDP认证。
 \label{\detokenize{1/AT+NWRFTEST:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1880,15 +2153,6 @@ PDP认证。
 \label{\detokenize{1/AT+NWRFTEST:id4}}
 \sphinxAtStartPar
 说明示例29
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+NWRFTEST:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{NWRFTEST}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -1924,13 +2188,31 @@ PDP认证。
 \label{\detokenize{1/AT+NSTGETRSSI:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -1939,15 +2221,6 @@ PDP认证。
 \label{\detokenize{1/AT+NSTGETRSSI:id4}}
 \sphinxAtStartPar
 说明示例30
-
-
-\subsection{示例命令}
-\label{\detokenize{1/AT+NSTGETRSSI:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{NSTGETRSSI}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2001,12 +2274,7 @@ AT+CSMS?\PYGZlt{}CR\PYGZgt{}
 \sphinxstylestrong{响应：}
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{o}{\PYGZlt{}}\PYG{n}{mt}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mo}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{bm}\PYG{o}{\PYGZgt{}}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
-\PYG{n}{Or}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{ERROR}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{o}{\PYGZlt{}}\PYG{n}{service}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mt}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mo}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{bm}\PYG{o}{\PYGZgt{}}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{p}{(}\PYG{n+nb}{list} \PYG{n}{of} \PYG{n}{supported} \PYG{o}{\PYGZlt{}}\PYG{n}{service}\PYG{o}{\PYGZgt{}}\PYG{n}{s}\PYG{p}{)}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
+\PYG{n}{OK}
 \end{sphinxVerbatim}
 
 
@@ -2023,12 +2291,7 @@ AT+CSMS=?\PYGZlt{}CR\PYGZgt{}
 \sphinxstylestrong{响应：}
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{o}{\PYGZlt{}}\PYG{n}{mt}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mo}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{bm}\PYG{o}{\PYGZgt{}}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
-\PYG{n}{Or}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{ERROR}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{o}{\PYGZlt{}}\PYG{n}{service}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mt}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{mo}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{bm}\PYG{o}{\PYGZgt{}}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{o}{+}\PYG{n}{CSMS}\PYG{p}{:} \PYG{p}{(}\PYG{n+nb}{list} \PYG{n}{of} \PYG{n}{supported} \PYG{o}{\PYGZlt{}}\PYG{n}{service}\PYG{o}{\PYGZgt{}}\PYG{n}{s}\PYG{p}{)}
-\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}\PYG{n}{OK}\PYG{o}{\PYGZlt{}}\PYG{n}{CR}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZlt{}}\PYG{n}{LF}\PYG{o}{\PYGZgt{}}
+\PYG{n}{OK}
 \end{sphinxVerbatim}
 
 
@@ -2036,13 +2299,31 @@ AT+CSMS=?\PYGZlt{}CR\PYGZgt{}
 \label{\detokenize{2/AT+CSMS:id5}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：示例
+
+\item {} 
+\sphinxAtStartPar
+1：示例
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2051,27 +2332,6 @@ AT+CSMS=?\PYGZlt{}CR\PYGZgt{}
 \label{\detokenize{2/AT+CSMS:id6}}
 \sphinxAtStartPar
 支持多种短消息服务类型
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CSMS:id7}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-AT+CSMS=1
-
-+CSMS: 1,1,1
-OK
-AT+CSMS=2
-
-ERROR
-AT+CSMS?
-
-+CSMS: 1,1,1,1
-OK
-AT+CSMS=?
-
-+CSMS: (0,1)
-OK
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2107,13 +2367,31 @@ OK
 \label{\detokenize{2/AT+CPMS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2122,15 +2400,6 @@ OK
 \label{\detokenize{2/AT+CPMS:id4}}
 \sphinxAtStartPar
 说明示例32
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CPMS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CPMS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2166,13 +2435,31 @@ OK
 \label{\detokenize{2/AT+CMGF:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2181,15 +2468,6 @@ OK
 \label{\detokenize{2/AT+CMGF:id4}}
 \sphinxAtStartPar
 说明示例33
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGF:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGF}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2225,13 +2503,31 @@ OK
 \label{\detokenize{2/AT+CSCS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2240,15 +2536,6 @@ OK
 \label{\detokenize{2/AT+CSCS:id4}}
 \sphinxAtStartPar
 说明示例34
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CSCS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSCS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2284,13 +2571,31 @@ OK
 \label{\detokenize{2/AT+CNMI:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2299,15 +2604,6 @@ OK
 \label{\detokenize{2/AT+CNMI:id4}}
 \sphinxAtStartPar
 说明示例35
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CNMI:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CNMI}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2344,13 +2640,31 @@ OK
 \label{\detokenize{2/AT+CMGR:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2359,15 +2673,6 @@ OK
 \label{\detokenize{2/AT+CMGR:id4}}
 \sphinxAtStartPar
 说明示例36
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGR:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGR}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2403,13 +2708,31 @@ OK
 \label{\detokenize{2/AT+CMGL:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2418,15 +2741,6 @@ OK
 \label{\detokenize{2/AT+CMGL:id4}}
 \sphinxAtStartPar
 说明示例37
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGL:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGL}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2462,13 +2776,31 @@ OK
 \label{\detokenize{2/AT+CMGS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2477,15 +2809,6 @@ OK
 \label{\detokenize{2/AT+CMGS:id4}}
 \sphinxAtStartPar
 说明示例38
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2521,13 +2844,31 @@ OK
 \label{\detokenize{2/AT+CMGW:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2536,15 +2877,6 @@ OK
 \label{\detokenize{2/AT+CMGW:id4}}
 \sphinxAtStartPar
 说明示例39
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGW:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGW}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2580,13 +2912,31 @@ OK
 \label{\detokenize{2/AT+CMSS:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2595,15 +2945,6 @@ OK
 \label{\detokenize{2/AT+CMSS:id4}}
 \sphinxAtStartPar
 说明示例40
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMSS:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMSS}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2639,13 +2980,31 @@ OK
 \label{\detokenize{2/AT+CMGD:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2654,15 +3013,6 @@ OK
 \label{\detokenize{2/AT+CMGD:id4}}
 \sphinxAtStartPar
 说明示例41
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CMGD:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CMGD}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2698,13 +3048,31 @@ OK
 \label{\detokenize{2/AT+CSCA:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2713,15 +3081,6 @@ OK
 \label{\detokenize{2/AT+CSCA:id4}}
 \sphinxAtStartPar
 说明示例42
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CSCA:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSCA}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2757,13 +3116,31 @@ OK
 \label{\detokenize{2/AT+CSMP:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2772,15 +3149,6 @@ OK
 \label{\detokenize{2/AT+CSMP:id4}}
 \sphinxAtStartPar
 说明示例43
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CSMP:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSMP}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 \sphinxstepscope
 
@@ -2816,13 +3184,31 @@ OK
 \label{\detokenize{2/AT+CSDH:id3}}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<service>}：
-短信服务模式选择
+\sphinxstylestrong{<service>}： 短信服务模式选择
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：GSM03.40/GSM03.41 Phase 2
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstylestrong{<mt>,<mo>,<bm>}：
-下行/上行/广播支持
+1：GSM03.40/GSM03.41 Phase 2+
+
+\end{itemize}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstylestrong{<mt>,<mo>,<bm>}： 下行/上行/广播支持
+\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+0：不支持
+
+\item {} 
+\sphinxAtStartPar
+1：支持
+
+\end{itemize}
 
 \end{itemize}
 
@@ -2831,15 +3217,6 @@ OK
 \label{\detokenize{2/AT+CSDH:id4}}
 \sphinxAtStartPar
 说明示例44
-
-
-\subsection{示例命令}
-\label{\detokenize{2/AT+CSDH:id5}}
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{n}{AT}\PYG{o}{+}\PYG{n}{CSDH}
-
-\PYG{n}{OK}
-\end{sphinxVerbatim}
 
 
 \chapter{附录}

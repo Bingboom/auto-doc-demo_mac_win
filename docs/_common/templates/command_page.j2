@@ -7,42 +7,39 @@
 
 命令格式
 ^^^^^^^^
-{% set formats = cmd_format.split(';') if ';' in cmd_format else [cmd_format] %}
-{% for f in formats %}
-{% set f_clean = f.strip() %}
-{% if f_clean %}
-**{{ ["执行命令", "查询命令", "测试命令", "设置命令"][loop.index0] if loop.index0 < 4 else "命令" }}**
+{% set label_map = {"执行":"执行命令", "查询":"查询命令", "测试":"测试命令", "设置":"设置命令"} %}
+{% for st in subtypes %}
+{% set label = label_map.get(st.type, "命令") %}
+**{{ label }}**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
 
 ::
 
-    {{ f_clean }}
+    {{ st.fmt }}
 
 **响应：**
 
 ::
-{% if cmd_response.strip() %}
-    {{ cmd_response.strip().replace('\n', '\n    ') }}
+{% if st.response.strip() %}
+    {{ st.response.strip().replace('\n', '\n    ') }}
 {% else %}
     OK
 {% endif %}
 
-{% endif %}
 {% endfor %}
 
 参数
 ^^^^
-{% if params %}
-{% for k, v in params.items() %}
-- **{{ k }}**：
-  {{ v.get('__desc__', '') }}
-{% if v.get('__options__') %}
-{% for opt, text in v['__options__'].items() %}
+{% if parameters %}
+{% for k, v in parameters.items() %}
+- **{{ k }}**： {{ (v.get('__desc__') or '')|trim }}
+
+{% for opt, text in v.items() if opt != '__desc__' %}
   - {{ opt }}：{{ text }}
 {% endfor %}
-{% endif %}
+
 {% endfor %}
 {% else %}
 (无参数)
@@ -51,12 +48,3 @@
 说明
 ^^^^
 {{ note.strip() if note else "(无说明)" }}
-
-示例命令
-^^^^^^^^
-::
-{% if example.strip() %}
-    {{ example.strip().replace('\n', '\n    ') }}
-{% else %}
-    （无示例）
-{% endif %}

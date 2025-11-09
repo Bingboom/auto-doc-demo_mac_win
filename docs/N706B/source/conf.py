@@ -105,7 +105,7 @@ latex_documents = [
 ]
 
 # >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-08 21:05:44
+# 自动注入时间：2025-11-09 13:17:20
 latex_engine = 'xelatex'
 latex_additional_files = [
     '../../_common/_static/logo.png',
@@ -181,7 +181,7 @@ latex_elements.update({
   \begin{flushleft}
     {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
     {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月08日}
+    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月09日}
   \end{flushleft}
 \end{titlepage}
 \clearpage
