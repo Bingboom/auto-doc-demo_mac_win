@@ -74,7 +74,7 @@ latex_elements.update({
 })
 
 # >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-10 00:06:01
+# 自动注入时间：2025-11-10 00:13:38
 latex_engine = 'xelatex'
 latex_additional_files = [
     '../../_common/_static/logo.png',

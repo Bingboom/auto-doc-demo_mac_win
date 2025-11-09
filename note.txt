@@ -1,0 +1,1 @@
+注意检查docs/N706B/source/background.png这个 通常能解决一些问题
