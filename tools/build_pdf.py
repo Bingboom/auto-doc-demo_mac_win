@@ -1,17 +1,17 @@
 # ================================================================
-# 📘 Neoway Build PDF v7.7 — 最终版：封面路径修复 + LaTeX缓存清理 + 字体安全
+# 📘 Neoway Build PDF v7.8 — 模块化注入 + 封面修复 + 缓存清理
 # ================================================================
 import os, re, shutil, subprocess, platform, sys
 from pathlib import Path
 from datetime import datetime
 
-# ✅ 确保能导入 tools 内的模块
+# ✅ 导入 tools 模块
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = CURRENT_DIR.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-# ✅ 导入 CSV → RST 构建脚本
 from tools.render_rst import *
+from tools.latex_inject import get_latex_block  # ✅ 新增导入
 
 # === 基础信息 ===
 LANG = "zh"
@@ -101,82 +101,21 @@ cover_block = rf"""
 \pagenumbering{{roman}}
 """
 
-# === 注入标记 ===
+# === 读取 conf.py 并清除旧注入 ===
 marker_begin = "# >>> BEGIN: NEOWAY_LATEX_BLOCK"
 marker_end   = "# <<< END:  NEOWAY_LATEX_BLOCK"
-
 conf_txt = conf_path.read_text(encoding="utf-8")
 conf_txt = re.sub(rf"{re.escape(marker_begin)}.*?{re.escape(marker_end)}", "", conf_txt, flags=re.DOTALL)
 
-latex_block = f"""{marker_begin}
-# 自动注入时间：{datetime.now():%Y-%m-%d %H:%M:%S}
-latex_engine = 'xelatex'
-latex_additional_files = [
-    '../../_common/_static/logo.png',
-    '../../_common/_static/header-logo.png',
-    'background.png'
-]
-latex_documents = [('index', 'Neoway_{MODEL_NAME}_Manual.tex', '{TITLE}', '{AUTHOR}', 'manual')]
+# === 生成新的注入块（由 latex_inject 模块生成） ===
+latex_block = get_latex_block(TITLE, AUTHOR, SUBJECT, zh_font, mono_font, cover_block)
 
-latex_elements = globals().get('latex_elements', {{}})
-
-latex_elements.update({{
-    'papersize': 'a4paper',
-    'pointsize': '11pt',
-    'extraclassoptions': 'openany,oneside',
-    'geometry': r'\\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=25pt]{{geometry}}',
-    'fontpkg': r'''
-\\usepackage{{xeCJK}}
-\\setCJKmainfont{{{zh_font}}}
-\\setmainfont{{Times New Roman}}
-\\setsansfont{{Arial}}
-\\setmonofont{{{mono_font}}}
-    ''',
-    'preamble': r'''
-\\usepackage{{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}}
-\\graphicspath{{{{./}}{{../../_common/_static/}}{{../../../_common/_static/}}}}
-\\setlength{{\\headheight}}{{25pt}}
-\\setlength{{\\headsep}}{{12pt}}
-
-\\hypersetup{{
-  pdftitle={{ {TITLE} }},
-  pdfauthor={{ {AUTHOR} }},
-  pdfsubject={{ {SUBJECT} }},
-  colorlinks=true, linkcolor=blue, urlcolor=blue
-}}
-
-\\newcommand{{\\neowayheaderlogo}}{{\\includegraphics[scale=0.25]{{header-logo.png}}}}
-\\makeatletter
-\\renewcommand{{\\chaptermark}}[1]{{\\markboth{{#1}}{{}}}}
-\\renewcommand{{\\sectionmark}}[1]{{\\markright{{#1}}}}
-\\makeatother
-
-\\fancypagestyle{{normal}}{{%
-  \\fancyhf{{}}%
-  \\fancyhead[L]{{\\neowayheaderlogo}}%
-  \\fancyhead[R]{{\\nouppercase{{\\rightmark}}}}%
-  \\fancyfoot[L]{{深圳市有方科技股份有限公司版权所有}}%
-  \\fancyfoot[R]{{\\thepage}}%
-  \\renewcommand{{\\headrulewidth}}{{0.4pt}}%
-  \\renewcommand{{\\footrulewidth}}{{0.4pt}}%
-}}
-
-\\fancypagestyle{{plain}}{{%
-  \\fancyhf{{}}%
-  \\fancyhead[L]{{\\neowayheaderlogo}}%
-  \\fancyhead[R]{{\\nouppercase{{\\rightmark}}}}%
-  \\fancyfoot[L]{{深圳市有方科技股份有限公司版权所有}}%
-  \\fancyfoot[R]{{\\thepage}}%
-  \\renewcommand{{\\headrulewidth}}{{0.4pt}}%
-  \\renewcommand{{\\footrulewidth}}{{0.4pt}}%
-}}
-    \\let\\cleardoublepage\\clearpage
-    ''',
-    'maketitle': r\"\"\"{cover_block}\"\"\",\n}})\n{marker_end}
-"""
+# ✅ 安全检查
+if not latex_block.rstrip().endswith("# <<< END:  NEOWAY_LATEX_BLOCK"):
+    raise ValueError("⚠️ LaTeX block 生成不完整（结尾不匹配）。")
 
 conf_path.write_text(conf_txt.rstrip() + "\n\n" + latex_block + "\n", encoding="utf-8")
-print(f"✅ 已更新 {conf_path}（{LANG.upper()} 版封面 + 页眉LOGO）")
+print(f"✅ 已更新 {conf_path}（{LANG.upper()} 版注入块）")
 
 # === 构建 Sphinx LaTeX ===
 subprocess.run(["sphinx-build", "-b", "latex", str(ROOT_DIR), str(LATEX_DIR)], check=True)
