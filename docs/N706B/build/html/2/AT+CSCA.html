@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AT+CSCA：短信中心号码 &mdash; Neoway AT 命令手册 v1.4 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=112729a3"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="AT+CSMP：设置文本模式参数" href="AT%2BCSMP.html" />
+    <link rel="prev" title="AT+CMGD：删除短消息" href="AT%2BCMGD.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Neoway AT 命令手册
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1/index.html">第1章 基础命令</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">第2章 SMS命令</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCSMS.html">AT+CSMS：选择短信服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCPMS.html">AT+CPMS：首选短信存储器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGF.html">AT+CMGF：设置短消息模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCSCS.html">AT+CSCS：设置TE字符集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCNMI.html">AT+CNMI：设置短信指示格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGR.html">AT+CMGR：读短消息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGL.html">AT+CMGL：短信列表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGS.html">AT+CMGS：发送短消息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGW.html">AT+CMGW：写短消息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMSS.html">AT+CMSS：发送已保存的短消息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCMGD.html">AT+CMGD：删除短消息</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AT+CSCA：短信中心号码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCSMP.html">AT+CSMP：设置文本模式参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AT%2BCSDH.html">AT+CSDH：显示文本模式参数</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Neoway AT 命令手册</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">第2章 SMS命令</a></li>
+      <li class="breadcrumb-item active">AT+CSCA：短信中心号码</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="at-csca">
+<span id="cmd-at-csca"></span><h1>AT+CSCA：短信中心号码<a class="headerlink" href="#at-csca" title="Link to this heading"></a></h1>
+<p>设置短信中心号码。CDMA模式下,不支持这条指令。</p>
+<p>命令格式</p>
+<section id="id1">
+<h2>命令格式<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3><strong>执行命令</strong><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p><strong>命令：</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">CSCA</span>
+</pre></div>
+</div>
+<p><strong>响应：</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;&lt;</span><span class="n">LF</span><span class="o">&gt;</span><span class="n">OK</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;&lt;</span><span class="n">LF</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>参数<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>&lt;service&gt;</strong>： 短信服务模式选择</p></li>
+<li><p>0：GSM03.40/GSM03.41 Phase 2</p></li>
+<li><p>1：GSM03.40/GSM03.41 Phase 2+</p></li>
+<li><p><strong>&lt;mt&gt;,&lt;mo&gt;,&lt;bm&gt;</strong>： 下行/上行/广播支持</p></li>
+<li><p>0：不支持</p></li>
+<li><p>1：支持</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>命令示例<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">CSCA</span>
+
+<span class="n">OK</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>说明<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>说明示例42</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="AT%2BCMGD.html" class="btn btn-neutral float-left" title="AT+CMGD：删除短消息" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="AT%2BCSMP.html" class="btn btn-neutral float-right" title="AT+CSMP：设置文本模式参数" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Neoway Technology。
+      <span class="lastupdated">最后更新于 2025-11-10.
+      </span></p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

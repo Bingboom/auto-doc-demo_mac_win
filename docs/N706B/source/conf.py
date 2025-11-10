@@ -74,14 +74,14 @@ latex_elements.update({
 })
 
 # >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-10 00:13:38
+# 自动注入时间：2025-11-10 14:38:22
 latex_engine = 'xelatex'
 latex_additional_files = [
     '../../_common/_static/logo.png',
-    '../../_common/_static/header-logo.png',
-    'background.png'
+    '../../_common/_static/background.png',
+    '../../_common/_static/header-logo.png'
 ]
-latex_documents = [('index', 'Neoway_N706B_Manual.tex', 'Neoway N706B AT 命令手册', 'Neoway 文档工程组', 'manual')]
+latex_documents = [('index', 'Neoway_Manual.tex', 'Neoway N706B AT 命令手册', 'Neoway 文档工程组', 'manual')]
 
 latex_elements = globals().get('latex_elements', {})
 
@@ -89,55 +89,46 @@ latex_elements.update({
     'papersize': 'a4paper',
     'pointsize': '11pt',
     'extraclassoptions': 'openany,oneside',
-    'geometry': r'\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=25pt]{geometry}',
+    'geometry': r'\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=18pt]{geometry}',
     'fontpkg': r'''
-\usepackage{xeCJK}
-\setCJKmainfont{PingFang SC}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
+        \usepackage{xeCJK}
+        \setCJKmainfont{Microsoft YaHei}
+        \setmainfont{Times New Roman}
+        \setsansfont{Arial}
+        \setmonofont{Consolas}
     ''',
     'preamble': r'''
-\usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
-\graphicspath{{./}{../../_common/_static/}{../../../_common/_static/}}
-\setlength{\headheight}{25pt}
-\setlength{\headsep}{12pt}
-
-\hypersetup{
-  pdftitle={ Neoway N706B AT 命令手册 },
-  pdfauthor={ Neoway 文档工程组 },
-  pdfsubject={ Neoway 机密 | N706B | V1.4 },
-  colorlinks=true, linkcolor=blue, urlcolor=blue
-}
-
-\newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
-\makeatletter
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\makeatother
-
-\fancypagestyle{normal}{%
-  \fancyhf{}%
-  \fancyhead[L]{\neowayheaderlogo}%
-  \fancyhead[R]{\nouppercase{\rightmark}}%
-  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-  \fancyfoot[R]{\thepage}%
-  \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\footrulewidth}{0.4pt}%
-}
-
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \fancyhead[L]{\neowayheaderlogo}%
-  \fancyhead[R]{\nouppercase{\rightmark}}%
-  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-  \fancyfoot[R]{\thepage}%
-  \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\footrulewidth}{0.4pt}%
-}
-    \let\cleardoublepage\clearpage
+        \usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
+        \graphicspath{{./}{../../_common/_static/}{_common/_static/}}
+        \setlength{\headheight}{24pt}
+        \setlength{\headsep}{12pt}
+        \hypersetup{ pdftitle={ Neoway N706B AT 命令手册 }, pdfauthor={ Neoway 文档工程组 }, pdfsubject={ Neoway 机密 | N706B | V1.4 }, colorlinks=true, linkcolor=blue, urlcolor=blue }
+        \newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
+        \makeatletter
+        \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+        \renewcommand{\sectionmark}[1]{\markright{#1}}
+        \makeatother
+        \fancypagestyle{normal}{%
+            \fancyhf{}
+            \fancyhead[L]{\neowayheaderlogo}
+            \fancyhead[R]{\nouppercase{\rightmark}}
+            \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+            \fancyfoot[R]{\thepage}
+            \renewcommand{\headrulewidth}{0.4pt}
+            \renewcommand{\footrulewidth}{0.4pt}
+        }
+        \fancypagestyle{plain}{%
+            \fancyhf{}
+            \fancyhead[L]{\neowayheaderlogo}
+            \fancyhead[R]{\nouppercase{\rightmark}}
+            \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+            \fancyfoot[R]{\thepage}
+            \renewcommand{\headrulewidth}{0.4pt}
+            \renewcommand{\footrulewidth}{0.4pt}
+        }
+        \let\cleardoublepage\clearpage
     ''',
-    'maketitle': r"""
+    'maketitle': r'''
 %% -------- Neoway 封面 --------
 \thispagestyle{empty}
 \pagenumbering{gobble}
@@ -155,7 +146,7 @@ latex_elements.update({
 \end{titlepage}
 \clearpage
 \pagenumbering{roman}
-""",
+'''
 })
 # <<< END:  NEOWAY_LATEX_BLOCK
 
