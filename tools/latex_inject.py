@@ -35,13 +35,16 @@ def get_latex_block(TITLE, AUTHOR, SUBJECT, zh_font, mono_font, cover_block):
         "        \\hypersetup{ pdftitle={ " + TITLE + " }, pdfauthor={ " + AUTHOR + " }, pdfsubject={ " + SUBJECT + " }, colorlinks=true, linkcolor=blue, urlcolor=blue }\n"
         "        \\newcommand{\\neowayheaderlogo}{\\includegraphics[scale=0.25]{header-logo.png}}\n"
         "        \\makeatletter\n"
+        "        % === 自定义页眉章节格式（中文样式） ===\n"
         "        \\renewcommand{\\chaptermark}[1]{\\markboth{#1}{}}\n"
-        "        \\renewcommand{\\sectionmark}[1]{\\markright{#1}}\n"
+        "        \\renewcommand{\\sectionmark}[1]{\\markright{第\\thesection 节\\ #1}}\n"
         "        \\makeatother\n"
+
+
         "        \\fancypagestyle{normal}{%\n"
         "            \\fancyhf{}\n"
         "            \\fancyhead[L]{\\neowayheaderlogo}\n"
-        "            \\fancyhead[R]{\\nouppercase{\\rightmark}}\n"
+        "            \\fancyhead[R]{\\nouppercase{\\leftmark}}\n"
         "            \\fancyfoot[L]{深圳市有方科技股份有限公司版权所有}\n"
         "            \\fancyfoot[R]{\\thepage}\n"
         "            \\renewcommand{\\headrulewidth}{0.4pt}\n"
