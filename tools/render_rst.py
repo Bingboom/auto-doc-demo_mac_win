@@ -55,8 +55,8 @@ main_index_tmpl = env.from_string("""
 """.strip())
 
 chapter_index_tmpl = env.from_string("""
-第{{ chap_num }}章 {{ chap_name }}
-{{ "=" * max((chap_name|length + 6), 10) }}
+{{ chap_name }}
+{{ "=" * max((chap_name|length + 2), 10) }}
 
 .. toctree::
    :maxdepth: 1
