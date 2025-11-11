@@ -1,114 +1,114 @@
+# tools/build_pdf.py
 # ================================================================
-# 📘 Neoway Build PDF v8.0 — 企业集成版
-#    - 自动生成 RST
-#    - 注入企业 LaTeX 样式（via latex_inject）
-#    - 执行 XeLaTeX 双轮构建并输出版本化 PDF
+# 📘 Neoway Build PDF v8.1 — 企业配套版（与 latex_inject v3.3 兼容）
 # ================================================================
-import os, shutil, subprocess, platform, sys
+import os, re, shutil, subprocess, platform, sys
 from pathlib import Path
 from datetime import datetime
 
-# === 环境初始化 ===
+# --- 工具导入 ---
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = CURRENT_DIR.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-# === 导入模块 ===
-from tools.render_rst import *  # CSV → RST
+# --- 导入模块 ---
 from tools.latex_inject import inject_latex_block
-from docs._common import conf_common as cfg
+from docs._common import conf_common
 
-# === 基本信息（可修改） ===
+# === 基础项目参数 ===
 LANG = "zh"
 MODEL_NAME = "N706B"
 VERSION = "v1.4"
-DOC_TYPE = "AT 命令手册"
-AUTHOR = cfg.PROJECT_AUTHOR
 
-# === 路径定义 ===
+DOC_TYPE_CN = "AT 命令手册"
+AUTHOR_CN = "Neoway 文档工程组"
+
+# === 元信息生成 ===
+DATE_STR = conf_common.get_date_str()
+VERSION_TAG = conf_common.get_version_tag(VERSION)
+TITLE = f"Neoway {MODEL_NAME} {DOC_TYPE_CN}"
+AUTHOR = AUTHOR_CN
+SUBJECT = f"Neoway 机密 | {MODEL_NAME} | {VERSION_TAG}"
+
+# === 自动定位目录结构 ===
 PROJECT_ROOT = Path.cwd()
 for p in [PROJECT_ROOT] + list(PROJECT_ROOT.parents):
     if (p / "docs" / MODEL_NAME / "source" / "conf.py").exists():
         PROJECT_ROOT = p
         break
 else:
-    raise FileNotFoundError("❌ 未找到 conf.py，请检查项目结构。")
+    raise FileNotFoundError(f"❌ 未找到 conf.py，请确认 docs/{MODEL_NAME}/source 目录存在")
 
 ROOT_DIR = PROJECT_ROOT / "docs" / MODEL_NAME / "source"
 BUILD_DIR = PROJECT_ROOT / "docs" / MODEL_NAME / "build"
 LATEX_DIR = BUILD_DIR / "latex"
 PDF_DIR = BUILD_DIR / "pdf"
 PDF_DIR.mkdir(parents=True, exist_ok=True)
-CONF_PATH = ROOT_DIR / "conf.py"
 
-# ================================================================
-# 🧩 STEP 1. 自动生成 RST 文件
-# ================================================================
-print("🧩 生成 RST 文件中（CSV → RST）...")
-subprocess.run([sys.executable, "tools/render_rst.py"], check=True)
-print("✅ RST 生成完成。")
+conf_path = ROOT_DIR / "conf.py"
 
-# ================================================================
-# 🧩 STEP 2. 注入企业 LaTeX 样式
-# ================================================================
-print("🧱 注入企业 LaTeX 样式块中…")
+# === 第一步：注入 LaTeX 块 ===
+print("🧩 [1/4] 注入企业版 LaTeX 样式...")
 inject_latex_block(
-    conf_path=CONF_PATH,
-    title=f"Neoway {MODEL_NAME} {DOC_TYPE}",
+    conf_path=conf_path,
+    title=TITLE,
     author=AUTHOR,
     model_name=MODEL_NAME,
     version=VERSION,
+    doc_type=DOC_TYPE_CN,
+    subject_prefix="Neoway 机密"
 )
-print("✅ LaTeX 样式注入完成。")
 
-# ================================================================
-# 🧩 STEP 3. 构建 Sphinx LaTeX
-# ================================================================
-print("📦 构建 Sphinx LaTeX 源文件中…")
+# === 第二步：生成 RST ===
+print("📄 [2/4] 生成 RST 文件中（CSV → RST）...")
+subprocess.run(["python", "tools/render_rst.py"], check=True)
+print("✅ RST 生成完成")
+
+# === 第三步：执行 Sphinx 构建 ===
+print("🏗️ [3/4] 构建 Sphinx LaTeX ...")
 subprocess.run(["sphinx-build", "-b", "latex", str(ROOT_DIR), str(LATEX_DIR)], check=True)
-print("✅ LaTeX 源文件构建完成。")
 
-# ================================================================
-# 🧩 STEP 4. 复制公共静态资源
-# ================================================================
+# === 第四步：同步公共资源 ===
 common_static = PROJECT_ROOT / "docs" / "_common" / "_static"
 dest_common = LATEX_DIR / "_common" / "_static"
 if common_static.exists():
     shutil.copytree(common_static, dest_common, dirs_exist_ok=True)
     print(f"✅ 已复制公共资源 → {dest_common}")
+
+# === 平台字体选择 ===
+sys_name = platform.system().lower()
+if "darwin" in sys_name or "mac" in sys_name:
+    zh_font = "PingFang SC"
+    mono_font = "Menlo"
+elif "win" in sys_name:
+    zh_font = "Microsoft YaHei"
+    mono_font = "Consolas"
 else:
-    print("⚠️ 未找到公共资源目录：docs/_common/_static")
+    zh_font = "Noto Sans CJK SC"
+    mono_font = "DejaVu Sans Mono"
+print(f"🖋️ 当前平台字体：{zh_font} / {mono_font}")
 
-# ================================================================
-# 🧩 STEP 5. XeLaTeX 双轮编译
-# ================================================================
+# === XeLaTeX 编译 ===
 os.chdir(LATEX_DIR)
-tex_files = list(LATEX_DIR.glob("*.tex"))
-if not tex_files:
-    raise FileNotFoundError("❌ 未生成 .tex 文件，请检查 LaTeX 构建输出。")
+tex_main = next(LATEX_DIR.glob("*.tex"), None)
+if not tex_main:
+    raise FileNotFoundError("❌ 未找到 .tex 文件，请检查 Sphinx 输出")
 
-tex_main = tex_files[0]
+print("🌀 [4/4] 编译 PDF (2 轮 XeLaTeX)...")
 for i in range(2):
-    print(f"🌀 XeLaTeX 第 {i+1}/2 轮编译：{tex_main.name}")
+    print(f"   → 第 {i+1}/2 轮 ...")
     subprocess.run(["xelatex", "-interaction=nonstopmode", tex_main.name], check=True)
 
-# ================================================================
-# 🧩 STEP 6. 输出最终 PDF
-# ================================================================
-version_tag = cfg.get_version_tag(VERSION)
-out_pdf = PDF_DIR / f"Neoway_{MODEL_NAME}_{DOC_TYPE}_{version_tag}.pdf".replace(" ", "_")
+# === 输出 PDF 命名 ===
+version_label = VERSION_TAG.lstrip("Vv")
+output_filename = f"Neoway_{MODEL_NAME}_{DOC_TYPE_CN}_V{version_label}.pdf".replace(" ", "_")
+out_pdf = PDF_DIR / output_filename
 
 pdfs = sorted(LATEX_DIR.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
 if pdfs:
     shutil.copy2(pdfs[0], out_pdf)
     print(f"🎉 成功生成 PDF：{out_pdf}")
 else:
-    print("❌ 未生成 PDF，请检查 LaTeX 日志。")
+    print("⚠️ 未生成 PDF，请检查 LaTeX 日志。")
 
-# ================================================================
-# 🧩 STEP 7. 日志 & 提示
-# ================================================================
-print("\n📘 构建流程完成")
-print(f"  📂 源文件目录：{ROOT_DIR}")
-print(f"  📄 输出 PDF：{out_pdf}")
-print(f"  🕒 构建时间：{datetime.now():%Y-%m-%d %H:%M:%S}")
+print("✅ 全流程完成 — Build PDF v8.1 🚀")
