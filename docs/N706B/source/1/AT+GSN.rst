@@ -3,7 +3,7 @@
 AT+GSN：获取通信模组IMEI号
 ----------------------
 
-获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
+获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
 命令格式
 
 命令格式

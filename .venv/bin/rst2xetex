@@ -1,4 +1,4 @@
-#!/Users/pika/Documents/AT-docs/auto-doc-demo/.venv/bin/python
+#!/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
