@@ -29,12 +29,12 @@
 
 
 
-        \usepackage{xeCJK}
-        \setCJKmainfont{PingFang SC}
-        \setmainfont{Times New Roman}
-        \setsansfont{Arial}
-        \setmonofont{Menlo}
-    
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}
+
 
 
 \usepackage[Sonny]{fncychap}
@@ -58,46 +58,44 @@
 \setcounter{tocdepth}{0}
 
 
-        \usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
-        \graphicspath{{./}{../../_common/_static/}{_common/_static/}}
-        \setlength{\headheight}{24pt}
-        \setlength{\headsep}{12pt}
-        \hypersetup{
-          pdftitle={ Neoway N706B AT 命令手册 },
-          pdfauthor={ Neoway 文档工程组 },
-          pdfsubject={ 深圳市有方科技股份有限公司 机密 | N706B | V1.4 },
-          colorlinks=true, linkcolor=blue, urlcolor=blue
-        }
-        \newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
-        \makeatletter
-        % ---- 修复 chapter 标记，防止重复章节号 ----
-        \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-        \renewcommand{\sectionmark}[1]{\markright{#1}}
-        \makeatother
-        % ---- 页眉页脚样式 ----
-        \fancypagestyle{normal}{%
-          \fancyhf{}%
-          \fancyhead[L]{\neowayheaderlogo}%
-          \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-          \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-          \fancyfoot[R]{\thepage}%
-          \renewcommand{\headrulewidth}{0.4pt}%
-          \renewcommand{\footrulewidth}{0.4pt}%
-        }
-        \fancypagestyle{plain}{%
-          \fancyhf{}%
-          \fancyhead[L]{\neowayheaderlogo}%
-          \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-          \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-          \fancyfoot[R]{\thepage}%
-          \renewcommand{\headrulewidth}{0.4pt}%
-          \renewcommand{\footrulewidth}{0.4pt}%
-        }
-        \let\cleardoublepage\clearpage
-    
+\usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
+\graphicspath{{./}{../../_common/_static/}{_common/_static/}}
+\setlength{\headheight}{24pt}
+\setlength{\headsep}{12pt}
+\hypersetup{
+  pdftitle={Neoway N706B AT 命令手册},
+  pdfauthor={Neoway 文档工程组},
+  pdfsubject={深圳市有方科技股份有限公司 机密 | N706B | V1.4},
+  colorlinks=true, linkcolor=blue, urlcolor=blue
+}
+\newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
+\makeatletter
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\makeatother
+\fancypagestyle{normal}{
+  \fancyhf{}
+  \fancyhead[L]{\neowayheaderlogo}
+  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}
+  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+  \fancyfoot[R]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\neowayheaderlogo}
+  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}
+  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+  \fancyfoot[R]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+\let\cleardoublepage\clearpage
+
 
 \title{Neoway N706B AT 命令手册}
-\date{2025-11-11}
+\date{2025-11-12}
 \release{v1.4}
 \author{Neoway 文档工程组}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -111,23 +109,21 @@
 \fi
 
 \pagestyle{empty}
-% -------- Neoway 封面 --------
-\thispagestyle{empty}
-\pagenumbering{gobble}
+
 \begin{titlepage}
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{_common/_static/background.png}};
-  \end{tikzpicture}
-  \vspace*{8cm}
-  \begin{flushleft}
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
-    {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月11日}
-  \end{flushleft}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north west, inner sep=0pt] at (current page.north west)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{_common/_static/background.png}};
+\end{tikzpicture}
+\vspace*{8cm}
+\begin{flushleft}
+  {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
+  {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
+  {\large 版本 V1.4 \hspace{1em} 日期 2025-11-12}
+\end{flushleft}
 \end{titlepage}
 \clearpage
-\pagenumbering{roman}
 
 \pagestyle{plain}
 \sphinxtableofcontents

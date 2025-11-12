@@ -1,59 +1,94 @@
-# ================================================================
-# 📘 Neoway Build PDF v8.0 — 企业集成版
-# ================================================================
-import subprocess, platform, shutil, os, sys
+# -*- coding: utf-8 -*-
+"""
+📘 build_pdf.py – 模块化 PDF 构建器（集成 LaTeX 样式注入）
+Usage:
+  python tools/build_pdf.py
+"""
+
 from pathlib import Path
 from datetime import datetime
+import subprocess
+import argparse
+from jinja2 import Environment, FileSystemLoader
+from weasyprint import HTML, CSS
 
-CURRENT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = CURRENT_DIR.parent
-sys.path.insert(0, str(PROJECT_ROOT))
+# 导入 LaTeX 注入模块
+from tools.latex_inject import inject_latex_style, CONF_PATH
 
-from tools.latex_inject import inject_latex_block
-from docs._common import conf_common
+# ====== 基本路径 ======
+BASE = Path(__file__).resolve().parents[1]
+COMMON = BASE / "docs" / "_common"
+TEMPLATE_DIR = COMMON / "templates" / "pdf"
+STATIC_DIR = COMMON / "_static"
+OUTPUT_DIR = BASE / "docs" / "N706B" / "build" / "pdf"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-MODEL = "N706B"
-VERSION = "v1.4"
-DOC_TYPE = "AT 命令手册"
-AUTHOR = "Neoway 文档工程组"
+HTML_SOURCE = BASE / "docs" / "N706B" / "build" / "html" / "index.html"
 
-PROJECT_DIR = PROJECT_ROOT / f"docs/{MODEL}/source"
-BUILD_DIR = PROJECT_ROOT / f"docs/{MODEL}/build"
-LATEX_DIR = BUILD_DIR / "latex"
-PDF_DIR = BUILD_DIR / "pdf"
-PDF_DIR.mkdir(parents=True, exist_ok=True)
-CONF_PATH = PROJECT_DIR / "conf.py"
+# ====== 元信息配置 ======
+META = {
+    "project_name": "Neoway N706B AT 命令手册",
+    "subtitle": "AT Command Manual – V1.4",
+    "author": "文档工程组",
+    "version": "V1.4",
+    "date": datetime.now().strftime("%Y-%m-%d"),
+    "year": datetime.now().year,
+    "company": "深圳市有方科技股份有限公司",
+    "logo_path": str((STATIC_DIR / "header-logo.png").resolve()),
+    "history": ["V1.0 初版", "V1.2 增加 NB 命令", "V1.4 优化章节结构"],
+}
 
-print("🧩 Step 1: 注入 LaTeX 样式 …")
-inject_latex_block(
-    conf_path=CONF_PATH,
-    model_name=MODEL,
-    version=VERSION,
-    doc_type=DOC_TYPE,
-    author=AUTHOR,
-    company=conf_common.COMPANY_NAME,
-    zh_font=conf_common.get_fonts()["zh_font"],
-    mono_font=conf_common.get_fonts()["mono_font"],
-    date_cn=conf_common.get_date_cn(),
-)
-print("✅ LaTeX 样式注入完成。")
+# ====== 构建函数 ======
+def render_template(name: str, context: dict) -> str:
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+    return env.get_template(name).render(**context)
 
-print("🧩 Step 2: 构建 Sphinx → LaTeX …")
-subprocess.run(["sphinx-build", "-b", "latex", str(PROJECT_DIR), str(LATEX_DIR)], check=True)
 
-print("🧩 Step 3: 编译 XeLaTeX …")
-os.chdir(LATEX_DIR)
-tex_main = next(LATEX_DIR.glob("*.tex"))
-for i in range(2):
-    print(f"🌀 XeLaTeX 第 {i+1}/2 轮 …")
-    subprocess.run(["xelatex", "-interaction=nonstopmode", tex_main.name], check=True)
+def build_pdf(include_cover=True, include_version=True, include_license=True):
+    print("🧩 Step 1: 注入 LaTeX 样式 …")
+    inject_latex_style(CONF_PATH)
+    print("✅ LaTeX 样式注入完成。")
 
-print("🧩 Step 4: 拷贝 PDF …")
-version_label = VERSION.lstrip("vV")
-out_pdf = PDF_DIR / f"Neoway_{MODEL}_{DOC_TYPE}_V{version_label}.pdf".replace(" ", "_")
-pdfs = sorted(LATEX_DIR.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
-if pdfs:
-    shutil.copy2(pdfs[0], out_pdf)
-    print(f"🎉 成功生成 PDF：{out_pdf}")
-else:
-    print("❌ 未生成 PDF，请检查 LaTeX 日志。")
+    print("🧩 Step 2: 构建 Sphinx → LaTeX …")
+    PROJECT_DIR = BASE / "docs" / "N706B" / "source"
+    LATEX_DIR = BASE / "docs" / "N706B" / "build" / "latex"
+    subprocess.run(
+        ["sphinx-build", "-b", "latex", str(PROJECT_DIR), str(LATEX_DIR)],
+        check=True,
+    )
+
+    print("🧩 Step 3: 生成 PDF 成品 …")
+
+    html_content = HTML_SOURCE.read_text(encoding="utf-8")
+    parts = []
+    if include_cover:
+        parts.append(render_template("cover_page.j2", META))
+    if include_version:
+        parts.append(render_template("version_page.j2", META))
+    if include_license:
+        parts.append(render_template("license_page.j2", META))
+    parts.append(html_content)
+
+    final_html = "\n".join(parts)
+    css_path = STATIC_DIR / "pdf_style.css"
+    output_file = OUTPUT_DIR / f"Neoway_N706B_AT_命令手册_{META['version']}.pdf"
+
+    HTML(string=final_html, base_url=str(BASE)).write_pdf(
+        str(output_file), stylesheets=[CSS(filename=str(css_path))]
+    )
+    print(f"✅ PDF 生成成功：{output_file}")
+
+
+# ====== CLI ======
+if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    p.add_argument("--no-cover", action="store_true")
+    p.add_argument("--no-version", action="store_true")
+    p.add_argument("--no-license", action="store_true")
+    args = p.parse_args()
+
+    build_pdf(
+        include_cover=not args.no_cover,
+        include_version=not args.no_version,
+        include_license=not args.no_license,
+    )

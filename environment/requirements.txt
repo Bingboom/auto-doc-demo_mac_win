@@ -1,0 +1,7 @@
+pandas
+rst2pdf
+sphinx_rtd_theme>=2.0.0
+sphinx==7.4.7
+weasyprint==62.3
+jinja2
+pillow

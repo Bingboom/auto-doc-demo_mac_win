@@ -1,8 +1,17 @@
-.PHONY: pdf all
+.PHONY: init html pdf clean
+
+init:
+	python -m pip install -U pip
+	pip install -r requirements.txt
+
+html:
+	python tools/build_docs.py
 
 pdf:
-	python tools/build_docs.py N706B zh_CN
+	python tools/build_pdf.py
 
-all:
-	python tools/build_docs.py N706B zh_CN
-	python tools/build_docs.py N725 zh_CN
+pdf-no-cover:
+	python tools/build_pdf.py --no-cover
+
+clean:
+	rm -rf docs/**/build

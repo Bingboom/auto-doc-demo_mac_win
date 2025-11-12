@@ -1,0 +1,11 @@
+<div class="version-page" style="page-break-after: always; font-family:sans-serif; margin:100px;">
+  <h2>版本信息 Version Info</h2>
+  <p>当前版本：{{ version }}</p>
+  <p>发布日期：{{ date }}</p>
+  <p>修订历史：</p>
+  <ul>
+    {% for item in history %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</div>

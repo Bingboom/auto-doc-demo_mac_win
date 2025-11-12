@@ -1,5 +1,5 @@
-﻿# ================================================================
-# 📘 Neoway N706B conf.py — 修正版，确保 _common 路径正确
+# ================================================================
+# 📘 Neoway N706B conf.py — Clean Fixed Version (final)
 # ================================================================
 from pathlib import Path
 import sys, os
@@ -37,17 +37,77 @@ html_logo = "_static/logo.png"
 html_show_sourcelink = False
 html_last_updated_fmt = today
 
-# === LaTeX 初始化（防止 NameError） ===
+# === LaTeX 配置 ===
 latex_engine = "xelatex"
-latex_elements = {}
-latex_additional_files = list(latex_additional_files)  # 从 _common 导入
+\setCJKmainfont{SimSun}
+\setCJKmonofont{SimSun}
+\setCJKsansfont{SimHei}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{\textbf{Neoway 文档工程组}}
+\fancyhead[R]{\textbf{N706B AT 命令手册}}
+\fancyfoot[L]{Neoway Technology Co., Ltd. 版权所有}
+\fancyfoot[R]{\thepage}
+""",
+}
+
 latex_documents = [
     ("index", "Neoway_N706B_Manual.tex", project, author, "manual"),
 ]
 
-# === 覆盖封面格式 ===
+latex_additional_files = [
+    "../../_common/_static/background.png",
+    "../../_common/_static/header-logo.png",
+    "../../_common/_static/logo.png",
+]
+
 latex_elements.update({
-    'maketitle': r"""
+    "extraclassoptions": "openany,oneside",
+    "geometry": r"\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=24pt]{geometry}",
+    "fontpkg": r"""
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}
+""",
+    "preamble": r"""
+\usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
+\graphicspath{{./}{../../_common/_static/}{_common/_static/}}
+\setlength{\headheight}{24pt}
+\setlength{\headsep}{12pt}
+\hypersetup{
+  pdftitle={Neoway N706B AT 命令手册},
+  pdfauthor={Neoway 文档工程组},
+  pdfsubject={深圳市有方科技股份有限公司 机密 | N706B | V1.4},
+  colorlinks=true, linkcolor=blue, urlcolor=blue
+}
+\newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
+\makeatletter
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\makeatother
+\fancypagestyle{normal}{
+  \fancyhf{}
+  \fancyhead[L]{\neowayheaderlogo}
+  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}
+  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+  \fancyfoot[R]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\neowayheaderlogo}
+  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}
+  \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
+  \fancyfoot[R]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+\let\cleardoublepage\clearpage
+""",
+    "maketitle": r"""
 \begin{titlepage}
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
@@ -58,99 +118,26 @@ latex_elements.update({
 \begin{flushleft}
   {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
   {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-  {\large 版本 V1.4 \hspace{1em} 日期 """ + get_date_cn() + r"""}
+  {\large 版本 V1.4 \hspace{1em} 日期 """ + today + r"""}
 \end{flushleft}
 \end{titlepage}
 \clearpage
-"""
+""",
 })
 
-# === 自动注入标记块 ===
-# (由 build_pdf.py 调用 latex_inject 注入，自动生成章节页眉格式)
-
-# >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-11 16:17:57
-if 'latex_elements' not in globals():
-    latex_elements = {}
-latex_engine = 'xelatex'
-latex_additional_files = globals().get('latex_additional_files', []) + [
-    '../../_common/_static/logo.png',
-    '../../_common/_static/background.png',
-    '../../_common/_static/header-logo.png',
-]
-latex_documents = [
-    ('index', 'Neoway_N706B_Manual.tex', 'Neoway N706B AT 命令手册', 'Neoway 文档工程组', 'manual')
-]
-latex_elements.update({
-    'papersize': 'a4paper',
-    'pointsize': '11pt',
-    'extraclassoptions': 'openany,oneside',
-    'geometry': r'\usepackage[a4paper,top=22mm,bottom=22mm,left=22mm,right=22mm,headheight=24pt]{geometry}',
-    'fontpkg': r'''
-        \usepackage{xeCJK}
-        \setCJKmainfont{PingFang SC}
-        \setmainfont{Times New Roman}
-        \setsansfont{Arial}
-        \setmonofont{Menlo}
-    ''',
-    'preamble': r'''
-        \usepackage{graphicx,tikz,eso-pic,xcolor,fancyhdr,titlesec,hyperref}
-        \graphicspath{{./}{../../_common/_static/}{_common/_static/}}
-        \setlength{\headheight}{24pt}
-        \setlength{\headsep}{12pt}
-        \hypersetup{
-          pdftitle={ Neoway N706B AT 命令手册 },
-          pdfauthor={ Neoway 文档工程组 },
-          pdfsubject={ 深圳市有方科技股份有限公司 机密 | N706B | V1.4 },
-          colorlinks=true, linkcolor=blue, urlcolor=blue
-        }
-        \newcommand{\neowayheaderlogo}{\includegraphics[scale=0.25]{header-logo.png}}
-        \makeatletter
-        % ---- 修复 chapter 标记，防止重复章节号 ----
-        \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-        \renewcommand{\sectionmark}[1]{\markright{#1}}
-        \makeatother
-        % ---- 页眉页脚样式 ----
-        \fancypagestyle{normal}{%
-          \fancyhf{}%
-          \fancyhead[L]{\neowayheaderlogo}%
-          \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-          \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-          \fancyfoot[R]{\thepage}%
-          \renewcommand{\headrulewidth}{0.4pt}%
-          \renewcommand{\footrulewidth}{0.4pt}%
-        }
-        \fancypagestyle{plain}{%
-          \fancyhf{}%
-          \fancyhead[L]{\neowayheaderlogo}%
-          \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-          \fancyfoot[L]{深圳市有方科技股份有限公司版权所有}%
-          \fancyfoot[R]{\thepage}%
-          \renewcommand{\headrulewidth}{0.4pt}%
-          \renewcommand{\footrulewidth}{0.4pt}%
-        }
-        \let\cleardoublepage\clearpage
-    ''',
-    'maketitle': (
-        r'''% -------- Neoway 封面 --------
-\thispagestyle{empty}
-\pagenumbering{gobble}
-\begin{titlepage}
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{_common/_static/background.png}};
-  \end{tikzpicture}
-  \vspace*{8cm}
-  \begin{flushleft}
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}\\[0.8cm]
-    {\fontsize{28}{32}\selectfont AT 命令手册}\\[0.6cm]
-    {\large 版本 V1.4 \hspace{1em} 日期 2025年11月11日}
-  \end{flushleft}
-\end{titlepage}
-\clearpage
-\pagenumbering{roman}
-'''
-    ),
-})
-# <<< END:  NEOWAY_LATEX_BLOCK
-
+latex_elements = {
+    "papersize": "a4paper",
+    "pointsize": "11pt",
+    "preamble": r"""
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+\setCJKmonofont{SimSun}
+\setCJKsansfont{SimHei}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{\textbf{Neoway 文档工程组}}
+\fancyhead[R]{\textbf{N706B AT 命令手册}}
+\fancyfoot[L]{Neoway Technology Co., Ltd. 版权所有}
+\fancyfoot[R]{\thepage}
+""",
+}
