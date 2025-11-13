@@ -1,24 +1,25 @@
-# ================================================================
-# 📘 Neoway Render RST v8.2 — 子类型先拆分 + 参数dict直传
-# ================================================================
+# tools/render_rst.py
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from pathlib import Path
 import json
 
+
+# 动态添加项目根目录到 sys.path 中
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))  # 添加根目录到 sys.path
+
+# 引入 paths.py 配置
+from tools.paths import PATHS
+
 PROJECT_NAME = "Neoway AT 命令手册"
 VERSION = "v1.4"
 AUTHOR = "文档工程组"
 DATE = datetime.now().strftime("%Y-%m-%d")
 
-PROJECT_ROOT = Path.cwd()
-for parent in [PROJECT_ROOT] + list(PROJECT_ROOT.parents):
-    if (parent / "csv-input").exists():
-        PROJECT_ROOT = parent
-        break
-
-CSV_PATH     = PROJECT_ROOT / "csv-input" / "at_N706B.csv"
+PROJECT_ROOT = PATHS["root"]
+CSV_PATH     = PATHS["csv_input"] / "at_N706B.csv"
 ROOT_DIR     = PROJECT_ROOT / "docs" / "N706B" / "source"
 OUTPUT_DIR   = ROOT_DIR
 TEMPLATE_DIR = PROJECT_ROOT / "docs" / "_common" / "templates"

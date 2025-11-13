@@ -1,6 +1,12 @@
+# tools/latex_inject.py
 from datetime import datetime
 from pathlib import Path
 import re
+
+
+
+# 引入 paths.py 中的配置
+from tools.paths import PATHS
 
 def inject_latex_block(
     conf_path: Path,
@@ -55,9 +61,9 @@ if 'latex_elements' not in globals():
     latex_elements = {{}}
 latex_engine = 'xelatex'
 latex_additional_files = globals().get('latex_additional_files', []) + [
-    '../../_common/_static/logo.png',
-    '../../_common/_static/background.png',
-    '../../_common/_static/header-logo.png',
+    '{str(PATHS["images"] / "logo.png")}',
+    '{str(PATHS["images"] / "background.png")}',
+    '{str(PATHS["images"] / "header-logo.png")}',
 ]
 latex_documents = [
     ('index', 'Neoway_{model_name}_Manual.tex', '{title}', '{author}', 'manual')

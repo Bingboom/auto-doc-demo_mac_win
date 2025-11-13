@@ -1,28 +1,33 @@
-import subprocess, platform, shutil, os, sys
+import sys
 from pathlib import Path
-from datetime import datetime
+import subprocess  # 添加 subprocess 模块的导入
+import os  # 添加 os 模块的导入
+import shutil  # 添加 shutil 模块的导入
 
-CURRENT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = CURRENT_DIR.parent
+# 动态添加项目根目录到 sys.path 中
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))  # 添加根目录到 sys.path
 
-# 确保 PROJECT_ROOT 添加到 sys.path 中
-sys.path.insert(0, str(PROJECT_ROOT))
+# 引入 paths.py 配置
+from tools.paths import PATHS
 
-# 导入 conf_common 和 inject_latex_block
-from tools.latex_inject import inject_latex_block
-from docs._common import conf_common
-
+# 统一路径配置
+PROJECT_ROOT = PATHS["root"]
 MODEL = "N706B"
 VERSION = "v1.4"
 DOC_TYPE = "AT 命令手册"
 AUTHOR = "Neoway 文档工程组"
 
-PROJECT_DIR = PROJECT_ROOT / f"docs/{MODEL}/source"
-BUILD_DIR = PROJECT_ROOT / f"docs/{MODEL}/build"
+PROJECT_DIR = PATHS["sphinx_docs"] / f"{MODEL}/source"
+BUILD_DIR = PATHS["sphinx_docs"] / f"{MODEL}/build"
 LATEX_DIR = BUILD_DIR / "latex"
 PDF_DIR = BUILD_DIR / "pdf"
 PDF_DIR.mkdir(parents=True, exist_ok=True)
 CONF_PATH = PROJECT_DIR / "conf.py"
+
+# 导入 conf_common 和 inject_latex_block
+from tools.latex_inject import inject_latex_block
+from docs._common import conf_common
 
 print("🧩 Step 1: 注入 LaTeX 样式 …")
 # 调用 inject_latex_block 注入样式
@@ -57,7 +62,7 @@ version_label = VERSION.lstrip("vV")
 out_pdf = PDF_DIR / f"Neoway_{MODEL}_{DOC_TYPE}_V{version_label}.pdf".replace(" ", "_")
 pdfs = sorted(LATEX_DIR.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
 if pdfs:
-    shutil.copy2(pdfs[0], out_pdf)
+    shutil.copy2(pdfs[0], out_pdf)  # 使用 shutil.copy2 复制文件
     print(f"🎉 成功生成 PDF：{out_pdf}")
 else:
     print("❌ 未生成 PDF，请检查 LaTeX 日志。")
