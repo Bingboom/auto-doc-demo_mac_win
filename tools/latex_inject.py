@@ -1,23 +1,6 @@
-# -*- coding: utf-8 -*-
-# ================================================================
-# 📘 Neoway Latex Inject v3.6 — 企业集成版（UTF-8 +BOM）
-# ================================================================
-# 功能说明：
-# 1️⃣ 自动向 docs/<MODEL>/source/conf.py 注入 LaTeX 样式。
-# 2️⃣ 支持公司信息、字体、封面、页眉页脚的统一管理。
-# 3️⃣ 向后兼容旧版 build_pdf.py 调用（不传 company 参数也可）。
-# 4️⃣ 可跨平台（Windows/macOS/Linux）使用。
-# ---------------------------------------------------------------
-# 最近更新：
-# - 新增 company / zh_font / mono_font / date_cn 参数。
-# - 修复章节页眉错位问题。
-# - 支持多项目复用（不同型号同模板）。
-# ================================================================
-
 from datetime import datetime
 from pathlib import Path
 import re
-
 
 def inject_latex_block(
     conf_path: Path,
@@ -153,5 +136,5 @@ latex_elements.update({{
 {marker_end}
 """
     conf_txt = conf_txt.rstrip() + "\n\n" + block + "\n"
-    conf_path.write_text(conf_txt, encoding="utf-8-sig")  # UTF-8 +BOM
+    conf_path.write_text(conf_txt, encoding="utf-8")  # 使用无 BOM 的 UTF-8 编码
     print(f"✅ 已更新 {conf_path}")
