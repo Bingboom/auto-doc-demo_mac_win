@@ -14,7 +14,7 @@ export LATEXOPTS ?=
 # with latexmk version 4.52b or higher set LATEXMKOPTS to -xelatex either here
 # or on command line for faster builds.
 LATEXMKOPTS ?=
-export XINDYOPTS = -L general -C utf8  -M sphinx.xdy
+export XINDYOPTS = -L english -C utf8  -M sphinx.xdy
 # format: pdf or dvi (used only by archive targets)
 FMT = pdf
 
@@ -49,7 +49,8 @@ tar: all-$(FMT)
 	rm -r $(ARCHIVEPREFIX)docs-$(FMT)
 
 gz: tar
-	gzip -9 < $(ARCHIVEPREFIX)docs-$(FMT).tar > $(ARCHIVEPREFIX)docs-$(FMT).tar.gz
+	# -n to omit mtime from gzip headers
+	gzip -n -9 < $(ARCHIVEPREFIX)docs-$(FMT).tar > $(ARCHIVEPREFIX)docs-$(FMT).tar.gz
 
 bz2: tar
 	bzip2 -9 -k $(ARCHIVEPREFIX)docs-$(FMT).tar

@@ -33,7 +33,7 @@ latex_documents = [
 ]
 
 # >>> BEGIN: NEOWAY_LATEX_BLOCK
-# 自动注入时间：2025-11-13 12:16:56
+# 自动注入时间：2025-11-13 12:20:32
 if 'latex_elements' not in globals():
     latex_elements = {}
 latex_engine = 'xelatex'
