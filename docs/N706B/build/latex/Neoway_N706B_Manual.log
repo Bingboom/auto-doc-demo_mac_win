@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  13 NOV 2025 12:20
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  14 NOV 2025 00:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1324,8 +1324,10 @@ Package hyperref Info: Link coloring ON on input line 106.
 \@outlinefile=\write6
 \openout6 = `Neoway_N706B_Manual.out'.
 
-File: _common/_static/background.png Graphic file (type bmp)
-<_common/_static/background.png>
+File: /Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/_static/b
+ackground.png Graphic file (type bmp)
+</Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/_static/backgr
+ound.png>
 
 
 [1
@@ -1808,8 +1810,8 @@ Package rerunfilecheck Info: File `Neoway_N706B_Manual.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  32030 strings out of 473832
- 671458 string characters out of 5729482
- 1120600 words of memory out of 5000000
+ 671962 string characters out of 5729482
+ 1120599 words of memory out of 5000000
  54470 multiletter control sequences out of 15000+600000
  562445 words of font info for 109 fonts, out of 8000000 for 9000
  1349 hyphenation exceptions out of 8191
