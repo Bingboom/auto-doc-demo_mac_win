@@ -1,9 +1,6 @@
-# tools/latex_inject.py
 from datetime import datetime
 from pathlib import Path
 import re
-
-
 
 # 引入 paths.py 中的配置
 from tools.paths import PATHS
@@ -125,7 +122,7 @@ latex_elements.update({{
 \\begin{{titlepage}}
   \\begin{{tikzpicture}}[remember picture, overlay]
     \\node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {{\\includegraphics[width=\\paperwidth,height=\\paperheight]{{_common/_static/background.png}}}};
+      {{\\includegraphics[width=\\paperwidth,height=\\paperheight]{{{str(PATHS['images'])}/background.png}}}};
   \\end{{tikzpicture}}
   \\vspace*{{8cm}}
   \\begin{{flushleft}}
