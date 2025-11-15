@@ -29,7 +29,6 @@ def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type:
     )
 
     # ============= 关键补丁：干掉 openright 产生的空白页 =============
-    # 只改 cleardoublepage，不动 clearpage 和目录逻辑
     remove_openright_blank_patch = r"""
 % ===== Neoway patch: remove blank pages from openright/cleardoublepage =====
 \makeatletter
@@ -38,7 +37,35 @@ def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type:
 \makeatother
 """
 
-    patched_preamble = styles["preamble_full"].rstrip() + "\n" + remove_openright_blank_patch
+    # ============= 关键补丁：彻底修复 TOC 页眉 =============
+    # Sphinx 对目录页（TOC）强制使用 \pagestyle{plain}，因此必须重写 plain 样式
+    # 并且强制目录页执行 thispagestyle{plain}
+    fix_toc_header_patch = r"""
+% ===== Neoway patch: FIX TOC HEADER =====
+% 强制重写 plain 样式（Sphinx 目录页默认使用 plain）
+\fancypagestyle{plain}{
+    \fancyhf{}
+    % 左侧 logo（你在 latex_styles.py 中定义的）
+    \fancyhead[L]{\neowayheaderlogo}
+    % 右侧空白
+    \fancyhead[R]{}
+    \renewcommand{\headrulewidth}{0.4pt}
+}
+
+% 强制目录页使用 plain（覆盖 Sphinx 自动行为）
+\AtBeginDocument{
+    \addtocontents{toc}{\protect\thispagestyle{plain}}
+}
+"""
+
+    # 合并 preamble
+    patched_preamble = (
+        styles["preamble_full"].rstrip()
+        + "\n"
+        + remove_openright_blank_patch
+        + "\n"
+        + fix_toc_header_patch
+    )
 
     # 注入 block
     block = f"""
@@ -46,7 +73,7 @@ def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type:
 
 latex_engine = "xelatex"
 
-# 生成 LaTeX 主文件名（必须设置，否则默认 projectnamenotset）
+# 生成 LaTeX 主文件名
 latex_documents = [
     ('index', '{tex_filename}', '{title}', '{author}', 'manual')
 ]
@@ -61,4 +88,4 @@ latex_elements = {{
 """
 
     conf_path.write_text(conf_text.rstrip() + "\n\n" + block, encoding="utf-8")
-    print(f"✔ 已注入 LaTeX 样式和 latex_documents（含 cleardoublepage 补丁）：{conf_path}")
+    print(f"✔ 已注入 LaTeX 样式（含 TOC 页眉修复）：{conf_path}")
