@@ -28,6 +28,18 @@ def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type:
         flags=re.DOTALL
     )
 
+    # ============= 关键补丁：干掉 openright 产生的空白页 =============
+    # 只改 cleardoublepage，不动 clearpage 和目录逻辑
+    remove_openright_blank_patch = r"""
+% ===== Neoway patch: remove blank pages from openright/cleardoublepage =====
+\makeatletter
+\let\origcleardoublepage\cleardoublepage
+\renewcommand{\cleardoublepage}{\clearpage}
+\makeatother
+"""
+
+    patched_preamble = styles["preamble_full"].rstrip() + "\n" + remove_openright_blank_patch
+
     # 注入 block
     block = f"""
 {marker_begin}
@@ -41,7 +53,7 @@ latex_documents = [
 
 latex_elements = {{
     "fontpkg": r\"\"\"{styles['fontpkg']}\"\"\",
-    "preamble": r\"\"\"{styles['preamble_full']}\"\"\",
+    "preamble": r\"\"\"{patched_preamble}\"\"\",
     "maketitle": r\"\"\"{styles['cover']}\"\"\",
 }}
 
@@ -49,4 +61,4 @@ latex_elements = {{
 """
 
     conf_path.write_text(conf_text.rstrip() + "\n\n" + block, encoding="utf-8")
-    print(f"✔ 已注入 LaTeX 样式和 latex_documents：{conf_path}")
+    print(f"✔ 已注入 LaTeX 样式和 latex_documents（含 cleardoublepage 补丁）：{conf_path}")
