@@ -23,9 +23,11 @@
 
 \catcode`^^^^00a0\active\protected\def^^^^00a0{\leavevmode\nobreak\ }
 \usepackage{cmap}
-\usepackage{xeCJK}
+\usepackage{fontspec}
+\defaultfontfeatures[\rmfamily,\sffamily,\ttfamily]{}
 \usepackage{amsmath,amssymb,amstext}
-\usepackage{babel}
+\usepackage{polyglossia}
+\setmainlanguage{english}
 
 
 % ===== Neoway LaTeX 字体统一配置 =====
@@ -40,12 +42,10 @@
 
 
 
-\usepackage[Sonny]{fncychap}
-\ChNameVar{\Large\normalfont\sffamily}
-\ChTitleVar{\Large\normalfont\sffamily}
+\usepackage[Bjarne]{fncychap}
 \usepackage{sphinx}
 
-\fvset{fontsize=\small,formatcom=\xeCJKVerbAddon}
+\fvset{fontsize=auto}
 \usepackage{geometry}
 
 
@@ -139,18 +139,13 @@
 
 
 \title{Neoway N706B AT_Command_Manual}
-\date{2025 年 11 月 15 日}
-\release{v1.4}
+\date{Nov 15, 2025}
+\release{}
 \author{Neoway Documentation Team}
 \newcommand{\sphinxlogo}{\vbox{}}
-\renewcommand{\releasename}{发行版本}
+\renewcommand{\releasename}{}
 \makeindex
 \begin{document}
-
-\ifdefined\shorthandoff
-  \ifnum\catcode`\=\string=\active\shorthandoff{=}\fi
-  \ifnum\catcode`\"=\active\shorthandoff{"}\fi
-\fi
 
 \pagestyle{empty}
 % -------- Neoway 文档封面 --------
@@ -163,13 +158,19 @@
       {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
   \end{tikzpicture}
 
-  \vspace*{8cm}
+  % 控制顶部间距
+  \vspace*{6cm}  % 根据需要微调顶部间距
+
+  % 使用 hspace* 来强制将 N706B 向左对齐
   \begin{flushleft}
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }}
-    \\[0.8cm]
-    {\fontsize{28}{32}\selectfont AT\_Command\_Manual}
-    \\[0.6cm]
-    {\large 版本 V1.0 \hspace{1em} 日期 2025年11月15日}
+    \hspace*{-0.4cm}  % 强制水平向左偏移
+    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }} % 修改字体
+    \vskip 0.8cm  % 控制标题和副标题之间的垂直间距
+
+    {\fontsize{28}{32}\selectfont AT Commands Manual}
+    \vskip 0.5cm  % 控制标题和日期之间的垂直间距
+
+    {\large Issue 1.2 \hspace{1em} Date 2025-08-13}
   \end{flushleft}
 \end{titlepage}
 
@@ -1371,7 +1372,7 @@
 \label{\detokenize{1/AT+CPIN:at-cpin-pin}}\label{\detokenize{1/AT+CPIN:cmd-at-cpin}}\label{\detokenize{1/AT+CPIN::doc}}
 \sphinxAtStartPar
 查询PIN状态以及输入PIN码。
-若要输入PIN码,需锁定当前SIM卡（AT+CLCK="SC",1,"1234"）后,重启模组才能输入PIN码,输入三次错误的PIN码后,会要求输入PUK码才能解锁。
+若要输入PIN码,需锁定当前SIM卡（AT+CLCK=”SC”,1,”1234”）后,重启模组才能输入PIN码,输入三次错误的PIN码后,会要求输入PUK码才能解锁。
 命令格式
 
 
@@ -1518,7 +1519,7 @@
 \label{\detokenize{1/AT+CPWD:at-cpwd}}\label{\detokenize{1/AT+CPWD:cmd-at-cpwd}}\label{\detokenize{1/AT+CPWD::doc}}
 \sphinxAtStartPar
 修改模组锁功能的密码。
-若需修改PIN码,需锁定SIM卡（AT+CLCK="SC",1,"1234"）后才能修改。
+若需修改PIN码,需锁定SIM卡（AT+CLCK=”SC”,1,”1234”）后才能修改。
 命令格式
 
 
@@ -3485,6 +3486,6 @@ OK
 \label{\detokenize{index:id1}}
 
 
-\renewcommand{\indexname}{索引}
+\renewcommand{\indexname}{Index}
 \printindex
 \end{document}

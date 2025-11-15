@@ -8,13 +8,19 @@
       {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
   \end{tikzpicture}
 
-  \vspace*{8cm}
+  % 控制顶部间距
+  \vspace*{6cm}  % 根据需要微调顶部间距
+
+  % 使用 hspace* 来强制将 N706B 向左对齐
   \begin{flushleft}
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }}
-    \\[0.8cm]
-    {\fontsize{28}{32}\selectfont AT\_Command\_Manual}
-    \\[0.6cm]
-    {\large 版本 V1.0 \hspace{1em} 日期 2025年11月15日}
+    \hspace*{-0.4cm}  % 强制水平向左偏移
+    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }} % 修改字体
+    \vskip 0.8cm  % 控制标题和副标题之间的垂直间距
+
+    {\fontsize{28}{32}\selectfont AT Commands Manual}
+    \vskip 0.5cm  % 控制标题和日期之间的垂直间距
+
+    {\large Issue 1.2 \hspace{1em} Date 2025-08-13}
   \end{flushleft}
 \end{titlepage}
 

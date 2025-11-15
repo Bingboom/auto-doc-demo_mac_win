@@ -5,17 +5,17 @@
 %
 \ProvidesPackage{sphinxmessages}[2019/01/04 v2.0 Localized LaTeX macros (Sphinx team)]
 
-\renewcommand{\literalblockcontinuedname}{接上页}
-\renewcommand{\literalblockcontinuesname}{续下页}
-\renewcommand{\sphinxnonalphabeticalgroupname}{非字母}
-\renewcommand{\sphinxsymbolsname}{符号}
-\renewcommand{\sphinxnumbersname}{数字}
-\def\pageautorefname{页}
+\renewcommand{\literalblockcontinuedname}{continued from previous page}
+\renewcommand{\literalblockcontinuesname}{continues on next page}
+\renewcommand{\sphinxnonalphabeticalgroupname}{Non\sphinxhyphen{}alphabetical}
+\renewcommand{\sphinxsymbolsname}{Symbols}
+\renewcommand{\sphinxnumbersname}{Numbers}
+\def\pageautorefname{page}
 
-\addto\captionsenglish{\renewcommand{\figurename}{图 }}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.\@{} }}
 \def\fnum@figure{\figurename\thefigure{}}
 
-\addto\captionsenglish{\renewcommand{\tablename}{表 }}
+\addto\captionsenglish{\renewcommand{\tablename}{Table }}
 \def\fnum@table{\tablename\thetable{}}
 
-\addto\captionsenglish{\renewcommand{\literalblockname}{列表}}
+\addto\captionsenglish{\renewcommand{\literalblockname}{Listing}}
