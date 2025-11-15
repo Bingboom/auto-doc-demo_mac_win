@@ -1,22 +1,64 @@
-% -------- Neoway 文档封面 --------
-\thispagestyle{empty}
-\pagenumbering{gobble}
+% ===============================================
+%   Neoway – Custom manual LaTeX Template
+%   (Overrides Sphinx's default manual.tex.j2)
+% ===============================================
 
-\begin{titlepage}
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
-  \end{tikzpicture}
+\documentclass[oneside,openany]{manual}
 
-  \vspace*{8cm}
-  \begin{flushleft}
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ {{ model_name }} }}
-    \\[0.8cm]
-    {\fontsize{28}{32}\selectfont {{ doc_type|replace("_", "\\_") }}}
-    \\[0.6cm]
-    {\large 版本 {{ version_tag }} \hspace{1em} 日期 {{ date_cn }}}
-  \end{flushleft}
-\end{titlepage}
+% ------------------------
+% Sphinx injected settings
+% ------------------------
+{%- if latex_engine %}
+\usepackage{ifxetex}
+\usepackage{ifluatex}
+{%- endif %}
 
-\clearpage
+% Sphinx injects: fontpkg, preamble, maketitle, etc.
+{{ latex_elements.preamble }}
+
+% ------------------------
+% Remove "Chapter x." prefix
+% ------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}{\Huge\bfseries}{第~\thechapter~章}{1em}{}
+
+% ------------------------
+% Fix chapter marks for header
+% ------------------------
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ------------------------
+% TOC pages use plain style (→ your plain style sets Right empty)
+% ------------------------
+\addtocontents{toc}{\protect\thispagestyle{plain}}
+
+% ------------------------
+% Document Start
+% ------------------------
+\begin{document}
+
+% -------------
+%   Cover Page
+% -------------
+{{ latex_elements.maketitle }}
+
+% Roman numbering for abstracts, toc
 \pagenumbering{roman}
+
+% Table of Contents
+\begingroup
+\pagestyle{plain}   % 左 logo，右空白（按照你 plain 的定义）
+\tableofcontents
+\clearpage
+\endgroup
+
+% Switch to Arabic numbering for content
+\pagenumbering{arabic}
+\pagestyle{normal}
+
+% ------------------------
+% Main Content
+% ------------------------
+{% block body %}{% endblock body %}
+
+\end{document}

@@ -42,7 +42,6 @@ latex_documents = []
 
 latex_engine = "xelatex"
 
-# 生成 LaTeX 主文件名（必须设置，否则默认 projectnamenotset）
 latex_documents = [
     ('index', 'Neoway_N706B_Manual.tex', 'Neoway N706B AT_Command_Manual', 'Neoway Documentation Team', 'manual')
 ]
@@ -86,47 +85,54 @@ latex_elements = {
 \usetikzlibrary{positioning,calc}
 
 % docs/_common/latex/headerfooter.tex
-% 只负责页眉页脚风格 + logo 命令
-% 不再 \usepackage{geometry}，不再引入其它包
 
-% 统一定义一次 header logo 命令
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\setlength{\headheight}{20pt}
+\setlength{\headsep}{12pt}
+
+% 左上角 LOGO 命令
 \newcommand{\neowayheaderlogo}{%
-  \includegraphics[scale=0.25]{header-logo.png}%
+  \includegraphics[height=14pt]{header-logo.png}
 }
 
 % 正常页面样式
-\fancypagestyle{normal}{%
-  \fancyhf{}%
-  % 左侧 logo
-  \fancyhead[L]{\neowayheaderlogo}%
-  % 右侧：第 x 章 + 章节标题
-  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-  % 页脚：左公司版权，右页码
-  \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}%
-  \fancyfoot[R]{\thepage}%
-  \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\footrulewidth}{0.4pt}%
+\fancypagestyle{normal}{
+    \fancyhf{}
+    \fancyhead[L]{\neowayheaderlogo}
+    \fancyhead[R]{\nouppercase{\leftmark}}
+    \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
 }
 
-% 章节起始页也用同样风格
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \fancyhead[L]{\neowayheaderlogo}%
-  \fancyhead[R]{第~\thechapter~章~\nouppercase{\leftmark}}%
-  \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}%
-  \fancyfoot[R]{\thepage}%
-  \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\footrulewidth}{0.4pt}%
+% plain：用于 TOC / Chapter 起始页
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{\neowayheaderlogo}
+    \fancyhead[R]{}
+    \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
 }
 
 % 默认页式
 \pagestyle{normal}
 
-% ===== Neoway patch: remove blank pages from openright/cleardoublepage =====
+% ===== Neoway Patch: remove blank pages from openright =====
 \makeatletter
 \let\origcleardoublepage\cleardoublepage
 \renewcommand{\cleardoublepage}{\clearpage}
 \makeatother
+
+
+% ===== Neoway Patch: force TOC to use headerfooter.tex plain style =====
+\AtBeginDocument{
+    \addtocontents{toc}{\protect\thispagestyle{plain}}
+}
 """,
     "maketitle": r"""% -------- Neoway 文档封面 --------
 \thispagestyle{empty}
