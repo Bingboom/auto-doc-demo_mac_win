@@ -1,68 +1,159 @@
+#!/usr/bin/env python3
+# tools/build_pdf.py
+
 import sys
+import shutil
+import subprocess
 from pathlib import Path
-import subprocess  # 添加 subprocess 模块的导入
-import os  # 添加 os 模块的导入
-import shutil  # 添加 shutil 模块的导入
 
-# 动态添加项目根目录到 sys.path 中
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT))  # 添加根目录到 sys.path
+# === 自动加入项目根目录 ===
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-# 引入 paths.py 配置
-from tools.paths import PATHS
+from paths import PATHS
+from tools.latex_cover import render_cover
+from tools.latex_styles import load_latex_styles
+from tools.latex_injector import inject_latex_block
 
-# 统一路径配置
-PROJECT_ROOT = PATHS["root"]
-MODEL = "N706B"
-VERSION = "v1.4"
-DOC_TYPE = "AT 命令手册"
-AUTHOR = "Neoway 文档工程组"
 
-PROJECT_DIR = PATHS["sphinx_docs"] / f"{MODEL}/source"
-BUILD_DIR = PATHS["sphinx_docs"] / f"{MODEL}/build"
-LATEX_DIR = BUILD_DIR / "latex"
-PDF_DIR = BUILD_DIR / "pdf"
-PDF_DIR.mkdir(parents=True, exist_ok=True)
-CONF_PATH = PROJECT_DIR / "conf.py"
+# ---------------------------------------------------------
+# 工具函数
+# ---------------------------------------------------------
+def run_cmd(cmd, cwd=None):
+    print(f"\n$ {' '.join(cmd)}")
+    p = subprocess.run(cmd, cwd=cwd)
+    if p.returncode != 0:
+        raise RuntimeError(f"命令失败：{' '.join(cmd)}")
 
-# 导入 conf_common 和 inject_latex_block
-from tools.latex_inject import inject_latex_block
-from docs._common import conf_common
 
-print("🧩 Step 1: 注入 LaTeX 样式 …")
-# 调用 inject_latex_block 注入样式
-inject_latex_block(
-    conf_path=CONF_PATH,
-    model_name=MODEL,
-    version=VERSION,
-    doc_type=DOC_TYPE,
-    author=AUTHOR,
-    company=conf_common.COMPANY_NAME,
-    zh_font=conf_common.get_fonts()["zh_font"],
-    mono_font=conf_common.get_fonts()["mono_font"],
-    date_cn=conf_common.get_date_cn(),
-)
-print("✅ LaTeX 样式注入完成。")
+def clean_latex_dir(pdf_dir: Path):
+    """
+    彻底清理所有旧构建文件，避免 xelatex 引用历史垃圾文件。
+    绝不保留任何旧的 tex/aux/log/index 文件。
+    """
+    exts = [
+        ".aux", ".log", ".toc", ".out", ".idx",
+        ".ind", ".ilg", ".lof", ".lot", ".fls", ".fdb_latexmk",
+        ".tex"  # 🔥 关键：清除旧 tex（防止 projectnamenotset.tex 残留）
+    ]
+    for f in pdf_dir.iterdir():
+        if f.suffix.lower() in exts:
+            f.unlink()
 
-print("🧩 Step 2: 构建 Sphinx → LaTeX …")
-# 构建 LaTeX 输出
-subprocess.run(["sphinx-build", "-b", "latex", str(PROJECT_DIR), str(LATEX_DIR)], check=True)
 
-print("🧩 Step 3: 编译 XeLaTeX …")
-# 进入 LATEX_DIR 执行 XeLaTeX 编译
-os.chdir(LATEX_DIR)
-tex_main = next(LATEX_DIR.glob("*.tex"))
-for i in range(2):
-    print(f"🌀 XeLaTeX 第 {i+1}/2 轮 …")
-    subprocess.run(["xelatex", "-interaction=nonstopmode", tex_main.name], check=True)
+def copy_static_assets():
+    """
+    只拷贝图片与必要资源，不拷贝任何 .tex 文件！！！
+    否则 xelatex 会误当它们是主文件。
+    """
+    target = PATHS["build_pdf"] / "latex"
+    target.mkdir(parents=True, exist_ok=True)
 
-print("🧩 Step 4: 拷贝 PDF …")
-# 输出生成的 PDF 文件
-version_label = VERSION.lstrip("vV")
-out_pdf = PDF_DIR / f"Neoway_{MODEL}_{DOC_TYPE}_V{version_label}.pdf".replace(" ", "_")
-pdfs = sorted(LATEX_DIR.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
-if pdfs:
-    shutil.copy2(pdfs[0], out_pdf)  # 使用 shutil.copy2 复制文件
-    print(f"🎉 成功生成 PDF：{out_pdf}")
-else:
-    print("❌ 未生成 PDF，请检查 LaTeX 日志。")
+    latex_dir = PATHS["latex"]
+    static_dir = PATHS["images"]
+
+    # 允许的资源（图片 / 样式），禁止复制任何 .tex！
+    allowed_suffix = [".png", ".jpg", ".jpeg", ".pdf", ".sty", ".cls"]
+
+    if latex_dir.exists():
+        for file in latex_dir.iterdir():
+            if file.is_file() and file.suffix.lower() in allowed_suffix:
+                shutil.copy(file, target)
+
+    if static_dir.exists():
+        for file in static_dir.iterdir():
+            if file.is_file() and file.suffix.lower() in allowed_suffix:
+                shutil.copy(file, target)
+
+
+# ---------------------------------------------------------
+# 主构建流程
+# ---------------------------------------------------------
+def build_pdf(model, version, doc_type, author):
+
+    print("\n============================")
+    print("🚀 开始构建 PDF")
+    print("============================\n")
+
+    # ① 生成封面 cover.tex（模板 cover_template.tex.j2）
+    cover_path = render_cover(model, version, doc_type)
+    print("✔ 已生成封面：", cover_path)
+
+    # ② 加载 LaTeX 样式（字体、公司名等）
+    styles = load_latex_styles()
+
+    # ③ 注入 LaTeX block 到 conf.py
+    conf_path = PATHS["rst_source"] / "conf.py"
+    inject_latex_block(conf_path, model, version, doc_type, author, styles)
+    print("✔ 已完成 LaTeX 样式注入")
+
+    # ④ 构建 latex build 目录
+    latex_build_dir = PATHS["build_pdf"] / "latex"
+    latex_build_dir.mkdir(parents=True, exist_ok=True)
+
+    # 🔥 清理所有旧 latex 文件，确保目录干净
+    clean_latex_dir(latex_build_dir)
+
+    # 拷贝字体 + 图片资源（不复制 .tex）
+    copy_static_assets()
+    print("✔ 已自动复制字体与图片资源")
+
+    # ⑤ 使用 Sphinx 构建 LaTeX
+    run_cmd(
+        [
+            "sphinx-build",
+            "-b", "latex",
+            str(PATHS["rst_source"]),
+            str(latex_build_dir),
+        ]
+    )
+
+    # ⑥ 明确锁定主 tex 文件：Neoway_{model}_Manual.tex
+    main_tex_name = f"Neoway_{model}_Manual.tex"
+    tex_file = latex_build_dir / main_tex_name
+
+    if not tex_file.exists():
+        available = [p.name for p in latex_build_dir.glob("*.tex")]
+        raise FileNotFoundError(
+            f"❌ 主 TeX 文件不存在：{main_tex_name}\n"
+            f"📄 当前目录的 tex 文件有：{available}"
+        )
+
+    print(f"✔ 检测到主 tex 文件：{tex_file.name}")
+
+    print("\n== LaTeX → PDF 编译中 ==")
+
+    # =========== ⑦ 三次编译 ===========
+    # pass 1
+    run_cmd(["xelatex", "-interaction=nonstopmode", tex_file.name], cwd=latex_build_dir)
+
+    # makeindex（避免 .ind 缺失报错）
+    idx_file = tex_file.with_suffix(".idx")
+    if idx_file.exists():
+        run_cmd(["makeindex", idx_file.name], cwd=latex_build_dir)
+
+    # pass 2
+    run_cmd(["xelatex", "-interaction=nonstopmode", tex_file.name], cwd=latex_build_dir)
+
+    # pass 3
+    run_cmd(["xelatex", "-interaction=nonstopmode", tex_file.name], cwd=latex_build_dir)
+
+    # ⑧ 复制最终 PDF
+    final_pdf = tex_file.with_suffix(".pdf")
+    output_pdf = PATHS["build_pdf"] / f"Neoway_{model}_{doc_type.replace(' ', '_')}.pdf"
+    output_pdf.write_bytes(final_pdf.read_bytes())
+
+    print(f"\n🎉 PDF 构建成功：{output_pdf}\n")
+
+
+# ---------------------------------------------------------
+# CLI 测试入口
+# ---------------------------------------------------------
+if __name__ == "__main__":
+    build_pdf(
+        model="N706B",
+        version="v1.0",
+        doc_type="AT_Command_Manual",
+        author="Neoway Documentation Team",
+    )
