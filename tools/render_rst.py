@@ -5,27 +5,42 @@ from datetime import datetime
 from pathlib import Path
 import json
 import sys
+import yaml
+
+# 加载 config.yaml 配置文件
+def load_config():
+    with open('config.yaml', 'r') as file:
+        return yaml.load(file, Loader=yaml.FullLoader)
+
+# 获取配置
+config = load_config()
 
 # === 自动加入项目根目录 ===
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(config['root']).resolve()  # 确保 ROOT 是实际路径
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from paths import PATHS
-
+# 使用 config.yaml 中的路径设置
 PROJECT_NAME = "Neoway AT 命令手册"
 VERSION = "v1.4"
 AUTHOR = "文档工程组"
 DATE = datetime.now().strftime("%Y-%m-%d")
 
-PROJECT_ROOT = PATHS["root"]
-CSV_PATH     = PATHS["csv_input"] / "at_N706B.csv"
-ROOT_DIR     = PROJECT_ROOT / "docs" / "N706B" / "source"
-OUTPUT_DIR   = ROOT_DIR
-TEMPLATE_DIR = PROJECT_ROOT / "docs" / "_common" / "templates"
+# 获取产品线配置
+product_line = config['default_product_line']
+
+# 从 config.yaml 中读取路径
+PROJECT_ROOT = Path(config['root']).resolve()
+CSV_PATH = Path(config['csv_input']) / "at_N706B.csv"  # 获取 CSV 路径
+
+# 获取产品线的路径配置
+ROOT_DIR = Path(config['product_lines'][product_line]['rst_source']).resolve()  # 获取文档源路径
+OUTPUT_DIR = Path(config['product_lines'][product_line]['build_pdf']).resolve()  # 获取输出目录路径
+TEMPLATE_DIR = Path(config['templates']).resolve()  # 获取模板目录路径
+
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
+env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))  # 加载 Jinja2 模板
 env.globals.update(max=max, min=min, len=len)
 
 # === ★★★ 修复 metadata 的主 index 模板（其他不变） ★★★
@@ -68,7 +83,7 @@ chapter_index_tmpl = env.from_string("""
 {% endfor %}
 """.strip())
 
-cmd_tmpl = env.get_template("command_page.j2")
+cmd_tmpl = env.get_template("command_page.j2")  # 获取命令模板
 
 # === 读取CSV ===
 df = pd.read_csv(CSV_PATH, dtype=str).fillna("")
