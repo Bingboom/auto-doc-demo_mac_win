@@ -2,14 +2,21 @@
 import re
 from pathlib import Path
 import sys
+import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+# 加载 config.yaml 配置文件
+def load_config():
+    with open('config.yaml', 'r') as file:
+        return yaml.load(file, Loader=yaml.FullLoader)
 
+# 获取配置
+config = load_config()
+
+# 使用 config.yaml 中的路径设置
+ROOT = Path(config['root']).resolve()  # 获取项目根目录
+LATEX_DIR = Path(config['latex']).resolve()  # 获取 LaTeX 配置路径
 
 def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type: str, author: str, styles: dict):
-
     tex_filename = f"Neoway_{model_name}_Manual.tex"
     title = f"Neoway {model_name} {doc_type}"
 

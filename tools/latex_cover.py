@@ -1,24 +1,26 @@
-# tools/latex_cover.py
 from jinja2 import Template
 from datetime import datetime
 from pathlib import Path
-import sys
+import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+# 加载 config.yaml 配置文件
+def load_config():
+    with open('config.yaml', 'r') as file:
+        return yaml.load(file, Loader=yaml.FullLoader)
 
-from paths import PATHS
+# 获取配置
+config = load_config()
 
+# 使用 config.yaml 中的路径设置
+ROOT = Path(config['root']).resolve()  # 获取项目根目录
+LATEX_DIR = Path(config['latex']).resolve()  # 获取 LaTeX 配置路径
 
 def render_cover(model_name: str, version: str, doc_type: str):
     """
     使用 Jinja2 渲染封面模板：cover_template.tex.j2 → cover.tex
     """
-    latex_dir = PATHS["latex"]
-
-    template_path = latex_dir / "cover_template.tex.j2"
-    output_path = latex_dir / "cover.tex"
+    template_path = LATEX_DIR / "cover_template.tex.j2"
+    output_path = LATEX_DIR / "cover.tex"
 
     version_tag = "V" + version.lstrip("vV")
     date_cn = datetime.now().strftime("%Y年%m月%d日")

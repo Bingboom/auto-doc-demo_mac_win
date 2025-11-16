@@ -1,26 +1,28 @@
-# tools/latex_styles.py
 from pathlib import Path
 import sys
+import yaml
 
-# 自动将项目根目录加入 sys.path
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+# 加载 config.yaml 配置文件
+def load_config():
+    with open('config.yaml', 'r') as file:
+        return yaml.load(file, Loader=yaml.FullLoader)
 
-from paths import PATHS
+# 获取配置
+config = load_config()
 
+# 使用 config.yaml 中的路径设置
+ROOT = Path(config['root']).resolve()  # 获取项目根目录
+LATEX_DIR = Path(config['latex']).resolve()  # 获取 LaTeX 配置路径
 
 def load_latex_styles():
     """
     加载 docs/_common/latex/ 目录中的 LaTeX 模板。
     """
-    latex_dir = PATHS["latex"]
-
     template_files = {
-        "fontpkg": latex_dir / "fonts.tex",
-        "preamble": latex_dir / "base_preamble.tex",
-        "headerfooter": latex_dir / "headerfooter.tex",
-        "cover": latex_dir / "cover.tex",
+        "fontpkg": LATEX_DIR / "fonts.tex",
+        "preamble": LATEX_DIR / "base_preamble.tex",
+        "headerfooter": LATEX_DIR / "headerfooter.tex",
+        "cover": LATEX_DIR / "cover.tex",
     }
 
     styles = {}
