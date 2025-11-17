@@ -1,64 +1,45 @@
 # tools/latex_injector.py
 import re
 from pathlib import Path
-import sys
-import yaml
 
-# 加载 config.yaml 配置文件
-def load_config():
-    with open('config.yaml', 'r') as file:
-        return yaml.load(file, Loader=yaml.FullLoader)
+from utils.path_utils import latex_common_path
 
-# 获取配置
-config = load_config()
+LATEX_DIR = latex_common_path()
 
-# 使用 config.yaml 中的路径设置
-ROOT = Path(config['root']).resolve()  # 获取项目根目录
-LATEX_DIR = Path(config['latex']).resolve()  # 获取 LaTeX 配置路径
+def inject_latex_block(conf_path: Path, model: str, version: str, doc_type: str, author: str, styles: dict):
 
-def inject_latex_block(conf_path: Path, model_name: str, version: str, doc_type: str, author: str, styles: dict):
-    tex_filename = f"Neoway_{model_name}_Manual.tex"
-    title = f"Neoway {model_name} {doc_type}"
+    tex_filename = f"Neoway_{model}_Manual.tex"
+    title = f"Neoway {model} {doc_type}"
 
     conf_text = conf_path.read_text(encoding="utf-8")
 
-    marker_begin = "# >>> AUTO_LATEX_BEGIN"
-    marker_end = "# <<< AUTO_LATEX_END"
+    begin = "# >>> AUTO_LATEX_BEGIN"
+    end = "# <<< AUTO_LATEX_END"
 
     conf_text = re.sub(
-        rf"{re.escape(marker_begin)}.*?{re.escape(marker_end)}",
+        rf"{re.escape(begin)}.*?{re.escape(end)}",
         "",
         conf_text,
         flags=re.DOTALL
     )
 
-    # ===== 移除 openright blank page =====
-    remove_openright_blank_patch = r"""
-% ===== Neoway Patch: remove blank pages from openright =====
+    remove_blank_pages = r"""
 \makeatletter
 \let\origcleardoublepage\cleardoublepage
 \renewcommand{\cleardoublepage}{\clearpage}
 \makeatother
 """
 
-    # ===== TOC 使用用户 headerfooter.tex 内定义的 plain 样式 =====
-    fix_toc_header_patch = r"""
-% ===== Neoway Patch: force TOC to use headerfooter.tex plain style =====
+    force_plain_toc = r"""
 \AtBeginDocument{
     \addtocontents{toc}{\protect\thispagestyle{plain}}
 }
 """
 
-    patched_preamble = (
-        styles["preamble_full"].rstrip()
-        + "\n"
-        + remove_openright_blank_patch
-        + "\n"
-        + fix_toc_header_patch
-    )
+    preamble_full = styles["preamble_full"] + "\n" + remove_blank_pages + "\n" + force_plain_toc
 
     block = f"""
-{marker_begin}
+{begin}
 
 latex_engine = "xelatex"
 
@@ -68,12 +49,12 @@ latex_documents = [
 
 latex_elements = {{
     "fontpkg": r\"\"\"{styles['fontpkg']}\"\"\",
-    "preamble": r\"\"\"{patched_preamble}\"\"\",
+    "preamble": r\"\"\"{preamble_full}\"\"\",
     "maketitle": r\"\"\"{styles['cover']}\"\"\",
 }}
 
-{marker_end}
+{end}
 """
 
     conf_path.write_text(conf_text.rstrip() + "\n\n" + block, encoding="utf-8")
-    print(f"✔ 已注入 LaTeX 样式（headerfooter 完全接管）: {conf_path}")
+    print(f"✔ 已注入 LaTeX 样式：{conf_path}")
