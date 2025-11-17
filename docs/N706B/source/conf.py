@@ -1,186 +1,59 @@
-latex_elements = {
-    "fontpkg": r"""% ===== LaTeX 字体统一配置 =====
-\usepackage{xeCJK}
-\setCJKmainfont{PingFang SC}
-\setCJKsansfont{PingFang SC}
-\setCJKmonofont{PingFang SC}
+# ==========================================
+#   Neoway N706B Sphinx Configuration
+# ==========================================
+from pathlib import Path
+import sys
 
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
-""",
-    "preamble": r"""% docs/_common/latex/base_preamble.tex
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{eso-pic}
-\usepackage{xcolor}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{hyperref}
-\usepackage[a4paper, left=1in, right=1in, top=1in, bottom=1in]{geometry}
+# -------------------------------------------------------------------
+# 1. 项目根目录
+# -------------------------------------------------------------------
+THIS_DIR = Path(__file__).resolve().parent
+# docs/N706B/source → docs/N706B → docs → auto-doc-demo_mac_win
+PROJECT_ROOT = THIS_DIR.parents[2]
 
-% 页眉页脚设置
-\setlength{\headheight}{24pt}
-\setlength{\headsep}{12pt}
+# 给 Sphinx 加可访问的工具路径
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue,
-  pdfborder={0 0 0}
-}
+# -------------------------------------------------------------------
+# 2. 导入路径模块（由 path_utils 控制所有路径）
+# -------------------------------------------------------------------
+import tools.utils.path_utils as paths
 
-\usetikzlibrary{positioning,calc}
+# 让 conf_common.py 可访问 paths 模块
+globals()["paths"] = paths
 
-% 设置背景图和封面样式
-\usepackage{fancyhdr}
-\pagestyle{fancy}
+# -------------------------------------------------------------------
+# 3. 继承公共配置
+# -------------------------------------------------------------------
+COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
+if not COMMON_CONF.exists():
+    raise FileNotFoundError(f"[FATAL] Missing common config: {COMMON_CONF}")
 
-\setlength{\headheight}{20pt}
-\setlength{\headsep}{12pt}
+exec(COMMON_CONF.read_text(encoding="utf-8"))
 
+# -------------------------------------------------------------------
+# 4. 产品线专属信息
+# -------------------------------------------------------------------
+PRODUCT = "N706B"
+CONF = paths.product_conf(PRODUCT)
 
-""",
-    "maketitle": r"""% -------- Neoway 文档封面 --------
-\thispagestyle{empty}
-\pagenumbering{gobble}
-
-\begin{titlepage}
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
-  \end{tikzpicture}
-\clearpage
-\pagenumbering{roman}
-""",
-}
-
-
-# >>> AUTO_LATEX_BEGIN
-
-latex_engine = "xelatex"
+project = f"Neoway {PRODUCT} AT Command Manual"
+author = "Neoway Technology"
+html_title = project
 
 latex_documents = [
-    ('index', 'Neoway_N706B_Manual.tex', 'Neoway N706B AT_Command_Manual', 'Neoway Documentation Team', 'manual')
+    (
+        "index",
+        f"Neoway_{PRODUCT}_Manual.tex",
+        project,
+        author,
+        "manual",
+    )
 ]
 
-latex_elements = {
-    "fontpkg": r"""% ===== Neoway LaTeX 字体统一配置 =====
-\usepackage{xeCJK}
-\setCJKmainfont{PingFang SC}
-\setCJKsansfont{PingFang SC}
-\setCJKmonofont{PingFang SC}
-
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
-""",
-    "preamble": r"""% docs/_common/latex/base_preamble.tex
-% 只负责通用包 + 超链接设置，不再引入 geometry，不定义页眉页脚
-
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{eso-pic}
-\usepackage{xcolor}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{hyperref}
-
-% 头部高度
-\setlength{\headheight}{24pt}
-\setlength{\headsep}{12pt}
-
-% 超链接样式
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue,
-  pdfborder={0 0 0}
-}
-
-% 让 TikZ 背景图可用
-\usetikzlibrary{positioning,calc}
-
-% docs/_common/latex/headerfooter.tex
-
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-
-\setlength{\headheight}{20pt}
-\setlength{\headsep}{12pt}
-
-% 左上角 LOGO 命令
-\newcommand{\neowayheaderlogo}{%
-  \includegraphics[height=14pt]{header-logo.png}
-}
-
-% 正常页面样式
-\fancypagestyle{normal}{
-    \fancyhf{}
-    \fancyhead[L]{\neowayheaderlogo}
-    \fancyhead[R]{\nouppercase{\leftmark}}
-    \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}
-    \fancyfoot[R]{\thepage}
-    \renewcommand{\headrulewidth}{0.4pt}
-    \renewcommand{\footrulewidth}{0.4pt}
-}
-
-% plain：用于 TOC / Chapter 起始页
-\fancypagestyle{plain}{
-    \fancyhf{}
-    \fancyhead[L]{\neowayheaderlogo}
-    \fancyhead[R]{}
-    \fancyfoot[L]{深圳市有方科技股份有限公司 版权所有}
-    \fancyfoot[R]{\thepage}
-    \renewcommand{\headrulewidth}{0.4pt}
-    \renewcommand{\footrulewidth}{0.4pt}
-}
-
-% 默认页式
-\pagestyle{normal}
-
-% ===== Neoway Patch: remove blank pages from openright =====
-\makeatletter
-\let\origcleardoublepage\cleardoublepage
-\renewcommand{\cleardoublepage}{\clearpage}
-\makeatother
-
-
-% ===== Neoway Patch: force TOC to use headerfooter.tex plain style =====
-\AtBeginDocument{
-    \addtocontents{toc}{\protect\thispagestyle{plain}}
-}
-""",
-    "maketitle": r"""% -------- Neoway 文档封面 --------
-\thispagestyle{empty}
-\pagenumbering{gobble}
-
-\begin{titlepage}
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
-  \end{tikzpicture}
-
-  % 控制顶部间距
-  \vspace*{6cm}  % 根据需要微调顶部间距
-
-  % 使用 hspace* 来强制将 N706B 向左对齐
-  \begin{flushleft}
-    \hspace*{-0.4cm}  % 强制水平向左偏移
-    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }} % 修改字体
-    \vskip 0.8cm  % 控制标题和副标题之间的垂直间距
-
-    {\fontsize{28}{32}\selectfont AT Commands Manual}
-    \vskip 0.5cm  % 控制标题和日期之间的垂直间距
-
-    {\large Issue 1.2 \hspace{1em} Date 2025-08-13}
-  \end{flushleft}
-\end{titlepage}
-
-\clearpage
-\pagenumbering{roman}""",
-}
-
-# <<< AUTO_LATEX_END
+# -------------------------------------------------------------------
+# 5. 输出路径（来自 config.yaml）
+# -------------------------------------------------------------------
+html_output = paths.build_html_path(PRODUCT)
+latex_output = paths.build_pdf_path(PRODUCT)

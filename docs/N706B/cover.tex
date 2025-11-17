@@ -1,0 +1,28 @@
+% -------- Neoway文档封面 --------
+\thispagestyle{empty}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north west, inner sep=0pt] at (current page.north west)
+  {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{background.png}};
+\end{tikzpicture}
+
+\vspace*{6cm}
+
+\begin{flushleft}
+  \hspace*{-0.4cm}
+  {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{N706B}}
+  \vskip 0.8cm
+
+  {\fontsize{28}{32}\selectfont AT Commands Manual}
+  \vskip 0.5cm
+
+  {\large Issue 1.2 \hspace{1em} Date 2025-08-13}
+\end{flushleft}
+
+\end{titlepage}
+
+\clearpage
+\pagenumbering{roman}
