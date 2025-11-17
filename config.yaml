@@ -1,29 +1,29 @@
 # config.yaml
 
 # 仓库根目录
-root: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win" # 替换为实际路径
+root: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win" # 替换为实际路径
 
 # 工具目录
-tools: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/tools" # 修正为实际路径
+tools: "Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/tools" # 修正为实际路径
 
 # CSV 输入目录
-csv_input: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/csv-input" # 修正为实际路径
+csv_input: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/csv-input" # 修正为实际路径
 
 # CSV2rst templates
-templates: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/templates" # 修正为实际路径
+templates: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/_common/templates" # 修正为实际路径
 
 # Sphinx 相关目录
-docs: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs" # 修正为实际路径
+docs: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs" # 修正为实际路径
 
-latex: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/latex_templates" # 修正为实际路径
-images: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/_static" # 修正为实际路径
+latex: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/_common/latex_templates" # 修正为实际路径
+images: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/_common/_static" # 修正为实际路径
 
 # 产品线配置
 product_lines:
   N706B:
-    rst_source: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/N706B/source" # 修正为实际路径
-    build_html: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/N706B/build/html" # 修正为实际路径
-    build_pdf: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/N706B/build/pdf" # 修正为实际路径
+    rst_source: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/N706B/source" # 修正为实际路径
+    build_html: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/N706B/build/html" # 修正为实际路径
+    build_pdf: "/Users/ahs/Documents/building-docs/auto-doc-demo_mac_win/docs/N706B/build/pdf" # 修正为实际路径
   N725:
     rst_source: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/N725/source" # 修正为实际路径
     build_html: "/Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/N725/build/html" # 修正为实际路径
