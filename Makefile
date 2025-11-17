@@ -1,8 +1,21 @@
-.PHONY: pdf all
+PYTHON = python3
 
-pdf:
-	python tools/build_docs.py N706B zh_CN
+help:
+	@echo "make all        # 构建全部 model × 全语言"
+	@echo "make html       # 同上"
+	@echo "make pdf        # 同上"
 
 all:
-	python tools/build_docs.py N706B zh_CN
-	python tools/build_docs.py N725 zh_CN
+	$(PYTHON) tools/build_docs.py
+
+html:
+	$(PYTHON) tools/build_docs.py
+
+pdf:
+	$(PYTHON) tools/build_docs.py
+
+# 单产品单语言调试命令
+# 例如：
+#    make build PRODUCT=N706B LANG=zh_CN
+build:
+	$(PYTHON) tools/build_docs.py $(PRODUCT) $(LANG)
