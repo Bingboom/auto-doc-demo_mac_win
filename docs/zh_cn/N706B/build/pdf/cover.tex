@@ -1,0 +1,25 @@
+\thispagestyle{empty}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west] at (current page.north west)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
+  \end{tikzpicture}
+
+  \vspace*{6cm}
+
+  \begin{flushleft}
+    {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ N706B }}
+    \vskip 1cm
+
+    {\fontsize{28}{32}\selectfont AT命令手册}
+    \vskip 0.6cm
+
+    {\large Issue 1.0 \hspace{2em} Date 2025-11-18}
+  \end{flushleft}
+
+\end{titlepage}
+
+\clearpage
+\pagenumbering{roman}
