@@ -1,4 +1,7 @@
-LANG_INFO = {
-    "lang": "en",
-    "manual_title": "{product} AT Commands Manual",
-}
+# ====================================
+# Language: en
+# ====================================
+
+PROJECT_TITLE = "AT Commands Manual"
+ISSUE = "1.0"
+DATE = "2025-11-18"
