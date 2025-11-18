@@ -41,7 +41,7 @@ exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 # ---------------------------------------------------------
 PRODUCT = "N706B"
 
-project = f"AT Commands Manual"
+project = f"AT命令手册"
 author = "Neoway Technology"
 html_title = project
 

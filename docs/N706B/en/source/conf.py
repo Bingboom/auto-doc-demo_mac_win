@@ -39,9 +39,9 @@ exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 # ---------------------------------------------------------
 # 5. 产品信息（保持你的原逻辑）
 # ---------------------------------------------------------
-PRODUCT = "NN706BB"
+PRODUCT = "N706B"
 
-project = f"Neoway {PRODUCT} AT Command Manual"
+project = f"AT Commands Manual"
 author = "Neoway Technology"
 html_title = project
 
@@ -54,3 +54,31 @@ latex_documents = [
         "manual",
     )
 ]
+
+# ---------------------------------------------------------
+# 6. 渲染封面 cover.tex（自动根据产品变量生成）
+# ---------------------------------------------------------
+from jinja2 import Template
+
+template_path = paths.latex_common_path() / "cover_template.tex.j2"
+output_path   = paths.latex_common_path() / "cover.tex"
+
+# 让 cover 支持不同产品和语言
+issue = "1.0"            # 如需可从 config.yaml 读
+date  = "2025-11-18"     # 如需可从 config.yaml 读
+
+variables = {
+    "product": PRODUCT,
+    "title": project,
+    "issue": issue,
+    "date": date,
+}
+
+with open(template_path, "r", encoding="utf-8") as f:
+    template = Template(f.read())
+
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(template.render(**variables))
+
+print(f"[COVER] 渲染封面完成 → {output_path}")
+
