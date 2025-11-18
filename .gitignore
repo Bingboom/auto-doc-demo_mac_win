@@ -59,7 +59,6 @@ auto_doc_output/
 # 📄 LaTeX Cover/Header/Footer Workflow
 ###############################################################################
 # Your auto-doc latex injector output
-*.pdf
 *.temp.tex
 *.patched.tex
 *_patched.tex
