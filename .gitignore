@@ -1,3 +1,5 @@
 # Python virtual environments
 .venv/
 venv/
+docs/zh_cn/*/build/
+docs/en/*/build/
