@@ -1,24 +1,22 @@
-% -------- Neoway 文档封面（Jinja2 模板版本）--------
 \thispagestyle{empty}
 \pagenumbering{gobble}
 
 \begin{titlepage}
   \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=north west, inner sep=0pt] at (current page.north west)
+    \node[anchor=north west] at (current page.north west)
       {\includegraphics[width=\paperwidth,height=\paperheight]{background.png}};
   \end{tikzpicture}
 
   \vspace*{6cm}
 
   \begin{flushleft}
-    \hspace*{-0.4cm}
     {\color[HTML]{70AD47}\fontsize{42}{48}\selectfont \textbf{ {{ product }} }}
-    \vskip 0.8cm
+    \vskip 1cm
 
     {\fontsize{28}{32}\selectfont {{ title }}}
-    \vskip 0.5cm
+    \vskip 0.6cm
 
-    {\large Issue {{ issue }} \hspace{1em} Date {{ date }}}
+    {\large Issue {{ issue }} \hspace{2em} Date {{ date }}}
   \end{flushleft}
 
 \end{titlepage}

@@ -2,7 +2,7 @@
 # Neoway Sphinx 通用配置（paths 由 conf.py 注入）
 # ==========================================
 
-# ---------- 路径（保持原逻辑） ----------
+# ---------- 路径（保持原逻辑，来自 path_utils） ----------
 common_templates_path = paths.common_templates()
 common_static_path    = paths.static_images_path()
 common_latex_path     = paths.latex_common_path()
@@ -19,44 +19,51 @@ html_static_path = [str(common_static_path)]
 # ==========================================
 #   Language Support (zh_CN / en)
 # ==========================================
-# conf.py 会注入变量：LANG
-# 默认 zh_CN
+# conf.py 注入变量 LANG
 LANG = globals().get("LANG", "zh_CN")
 
 IS_CHINESE = LANG.lower() in ("zh_cn", "zh-hans")
 
 
 # ==========================================
-#   LaTeX 配置（按你的逻辑，保持资源不变）
+#   LaTeX 资源（保持你的原文件结构）
 # ==========================================
 latex_additional_files = [
     str(common_latex_path / "cover.tex"),
     str(common_latex_path / "fonts.tex"),
     str(common_latex_path / "headerfooter.tex"),
 
+    # 静态资源（保持不变）
     str(common_static_path / "background.png"),
     str(common_static_path / "header-logo.png"),
 ]
 
 
-# ---------- 区分中英的字体逻辑 ----------
+# ==========================================
+# 字体逻辑（不丢失你的中文字体方案）
+# ==========================================
 if IS_CHINESE:
+    # 使用你仓库中 fonts.tex（提供中文字体）
     fontpkg = r"\input{fonts.tex}"
 else:
-    # 英文环境下不用加载中文字体避免报错
+    # 英文模式采用原生系统字体
     fontpkg = r"""
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 """
-    
+
+
 # ==========================================
-# 禁用 Sphinx 默认 maketitle，确保只有你的封面
+# 关键：禁用默认 maketitle，使用 cover.tex
 # ==========================================
 latex_elements = {
     "fontpkg": fontpkg,
 
     "preamble": r"""
+    % ===== Header & Footer =====
     \input{headerfooter.tex}
+
+    % ===== Extra Packages =====
     \usepackage{tikz}
     \usepackage{eso-pic}
     \usepackage{graphicx}
@@ -67,5 +74,6 @@ latex_elements = {
     \makeatother
     """,
 
+    # -------- 使用你提供的封面 cover.tex --------
     "maketitle": r"\input{cover.tex}",
 }

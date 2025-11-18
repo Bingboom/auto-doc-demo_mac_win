@@ -43,7 +43,7 @@ DATE = datetime.now().strftime("%Y-%m-%d")
 CSV_DIR = csv_path(PRODUCT)
 CSV_FILE = CSV_DIR / "at_{}.csv".format(PRODUCT)
 
-RST_OUT_DIR = rst_source_path(PRODUCT)
+RST_OUT_DIR = rst_source_path(PRODUCT, "zh_CN")
 TEMPLATE_DIR = common_templates()
 
 RST_OUT_DIR.mkdir(parents=True, exist_ok=True)

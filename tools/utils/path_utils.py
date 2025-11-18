@@ -26,7 +26,7 @@ config, ROOT = load_config()
 
 
 # ============================================================
-# 公共资源路径（保持原样）
+# 公共资源
 # ============================================================
 def common_templates():
     return ROOT / config["common"]["templates"]
@@ -39,69 +39,37 @@ def latex_common_path():
 
 
 # ============================================================
-# 产品配置（保持原样）
+# 产品配置读取
 # ============================================================
 def product_conf(product: str):
     return config["products"][product]
 
-def get_default_product():
-    return config["default_product"]
-
 
 # ============================================================
-# 语言注入器（精确插入在产品名后）
-#   示例：
-#     docs/N706B/source      → docs/N706B/zh_CN/source
-#     docs/N706B/build/html  → docs/N706B/zh_CN/build/html
+# 语言优先路径渲染
 # ============================================================
-def _inject_lang_for_product(path_str: str, product: str, lang: str) -> Path:
-    p = ROOT / path_str
-
-    # 若路径已经包含语言目录则直接返回
-    if "zh_CN" in p.parts or "en" in p.parts:
-        return p
-
-    parts = list(p.parts)
-
-    # 找到产品名在路径中的位置
-    try:
-        idx = parts.index(product)
-    except ValueError:
-        # 找不到产品名（不应该出现），回退原逻辑
-        return p.parent / lang / p.name
-
-    # 在产品名后插入语言层
-    insert_pos = idx + 1
-    parts.insert(insert_pos, lang)
-
-    return Path(*parts)
+def _render_lang_path(template: str, product: str, lang: str) -> Path:
+    """将 docs/{lang}/N706B/source 这种模板渲染为真实路径"""
+    path_str = template.format(lang=lang)
+    return ROOT / path_str
 
 
-# ============================================================
-# 多语言路径函数（正式版）
-# ============================================================
 def rst_source_path(product: str, lang: str = "zh_CN") -> Path:
-    base = product_conf(product)["source"]
-    return _inject_lang_for_product(base, product, lang)
+    return _render_lang_path(product_conf(product)["source"], product, lang)
 
 def build_html_path(product: str, lang: str = "zh_CN") -> Path:
-    base = product_conf(product)["build_html"]
-    return _inject_lang_for_product(base, product, lang)
+    return _render_lang_path(product_conf(product)["build_html"], product, lang)
 
 def build_pdf_path(product: str, lang: str = "zh_CN") -> Path:
-    base = product_conf(product)["build_pdf"]
-    return _inject_lang_for_product(base, product, lang)
+    return _render_lang_path(product_conf(product)["build_pdf"], product, lang)
 
 
 # ============================================================
-# CSV 路径（保持原样，不依赖语言）
+# CSV 路径
 # ============================================================
 def csv_path(product: str) -> Path:
     return ROOT / product_conf(product)["csv"]
 
-
-# ============================================================
-# tools 根路径
-# ============================================================
-def tools_root():
-    return ROOT / config["tools_root"]
+# 默认产品
+def get_default_product():
+    return config.get("default_product")

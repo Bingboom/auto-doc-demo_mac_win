@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # =============================================================
-# Neoway auto-doc | Safe Universal Builder (models × languages)
+# Neoway auto-doc | Universal Builder (products × languages)
 # =============================================================
 from pathlib import Path
 import subprocess
@@ -8,17 +8,19 @@ import sys
 import shutil
 
 # -------------------------------------------------------------
-# 1. 强制定位仓库根目录（防止 Sphinx cwd 干扰）
+# 1. 强制定位仓库根目录
 # -------------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[2]     # auto-doc-demo_mac_win/
-TOOLS_ROOT   = THIS_FILE.parents[1]     # tools/
+PROJECT_ROOT = THIS_FILE.parents[2]
+TOOLS_ROOT   = THIS_FILE.parents[1]
 
-# 避免 import tools 失败
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(TOOLS_ROOT))
 
-import tools.utils.path_utils as paths
+# -------------------------------------------------------------
+# 引入 path_utils
+# -------------------------------------------------------------
+from tools.utils import path_utils as paths
 
 ROOT = paths.ROOT
 CONF = paths.config
@@ -33,9 +35,9 @@ def run(cmd, cwd=None):
 
 
 def build_single(product: str, lang: str):
-    """构建单一产品 + 单一语言。不存在语言目录则自动跳过。"""
+    """匹配新目录结构：docs/<lang>/<product>/source/conf.py"""
 
-    conf_py = ROOT / f"docs/{product}/{lang}/source/conf.py"
+    conf_py = ROOT / f"docs/{lang}/{product}/source/conf.py"
 
     if not conf_py.exists():
         print(f"[SKIP] {product} [{lang}] - 未找到 {conf_py}")
@@ -51,71 +53,37 @@ def build_single(product: str, lang: str):
     pdf_out.mkdir(parents=True, exist_ok=True)
 
     # ---------------------------
-    # 1. HTML
+    # HTML
     # ---------------------------
-    run([
-        "sphinx-build",
-        "-b", "html",
-        str(source_dir),
-        str(html_out)
-    ])
+    run(["sphinx-build", "-b", "html", str(source_dir), str(html_out)])
 
     # ---------------------------
-    # 2. LaTeX（生成 tex 文件）
+    # LaTeX
     # ---------------------------
-    run([
-        "sphinx-build",
-        "-b", "latex",
-        str(source_dir),
-        str(pdf_out)
-    ])
+    run(["sphinx-build", "-b", "latex", str(source_dir), str(pdf_out)])
 
-    # ---------------------------
-    # 3. PDF（只编译主 Manual.tex）
-    # ---------------------------
-    tex_file = None
-    for t in pdf_out.glob("*.tex"):
-        if "Manual" in t.name:
-            tex_file = t
-            break
-
+    tex_file = next((t for t in pdf_out.glob("*.tex") if "Manual" in t.name), None)
     if not tex_file:
-        print(f"[WARN] {product} [{lang}] 未找到 *_Manual.tex，跳过 PDF 构建")
+        print(f"[WARN] 未找到 *_Manual.tex，跳过 PDF")
         return
 
-    print(f"[PDF] latexmk -xelatex {tex_file.name}")
-
-    run([
-        "latexmk",
-        "-xelatex",
-        tex_file.name
-    ], cwd=str(pdf_out))
-
     # ---------------------------
-    # 4. PDF 发布流程（重命名 + 复制到 output/pdf）
+    # 编译 PDF
     # ---------------------------
-    final_pdf = None
-    for f in pdf_out.glob("*.pdf"):
-        if "Manual" in f.name:
-            final_pdf = f
-            break
+    run(["latexmk", "-xelatex", tex_file.name], cwd=str(pdf_out))
 
+    final_pdf = next((f for f in pdf_out.glob("*.pdf") if "Manual" in f.name), None)
     if not final_pdf:
-        print(f"[WARN] {product} [{lang}] 未找到 PDF，跳过发布")
+        print(f"[WARN] 未生成 PDF")
         return
 
-    # 创建输出目录
     publish_dir = ROOT / "output" / "pdf"
     publish_dir.mkdir(parents=True, exist_ok=True)
 
-    # 目标文件名：Neoway_<Model>_<Lang>.pdf
     renamed = publish_dir / f"Neoway_{product}_{lang}.pdf"
-
-    print(f"[PUBLISH] {final_pdf.name} → {renamed}")
-
     shutil.copy2(final_pdf, renamed)
 
-    print(f"[OK] 完成 {product} [{lang}] 构建（HTML + PDF + 发布）")
+    print(f"[OK] {product} [{lang}] PDF → {renamed}")
 
 
 def build_all():

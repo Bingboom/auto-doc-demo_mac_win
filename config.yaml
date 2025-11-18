@@ -2,7 +2,7 @@
 # Unified Config for auto-doc
 # ============================
 
-root: . # 仓库根目录（相对路径，跨平台）
+root: .
 docs_root: docs
 csv_input_root: csv-input
 tools_root: tools
@@ -16,30 +16,14 @@ common:
   latex: docs/_common/latex_templates
 
 # -------------------------------------
-# 产品线配置（esp-docs best practice）
-# 每个产品必须包含 version
+# 产品线配置（LANGUAGE-FIRST）
 # -------------------------------------
 products:
   N706B:
     version: "1.0"
     csv: csv-input/N706B
-    source: docs/N706B
-    build_html: docs/N706B/build/html
-    build_pdf: docs/N706B/build/pdf
+    source: docs/{lang}/N706B/source
+    build_html: docs/{lang}/N706B/build/html
+    build_pdf: docs/{lang}/N706B/build/pdf
 
-  N725:
-    version: "1.0"
-    csv: csv-input/N725
-    source: docs/N725
-    build_html: docs/N725/build/html
-    build_pdf: docs/N725/build/pdf
-
-  N523:
-    version: "1.0"
-    csv: csv-input/N523
-    source: docs/N523
-    build_html: docs/N523/build/html
-    build_pdf: docs/N523/build/pdf
-
-# 默认产品线
 default_product: "N706B"
