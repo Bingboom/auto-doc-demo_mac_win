@@ -1,77 +1,84 @@
 # ==========================================
-# Neoway NN706BB 文档配置（en）
+# Neoway Sphinx Config (LANG from folder)
 # ==========================================
 from pathlib import Path
 import sys
 
 # ---------------------------------------------------------
-# 1. 定位仓库根目录：docs/NN706BB/en/source/conf.py
+# 1. 从路径解析语言与产品（docs/<lang>/<product>/source/conf.py）
 # ---------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[4]   # auto-doc-demo_mac_win/
 
-# 确保 tools/utils/path_utils 可以 import
+LANG    = THIS_FILE.parents[2].name    # zh_CN / en
+PRODUCT = THIS_FILE.parents[1].name    # N706B
+
+# ---------------------------------------------------------
+# 2. 定位仓库根目录
+# ---------------------------------------------------------
+PROJECT_ROOT = THIS_FILE.parents[4]     # auto-doc-demo_mac_win/
+
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # ---------------------------------------------------------
-# 2. 注入 paths（conf_common.py 会用）
+# 3. 加载路径工具（你当前仓库的 path_utils 完全兼容）
 # ---------------------------------------------------------
 import tools.utils.path_utils as paths
 globals()["paths"] = paths
 
 # ---------------------------------------------------------
-# 3. 注入语言（关键！）
+# 4. 加载语言配置文件 docs/_langs/<LANG>.py
 # ---------------------------------------------------------
-LANG = "en"
-globals()["LANG"] = LANG
+lang_file = PROJECT_ROOT / "docs" / "_langs" / f"{LANG}.py"
+
+if not lang_file.exists():
+    raise FileNotFoundError(f"Language config not found: {lang_file}")
+
+lang_namespace = {}
+exec(lang_file.read_text(encoding="utf-8"), lang_namespace)
+
+# 注入所有语言模块中的大写变量，如 TITLE / ISSUE / DATE
+for key, val in lang_namespace.items():
+    if key.isupper():
+        globals()[key] = val
+
+globals()["LANG"] = LANG   # 给 conf_common.py 使用
+
 
 # ---------------------------------------------------------
-# 4. 继承公共配置 docs/_common/conf_common.py
+# 5. 继承通用配置（你的原 conf_common.py）
 # ---------------------------------------------------------
 COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
-
-if not COMMON_CONF.exists():
-    raise FileNotFoundError(f"Missing common config: {COMMON_CONF}")
-
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 
-# ---------------------------------------------------------
-# 5. 产品信息（保持你的原逻辑）
-# ---------------------------------------------------------
-PRODUCT = "N706B"
 
-project = f"AT Commands Manual"
-author = "Neoway Technology"
-html_title = project
-
+# ---------------------------------------------------------
+# 6. latex_documents（标题字段来自语言文件）
+# ---------------------------------------------------------
 latex_documents = [
     (
         "index",
-        f"Neoway_N706B_Manual.tex",
-        project,
-        author,
+        f"Neoway_{PRODUCT}_Manual.tex",
+        PROJECT_TITLE,            # <-- 从语言文件注入
+        "Neoway Technology",
         "manual",
     )
 ]
 
+
 # ---------------------------------------------------------
-# 6. 渲染封面 cover.tex（自动根据产品变量生成）
+# 7. 渲染封面 cover.tex（语言文件提供 ISSUE、DATE、PROJECT_TITLE）
 # ---------------------------------------------------------
 from jinja2 import Template
 
 template_path = paths.latex_common_path() / "cover_template.tex.j2"
 output_path   = paths.latex_common_path() / "cover.tex"
 
-# 让 cover 支持不同产品和语言
-issue = "1.0"            # 如需可从 config.yaml 读
-date  = "2025-11-18"     # 如需可从 config.yaml 读
-
 variables = {
     "product": PRODUCT,
-    "title": project,
-    "issue": issue,
-    "date": date,
+    "title": PROJECT_TITLE,
+    "issue": ISSUE,
+    "date": DATE,
 }
 
 with open(template_path, "r", encoding="utf-8") as f:
@@ -81,4 +88,3 @@ with open(output_path, "w", encoding="utf-8") as f:
     f.write(template.render(**variables))
 
 print(f"[COVER] 渲染封面完成 → {output_path}")
-

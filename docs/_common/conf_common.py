@@ -52,14 +52,14 @@ else:
 \setmainfont{Times New Roman}
 """
 
+# <<< 添加：强制 sphinx 使用 xelatex >>>
+latex_engine = "xelatex"
+
 
 # ==========================================
 # 关键：禁用默认 maketitle，使用 cover.tex
 # ==========================================
-latex_elements = {
-    "fontpkg": fontpkg,
-
-    "preamble": r"""
+preamble = r"""
     % ===== Header & Footer =====
     \input{headerfooter.tex}
 
@@ -68,12 +68,40 @@ latex_elements = {
     \usepackage{eso-pic}
     \usepackage{graphicx}
 
-    % -------- 删除 maketitle 后多余空白页 --------
     \makeatletter
     \let\cleardoublepage\clearpage
     \makeatother
-    """,
+"""
 
-    # -------- 使用你提供的封面 cover.tex --------
+# 语言包提供 CHAPTER_FORMAT 时自动注入
+chapter_fmt = globals().get("CHAPTER_FORMAT")
+if chapter_fmt:
+    preamble += "\n" + chapter_fmt + "\n"
+
+latex_elements = {
+    "fontpkg": fontpkg,
+    "preamble": preamble,
     "maketitle": r"\input{cover.tex}",
 }
+
+
+# ==========================================
+# 渲染 headerfooter.tex（基于 Jinja2 模板）
+# ==========================================
+from jinja2 import Template
+import os
+
+template_file = common_latex_path / "headerfooter.tex.j2"
+output_file   = common_latex_path / "headerfooter.tex"
+
+# 语言文件注入的 COMPANY_NAME
+company_name = globals().get("COMPANY_NAME", "Neoway Technology")
+
+# 渲染
+with open(template_file, "r", encoding="utf-8") as f:
+    tpl = Template(f.read())
+
+output_file.write_text(
+    tpl.render(company_name=company_name),
+    encoding="utf-8"
+)

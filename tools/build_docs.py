@@ -70,7 +70,13 @@ def build_single(product: str, lang: str):
     # ---------------------------
     # 编译 PDF
     # ---------------------------
-    run(["latexmk", "-xelatex", tex_file.name], cwd=str(pdf_out))
+    run([
+        "latexmk",
+        "-xelatex",
+        "-interaction=nonstopmode",
+        "-f",
+        tex_file.name
+    ], cwd=str(pdf_out))
 
     final_pdf = next((f for f in pdf_out.glob("*.pdf") if "Manual" in f.name), None)
     if not final_pdf:

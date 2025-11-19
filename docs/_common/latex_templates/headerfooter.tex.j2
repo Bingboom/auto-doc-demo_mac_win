@@ -1,4 +1,4 @@
-
+{% raw %}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
@@ -17,7 +17,7 @@
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{\nouppercase{\leftmark}}
     \fancyfoot[L]{ 
-Neoway Technology Co., Ltd. All Rights Reserved. 
+{% endraw %}{{ company_name }}{% raw %} 
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
@@ -32,7 +32,7 @@ Neoway Technology Co., Ltd. All Rights Reserved.
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{}
     \fancyfoot[L]{ 
-Neoway Technology Co., Ltd. All Rights Reserved. 
+{% endraw %}{{ company_name }}{% raw %} 
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
@@ -41,3 +41,4 @@ Neoway Technology Co., Ltd. All Rights Reserved.
 
 % 默认页式
 \pagestyle{normal}
+{% endraw %}
