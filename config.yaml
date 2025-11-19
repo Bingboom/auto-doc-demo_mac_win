@@ -1,29 +1,52 @@
-# ============================
-# Unified Config for auto-doc
-# ============================
-
-root: .
-docs_root: docs
-csv_input_root: csv-input
-tools_root: tools
-
-# -------------------------------------
-# 公共资源
-# -------------------------------------
-common:
-  templates: docs/_common/templates
-  static: docs/_common/_static
-  latex: docs/_common/latex_templates
-
-# -------------------------------------
-# 产品线配置（LANGUAGE-FIRST）
-# -------------------------------------
-products:
-  N706B:
-    version: "1.0"
-    csv: csv-input/N706B
-    source: docs/{lang}/N706B/source
-    build_html: docs/{lang}/N706B/build/html
-    build_pdf: docs/{lang}/N706B/build/pdf
+# ============================================
+# Global Config for Auto Documentation System
+# ============================================
 
 default_product: "N706B"
+
+# ============================================
+# Common Paths
+# ============================================
+common:
+  templates: "docs/_common/templates"
+  static: "docs/_common/_static"
+  latex: "docs/_common/latex_templates"
+
+tools_root: "tools"
+
+# ============================================
+# Document Types（自动命名 PDF 使用）
+# key = 文档类型代码（AT / HW / UG / API ...）
+# ============================================
+doc_types:
+  AT:
+    zh_cn: "AT命令手册"
+    en: "AT Commands Manual"
+
+  HW:
+    zh_cn: "硬件设计指南"
+    en: "Hardware Design Guide"
+
+  UG:
+    zh_cn: "用户指南"
+    en: "User Guide"
+
+# ============================================
+# Products
+# 每个产品可有多个文档类型
+# ============================================
+products:
+
+  N706B:
+    source: "docs/{lang}/N706B/source"
+    build_html: "docs/{lang}/N706B/build/html"
+    build_pdf: "docs/{lang}/N706B/build/pdf"
+    csv: "csv-input/N706B"
+    doc_types: [ "AT" ] # 该产品默认只生成 AT 指令手册，可扩展
+
+#   N58:
+#     source: "docs/{lang}/N58/source"
+#     build_html: "docs/{lang}/N58/build/html"
+#     build_pdf: "docs/{lang}/N58/build/pdf"
+#     csv: "csv-input/N58"
+#     doc_types: [ "AT", "HW" ] # 该产品可生成多个类型
