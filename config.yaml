@@ -44,9 +44,9 @@ products:
     csv: "csv-input/N706B"
     doc_types: [ "AT" ] # 该产品默认只生成 AT 指令手册，可扩展
 
-#   N58:
-#     source: "docs/{lang}/N58/source"
-#     build_html: "docs/{lang}/N58/build/html"
-#     build_pdf: "docs/{lang}/N58/build/pdf"
-#     csv: "csv-input/N58"
-#     doc_types: [ "AT", "HW" ] # 该产品可生成多个类型
+  N58:
+    source: "docs/{lang}/N58/source"
+    build_html: "docs/{lang}/N58/build/html"
+    build_pdf: "docs/{lang}/N58/build/pdf"
+    csv: "csv-input/N58"
+    doc_types: [ "AT", "HW" ] # 该产品可生成多个类型

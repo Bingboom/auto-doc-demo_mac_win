@@ -38,12 +38,20 @@ def build_single(product: str, lang: str, doc_type: str):
     conf.py 会通过 gen_conf 生成
     """
 
+    # -------------------------------
+    # ①检查 source 目录是否存在
+    # -------------------------------
+    src = paths.rst_source_path(product, lang)
+
+    if not src.exists():
+        print(f"[SKIP] {product} [{lang}] <{doc_type}> - source dir not found: {src}")
+        return
+
     # 生成 conf.py —— 基于模板
     from tools.gen_conf import generate_conf
     generate_conf(product, lang, doc_type)
 
     # 计算路径
-    src = paths.rst_source_path(product, lang)
     html_out = paths.build_html_path(product, lang)
     pdf_out  = paths.build_pdf_path(product, lang)
 
@@ -62,21 +70,39 @@ def build_single(product: str, lang: str, doc_type: str):
     # ---------------------------
     run(["sphinx-build", "-b", "latex", str(src), str(pdf_out)])
 
-    tex_file = next((t for t in pdf_out.glob("*.tex") if "Manual" in t.name), None)
-    if not tex_file:
-        print("[WARN] 未找到 *_Manual.tex，跳过 PDF")
+    # ---------------------------
+    # 寻找 .tex 文件（不再依赖 Manual 关键字）
+    # ---------------------------
+    tex_candidates = [
+        t for t in pdf_out.glob("*.tex")
+        if not t.name.startswith("sphinx")
+    ]
+
+    if not tex_candidates:
+        print("[WARN] 未找到可用的 .tex 文件（跳过 PDF）")
         return
+
+    tex_file = tex_candidates[0]   # 取第一个有效 tex 文件
 
     # ---------------------------
     # PDF 编译
     # ---------------------------
-    run(["latexmk", "-xelatex", "-interaction=nonstopmode", "-f", tex_file.name],
-        cwd=str(pdf_out))
+    run([
+        "latexmk", "-xelatex", "-interaction=nonstopmode", "-f", tex_file.name
+    ], cwd=str(pdf_out))
 
-    final_pdf = next((f for f in pdf_out.glob("*.pdf") if "Manual" in f.name), None)
-    if not final_pdf:
+    # ⭐ 修改 PDF 匹配规则
+    pdf_candidates = [
+        f for f in pdf_out.glob("*.pdf")
+        if not f.name.startswith("sphinx")
+    ]
+
+    if not pdf_candidates:
         print("[WARN] PDF 未生成")
         return
+
+    final_pdf = pdf_candidates[0]
+
 
     # 自动命名 PDF
     pdf_name = DOC_TYPES[doc_type][lang]   # AT命令手册 / AT Commands Manual
