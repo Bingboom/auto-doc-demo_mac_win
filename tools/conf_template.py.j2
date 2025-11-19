@@ -14,12 +14,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 import tools.utils.path_utils as paths
 
-LANG = "zh_cn"
-PRODUCT = "N706B"
-DOC_TYPE = "AT"
+LANG = "{{ LANG }}"
+PRODUCT = "{{ PRODUCT }}"
+DOC_TYPE = "{{ DOC_TYPE }}"
 
 # 载入语言包
-exec(open(PROJECT_ROOT / "docs/_langs/zh_cn.py", "r", encoding="utf-8").read(), globals())
+exec(open(PROJECT_ROOT / "{{ lang_file }}", "r", encoding="utf-8").read(), globals())
 
 # 引入公共配置
 COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
