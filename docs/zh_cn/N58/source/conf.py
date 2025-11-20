@@ -17,14 +17,14 @@ import tools.utils.path_utils as paths
 # ---------------------------------------------------------
 # 基础变量
 # ---------------------------------------------------------
-LANG = "en"
-PRODUCT = "N706B"
+LANG = "zh_cn"
+PRODUCT = "N58"
 DOC_TYPE = "AT"
 
 # ---------------------------------------------------------
 # 加载语言包（自动注入 PROJECT_TITLE / ISSUE / DATE 等变量）
 # ---------------------------------------------------------
-lang_file = PROJECT_ROOT / "docs/_langs/en.py"
+lang_file = PROJECT_ROOT / "docs/_langs/zh_cn.py"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
 # ---------------------------------------------------------
