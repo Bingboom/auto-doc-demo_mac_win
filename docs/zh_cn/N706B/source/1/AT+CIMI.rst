@@ -3,7 +3,7 @@
 AT+CIMI：查询国际移动用户识别码
 -----------------------
 
-获取国际移动用户识别码IMSI（international mobile subscriber identification）。
+获取国际移动用户识别码IMSI（international mobile subscriber identification）。
 命令格式
 
 命令格式
