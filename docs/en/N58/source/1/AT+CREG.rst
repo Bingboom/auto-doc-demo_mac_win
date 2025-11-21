@@ -1,14 +1,14 @@
 .. _cmd-at+creg:
 
-AT+CREG：查询网络注册状态
---------------------
+AT+CREG：Query Network Registration Status
+---------------------------------------------
 
-查询模组的当前网络注册状态。
-命令格式
+Query the current network registration status of the module.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CREG：查询网络注册状态
 
 说明
 ^^^^
-说明示例4
+See Example 4

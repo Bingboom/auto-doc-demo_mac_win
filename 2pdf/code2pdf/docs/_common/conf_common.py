@@ -1,91 +1,90 @@
 # ================================================================
 # 📘 Neoway Docs Common Config（共享基础配置）
-#  统一跨项目的 Sphinx/LaTeX 公共配置
 # ================================================================
 from pathlib import Path
-import os
-import sys
-import platform
 from datetime import datetime
+import sys
 
-# === 路径定义 ===
-COMMON_ROOT = Path(__file__).resolve().parent
-COMMON_STATIC_PATH = COMMON_ROOT / "_static"
+# === 导入路径工具：完全基于 config.yaml 管理路径 ===
+from tools.utils import path_utils as paths
 
-# 确保 _static 在路径中可访问
-sys.path.insert(0, str(COMMON_ROOT))
-
-# === 通用信息 ===
+# === 基本变量 ===
 author = "Neoway 文档工程组"
-copyright = f"{datetime.now().year}, Neoway Technology"
 language = "zh_CN"
+copyright = (
+    f"{datetime.now().year}, Neoway Technology"
+)
 
-# === HTML 静态资源 ===
-html_static_path = [str(COMMON_STATIC_PATH)]
-html_logo = str(COMMON_STATIC_PATH / "logo.png")
+# === 基于 config.yaml 动态解析路径 ===
+COMMON_ROOT = Path(__file__).resolve().parent
+STATIC_DIR = paths.static_images_path()              # docs/_common/_static
+LATEX_COMMON = paths.latex_common_path()             # docs/_common/latex_templates
+FONTS_TEX = LATEX_COMMON / "fonts.tex"               # 自动生成字体文件
 
-# === LaTeX 资源路径（公共静态引用） ===
+# === HTML static ===
+html_static_path = [str(STATIC_DIR)]
+html_logo = str(STATIC_DIR / "logo.png")
+
+# === LaTeX static files ===
 latex_engine = "xelatex"
 latex_additional_files = [
-    str(COMMON_STATIC_PATH / "logo.png"),
-    str(COMMON_STATIC_PATH / "header-logo.png"),
-    str(COMMON_STATIC_PATH / "background.png"),
+    str(STATIC_DIR / "logo.png"),
+    str(STATIC_DIR / "header-logo.png"),
+    str(STATIC_DIR / "background.png"),
+    str(FONTS_TEX)
 ]
 
-# === 跨平台字体自动识别 ===
-sys_name = platform.system().lower()
-if "windows" in sys_name:
-    zh_main, zh_sans, zh_mono = "SimSun", "SimHei", "FangSong"
-    en_main, en_sans, en_mono = "Times New Roman", "Arial", "Consolas"
-elif "darwin" in sys_name:  # macOS
-    zh_main, zh_sans, zh_mono = "PingFang SC", "STHeiti", "PingFang SC"
-    en_main, en_sans, en_mono = "Times New Roman", "Arial", "Menlo"
-else:  # Linux
-    zh_main, zh_sans, zh_mono = "Noto Sans CJK SC", "Noto Sans CJK SC", "Noto Sans Mono CJK SC"
-    en_main, en_sans, en_mono = "Times New Roman", "Arial", "DejaVu Sans Mono"
-
-# === 公共 LaTeX 元素（在各子 conf.py 里继承 update() 即可） ===
+# ============================================================
+# 📌 字体：完全由 fonts.tex 控制（由 build_docs.py 自动生成）
+# ============================================================
 latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '11pt',
     'extraclassoptions': 'openany,oneside',
-    'geometry': r'\usepackage[a4paper,top=22mm,bottom=22mm,left=25mm,right=25mm,headheight=25pt]{geometry}',
 
-    'fontpkg': rf'''
-\usepackage{{xeCJK}}
-\setCJKmainfont{{{zh_main}}}
-\setCJKsansfont{{{zh_sans}}}
-\setCJKmonofont{{{zh_mono}}}
-\setmainfont{{{en_main}}}
-\setsansfont{{{en_sans}}}
-\setmonofont{{{en_mono}}}
-\linespread{{1.3}}
+    'geometry': r'''
+\usepackage[a4paper,
+    top=22mm,
+    bottom=22mm,
+    left=25mm,
+    right=25mm,
+    headheight=25pt
+]{geometry}
 ''',
 
-    'preamble': r'''
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{tocloft}
-\usepackage{hyperref}
-\usepackage{setspace}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{tikz}
+    # ==== 关键：字体由 fonts.tex 控制（动态路径 from config.yaml） ====
+    'fontpkg': rf'''
+\usepackage{{fontspec}}
+\usepackage{{xeCJK}}
+\input{{{FONTS_TEX.as_posix()}}}
+''',
 
-% ===== 页眉页脚 =====
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\includegraphics[scale=0.25]{../../_common/_static/header-logo.png}}
-\fancyhead[R]{\leftmark}
-\fancyfoot[L]{深圳市有方科技股份有限公司版权所有}
-\fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-\setlength{\headheight}{25pt}
+    # ==== preamble（页眉页脚等） ====
+    'preamble': rf'''
+\usepackage{{fancyhdr}}
+\usepackage{{titlesec}}
+\usepackage{{tocloft}}
+\usepackage{{hyperref}}
+\usepackage{{setspace}}
+\usepackage{{graphicx}}
+\usepackage{{xcolor}}
+\usepackage{{tikz}}
 
-% ===== 中文目录与章节 =====
-\renewcommand{\contentsname}{\centering 目~录}
-\titleformat{\chapter}{\Huge\bfseries}{第\,\thechapter\,章}{1em}{}
+% -------- 页眉页脚 --------
+\pagestyle{{fancy}}
+\fancyhf{{}}
+\fancyhead[L]{{\includegraphics[scale=0.25]{{{STATIC_DIR / "header-logo.png"}}}}}
+\fancyhead[R]{{\leftmark}}
+\fancyfoot[L]{{深圳市有方科技股份有限公司版权所有}}
+\fancyfoot[R]{{\thepage}}
+\renewcommand{{\headrulewidth}}{{0.4pt}}
+\renewcommand{{\footrulewidth}}{{0.4pt}}
+\setlength{{\headheight}}{{25pt}}
+
+% -------- 中文目录与章节格式 --------
+\renewcommand{{\contentsname}}{{\centering 目~录}}
+\titleformat{{\chapter}}{{\Huge\bfseries}}{{第\,\thechapter\,章}}{{1em}}{{}}
+
 \let\cleardoublepage\clearpage
 '''
 }

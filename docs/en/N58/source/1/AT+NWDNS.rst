@@ -1,16 +1,16 @@
 .. _cmd-at+nwdns:
 
-AT+NWDNS：域名解析
------------------
+AT+NWDNS：Domain Name Resolution
+-----------------------------------
 
-内置协议栈拨号后,查询DNS解析结果。
-先使用AT+XIIC命令拨号成功后,才能执行该命令。
-域名填入不校验正确性,需保证填入内容的正确性。
-命令格式
+After dialing with the built-in protocol stack, query the DNS resolution result.
+This command can only be executed after successfully dialing with AT+XIIC command.
+The domain name is not validated for correctness; ensure the correctness of the input content.
+Command format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -43,4 +43,4 @@ AT+NWDNS：域名解析
 
 说明
 ^^^^
-说明示例26
+See Example 26

@@ -1,14 +1,14 @@
 .. _cmd-at+cmgs:
 
-AT+CMGS：发送短消息
------------------
+AT+CMGS：Send Short Message
+------------------------------
 
-将短消息从模组发送到网络,短消息发送成功后网络返回参考值<mr>给模组。
-命令格式
+Send a short message from the module to the network, after the short message is successfully sent, the network returns the reference value <mr> to the module.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CMGS：发送短消息
 
 说明
 ^^^^
-说明示例38
+See Example 38

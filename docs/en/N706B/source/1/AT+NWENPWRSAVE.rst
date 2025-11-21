@@ -1,16 +1,16 @@
 .. _cmd-at+nwenpwrsave:
 
-AT+NWENPWRSAVE：休眠（Sleep）设置
-------------------------------
+AT+NWENPWRSAVE：Sleep Setting
+--------------------------------
 
-设置是否允许模组进入休眠（Sleep）模式。该命令设置掉电不保存。
-模组DTR信号默认为低电平：
-发送允许进入休眠模式指令之后,且模组DTR信号为低（或高）电平,模组内部各个部分的电路都允许进入休眠状态模组才能进入休眠。
-命令格式
+Set whether to allow the module to enter sleep mode. This command does not save settings after power off.
+The module DTR signal is low by default:
+After sending the command to allow entering sleep mode, and the module DTR signal is low (or high), all circuits of the module must be allowed to enter sleep state for the module to enter sleep.
+Command format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -43,4 +43,4 @@ AT+NWENPWRSAVE：休眠（Sleep）设置
 
 说明
 ^^^^
-说明示例27
+See Example 27

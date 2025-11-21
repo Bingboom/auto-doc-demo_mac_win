@@ -1,15 +1,15 @@
 .. _cmd-at+cpwd:
 
-AT+CPWD：修改密码指令
-------------------
+AT+CPWD：Change Password Command
+-----------------------------------
 
-修改模组锁功能的密码。
-若需修改PIN码,需锁定SIM卡（AT+CLCK="SC",1,"1234"）后才能修改。
-命令格式
+Change the password for the module lock function.
+To change the PIN code, the SIM card must be locked first (AT+CLCK="SC",1,"1234").
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+CPWD：修改密码指令
 
 说明
 ^^^^
-说明示例19
+Example 19

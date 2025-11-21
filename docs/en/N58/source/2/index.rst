@@ -1,5 +1,5 @@
-SMS命令
-==========
+SMS Command
+=============
 
 .. toctree::
    :maxdepth: 1

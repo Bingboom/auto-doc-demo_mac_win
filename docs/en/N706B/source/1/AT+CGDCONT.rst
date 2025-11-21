@@ -1,14 +1,14 @@
 .. _cmd-at+cgdcont:
 
-AT+CGDCONT：设置PDP格式
-----------------------
+AT+CGDCONT：Set PDP Format
+-----------------------------
 
-设置GPRS的PDP（Packet Data Protocol,分组数据协议）格式。APN允许设置的长度最长是50。
-命令格式
+Set the PDP (Packet Data Protocol) format for GPRS. The maximum length allowed for APN is 50.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CGDCONT：设置PDP格式
 
 说明
 ^^^^
-说明示例20
+Example 20

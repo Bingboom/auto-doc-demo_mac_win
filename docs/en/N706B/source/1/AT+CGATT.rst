@@ -1,17 +1,17 @@
 .. _cmd-at+cgatt:
 
-AT+CGATT：设置GPRS附着和分离
-------------------------
+AT+CGATT：Set GPRS Attach and Detach
+---------------------------------------
 
-该指令用来查询、设置GPRS附着和分离。掉电不保存。
-模组默认情况下,会主动进行GPRS附着。
-进行PPP连接之前要确保GPRS是处于附着状态,AT流程增加查询指令AT+CGATT?：
-如果返回值是1,则可以直接进行PPP连接,如果返回值是0,则需进行手动附着,即AT+CGATT=1。
-命令格式
+This command is used to query and set GPRS attach and detach. It does not persist after power off.
+By default, the module actively performs GPRS attach.
+Before establishing a PPP connection, ensure that GPRS is in the attached state. Add the query command AT+CGATT?:
+If the return value is 1, you can directly proceed with the PPP connection; if the return value is 0, manual attachment is required, i.e., AT+CGATT=1.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -44,4 +44,4 @@ AT+CGATT：设置GPRS附着和分离
 
 说明
 ^^^^
-说明示例22
+Example 22

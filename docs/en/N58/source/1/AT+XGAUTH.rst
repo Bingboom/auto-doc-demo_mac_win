@@ -1,18 +1,18 @@
 .. _cmd-at+xgauth:
 
-AT+XGAUTH：用户认证
-------------------
+AT+XGAUTH：User Authentication
+---------------------------------
 
-PDP认证。
-该指令要放在AT+CGDCONT这条指令后面。目前在专网中各个地方逐渐增加了用户身份认证需求,使用内部协议栈,需要使用到这条指令,因此,请在代码流程上加上这条指令。
-联通卡默认用户名和密码是“card”和“card”。
-<cid>对应+CGDCONT中的<cid>。
-<name>和<pwd>允许设置的最大字符串长度都是50
-命令格式
+PDP authentication.
+This command should be placed after the AT+CGDCONT command. Currently, there is a growing demand for user identity authentication in various places within private networks, using the internal protocol stack, this command needs to be used, so please add this command in the code flow.
+The default username and password for Unicom cards are "card" and "card".
+<cid> corresponds to <cid> in +CGDCONT.
+The maximum string length allowed for <name> and <pwd> is 50.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -45,4 +45,4 @@ PDP认证。
 
 说明
 ^^^^
-说明示例21
+Example 21

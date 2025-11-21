@@ -1,5 +1,5 @@
-基础命令
-==========
+Basic Commands
+================
 
 .. toctree::
    :maxdepth: 1

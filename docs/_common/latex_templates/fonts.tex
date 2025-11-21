@@ -1,9 +1,22 @@
-% ===== Neoway LaTeX 字体统一配置 =====
-\usepackage{xeCJK}
-\setCJKmainfont{PingFang SC}
-\setCJKsansfont{PingFang SC}
-\setCJKmonofont{PingFang SC}
 
+% ======= AUTO GENERATED: Do NOT edit manually =======
+% Platform: windows
+
+\usepackage{xeCJK}
+\usepackage{fontspec}
+
+% ---- Western ----
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
-\setmonofont{Menlo}
+\setmonofont{Consolas}
+
+% ---- CJK ----
+\setCJKmainfont{SimHei}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{SimHei}
+
+% ---- Fallback ----
+\defaultCJKfontfeatures{
+    Script=Hans,
+    Language=Chinese
+}

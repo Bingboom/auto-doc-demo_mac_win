@@ -1,14 +1,14 @@
 .. _cmd-at+clck:
 
-AT+CLCK：PIN使能与查询功能指令
-------------------------
+AT+CLCK：PIN Enable and Query Function Command
+-------------------------------------------------
 
-锁、解锁以及查询MT和网络设备。设置该参数,重启模组后生效。
-命令格式
+Lock, unlock, and query MT and network devices. Set this parameter, and it will take effect after restarting the module.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CLCK：PIN使能与查询功能指令
 
 说明
 ^^^^
-说明示例18
+Example 18

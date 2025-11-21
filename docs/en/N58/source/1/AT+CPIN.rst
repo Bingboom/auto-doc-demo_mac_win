@@ -1,15 +1,15 @@
 .. _cmd-at+cpin:
 
-AT+CPIN：输入PIN码
-------------------
+AT+CPIN：Input PIN Code
+--------------------------
 
-查询PIN状态以及输入PIN码。
-若要输入PIN码,需锁定当前SIM卡（AT+CLCK="SC",1,"1234"）后,重启模组才能输入PIN码,输入三次错误的PIN码后,会要求输入PUK码才能解锁。
-命令格式
+Query the PIN status and input the PIN code.
+To input the PIN code, the current SIM card must be locked (AT+CLCK="SC",1,"1234") and the module must be restarted to input the PIN code. After three incorrect PIN entries, a PUK code will be required to unlock.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+CPIN：输入PIN码
 
 说明
 ^^^^
-说明示例17
+Example 17

@@ -1,14 +1,14 @@
 .. _cmd-at+nstgetrssi:
 
-AT+NSTGETRSSI：获取强收模式下模组的接收功率（仅可用于测试）
-----------------------------------------
+AT+NSTGETRSSI：Get Receive Power of the Module in Strong Receive Mode (For Testing Only)
+-------------------------------------------------------------------------------------------
 
-用于在测试模式下验证模组的接收功率,强收测试精度会有一些误差。
-命令格式
+Used to verify the module's receive power in test mode, strong receive test accuracy will have some errors.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+NSTGETRSSI：获取强收模式下模组的接收功率（仅可用于测试�
 
 说明
 ^^^^
-说明示例30
+Example 30

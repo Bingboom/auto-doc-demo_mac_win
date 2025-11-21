@@ -1,13 +1,13 @@
 .. _cmd-at+csms:
 
-AT+CSMS：选择短信服务
-------------------
+AT+CSMS：Select SMS Service
+------------------------------
 
-用于支持的短消息包括：发送（SMS-MO）、接收（SMS-MT）、小区广播（SMS-CB）。
+Supported short messages include: sending (SMS-MO), receiving (SMS-MT), cell broadcast (SMS-CB).
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -27,7 +27,7 @@ AT+CSMS：选择短信服务
     <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
     <CR><LF>OK<CR><LF>
 
-**查询命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,7 +42,7 @@ AT+CSMS：选择短信服务
 
     OK
 
-**测试命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -59,12 +59,12 @@ AT+CSMS：选择短信服务
 
 参数
 ^^^^
-- **<service>**： 短信服务模式选择
+- **<service>**： SMS service mode selection
 - 0：GSM03.40/GSM03.41 Phase 2
 - 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
-- 0：示例
-- 1：示例
+- **<mt>,<mo>,<bm>**： Downlink/Uplink/Broadcast support
+- 0：Not supported
+- 1：Supported
 命令示例
 ^^^^^^^^
 ::
@@ -87,4 +87,4 @@ AT+CSMS：选择短信服务
 
 说明
 ^^^^
-支持多种短消息服务类型
+Supports multiple short message service types

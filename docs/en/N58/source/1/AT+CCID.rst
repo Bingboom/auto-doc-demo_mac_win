@@ -1,14 +1,14 @@
 .. _cmd-at+ccid:
 
-AT+CCID：获取SIM卡标识
---------------------
+AT+CCID：Get SIM Card Identifier
+-----------------------------------
 
-获取SIM卡的ICCID。
-命令格式
+Get the ICCID of the SIM card.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CCID：获取SIM卡标识
 
 说明
 ^^^^
-说明示例10
+See Example 10

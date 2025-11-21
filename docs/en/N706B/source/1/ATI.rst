@@ -1,14 +1,14 @@
 .. _cmd-ati:
 
-ATI：获取模组厂商信息
-----------------
+ATI：Get Module Manufacturer Information
+-------------------------------------------
 
-获取模组厂商信息,包括厂家、型号和版本。
-命令格式
+Get module manufacturer information, including manufacturer, model, and version.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -44,4 +44,4 @@ ATI：获取模组厂商信息
 
 说明
 ^^^^
-说明示例1
+Example 1

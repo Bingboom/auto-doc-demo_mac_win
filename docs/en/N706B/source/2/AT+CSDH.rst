@@ -1,14 +1,14 @@
 .. _cmd-at+csdh:
 
-AT+CSDH：显示文本模式参数
---------------------
+AT+CSDH：Display Text Mode Parameters
+----------------------------------------
 
-设置是否在文本模式下的结果码中显示详细的头信息。该指令在短信文本模式下有效,需发送AT+CMGF=1设置成文本模式。
-命令格式
+Set whether to display detailed header information in the result code in text mode. This command is valid in SMS text mode and requires sending AT+CMGF=1 to set to text mode.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CSDH：显示文本模式参数
 
 说明
 ^^^^
-说明示例44
+See Example 44

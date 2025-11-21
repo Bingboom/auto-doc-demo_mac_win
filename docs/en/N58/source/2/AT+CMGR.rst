@@ -1,15 +1,15 @@
 .. _cmd-at+cmgr:
 
-AT+CMGR：读短消息
-----------------
+AT+CMGR：Read Short Message
+------------------------------
 
-读取当前存储器中的短消息（需预先通过AT+CPMS指令设定当前存储器）。
-如果接收到的短信状态是未读的,执行该指令后,短信存储状态就变成已读。
-命令格式
+Read the short message in the current storage (must be set in advance using the AT+CPMS command).
+If the status of the received SMS is unread, executing this command will change the SMS storage status to read.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+CMGR：读短消息
 
 说明
 ^^^^
-说明示例36
+Example 36

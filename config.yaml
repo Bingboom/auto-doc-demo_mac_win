@@ -15,6 +15,27 @@ common:
 tools_root: "tools"
 
 # ============================================
+# Font Settings（根据系统自动选择字体）
+# ============================================
+fonts:
+
+  windows:
+    cjk: "SimHei"
+    sans: "Arial"
+    mono: "Consolas"
+
+  mac:
+    cjk: "PingFang SC"
+    sans: "Arial"
+    mono: "Menlo"
+
+  linux:
+    cjk: "Noto Sans CJK SC"
+    sans: "Noto Sans CJK SC"
+    mono: "Noto Sans Mono CJK SC"
+
+
+# ============================================
 # Document Types（自动命名 PDF 使用）
 # key = 文档类型代码（AT / HW / UG / API ...）
 # doc_types 只是预留的接口 具体还得再创建 类似docs/_doctypes文件夹 再创建脚本去管理 在这里 先搁置 暂时不增加复杂度了

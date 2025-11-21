@@ -1,16 +1,16 @@
 .. _cmd-ate1:
 
-ATE1：/ATE0：打开&关闭回显
-----------------------
+ATE1：/ATE0: Turn On & Off Echo
+----------------------------------
 
-打开（或关闭）模组AT指令回显功能。
-该模组默认回显功能为打开状态。
-该指令设置后掉电不保存。
-命令格式
+Turn on (or off) the module's AT command echo function.
+The module's default echo function is in the on state.
+This setting does not persist after power off.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -43,4 +43,4 @@ ATE1：/ATE0：打开&关闭回显
 
 说明
 ^^^^
-说明示例23
+Example 23

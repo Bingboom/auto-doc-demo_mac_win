@@ -1,14 +1,14 @@
 .. _cmd-at+cereg:
 
-AT+CEREG：获取EPS网络注册状态
-------------------------
+AT+CEREG：Get EPS Network Registration Status
+------------------------------------------------
 
-查询EPS网络注册状态。
-命令格式
+Query EPS network registration status.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CEREG：获取EPS网络注册状态
 
 说明
 ^^^^
-说明示例5
+See Example 5

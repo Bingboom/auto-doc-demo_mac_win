@@ -1,14 +1,14 @@
 .. _cmd-at+csca:
 
-AT+CSCA：短信中心号码
-------------------
+AT+CSCA：SMS Center Number
+-----------------------------
 
-设置短信中心号码。CDMA模式下,不支持这条指令。
-命令格式
+Set the SMS center number. This command is not supported in CDMA mode.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CSCA：短信中心号码
 
 说明
 ^^^^
-说明示例42
+Example 42

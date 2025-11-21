@@ -1,14 +1,14 @@
 .. _cmd-at+gsn:
 
-AT+GSN：获取通信模组IMEI号
-----------------------
+AT+GSN：Get Communication Module IMEI Number
+-----------------------------------------------
 
-获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
-命令格式
+Obtain the product serial number of the module, which is the IMEI number (International Mobile Equipment Identity).
+Command Syntax
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+GSN：获取通信模组IMEI号
 
 说明
 ^^^^
-说明示例9
+See Example 9

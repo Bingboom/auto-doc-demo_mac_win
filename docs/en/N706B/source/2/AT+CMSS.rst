@@ -1,14 +1,14 @@
 .. _cmd-at+cmss:
 
-AT+CMSS：发送已保存的短消息
----------------------
+AT+CMSS：Send Saved Short Message
+------------------------------------
 
-发送存储器中<index>指定位置的短消息（SMS-SUBMIT）,短消息发送成功后网络返回参考值<mr>给终端。
-命令格式
+Send the short message (SMS-SUBMIT) located at the position specified by <index> in the memory. After the short message is successfully sent, the network returns the reference value <mr> to the terminal.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CMSS：发送已保存的短消息
 
 说明
 ^^^^
-说明示例40
+Example 40

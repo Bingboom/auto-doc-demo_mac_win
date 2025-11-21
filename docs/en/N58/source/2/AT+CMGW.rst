@@ -1,14 +1,14 @@
 .. _cmd-at+cmgw:
 
-AT+CMGW：写短消息
-----------------
+AT+CMGW：Write Short Message
+-------------------------------
 
-往存储器中写入短消息,正确存储后返回位置信息<index>。
-命令格式
+Write a short message to the storage, after successful storage, return the location information <index>.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CMGW：写短消息
 
 说明
 ^^^^
-说明示例39
+See Example 39

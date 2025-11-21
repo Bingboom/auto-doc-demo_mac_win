@@ -1,15 +1,15 @@
-章节,章节名称,命令,命令标题,命令类型,命令格式,响应,响应校正,示例命令,功能描述,备注,表数量,顺序,参数,参数json
-1,基础命令,ATI,获取模组厂商信息,执行,ATI,<CR><LF>OK<CR><LF>,"<CR><LF><manufacturer>
+﻿章节,章节名称,命令,命令标题,命令类型,命令格式,响应,响应校正,示例命令,功能描述,备注,表数量,顺序,参数,参数json
+1,Basic Commands,ATI,Get Module Manufacturer Information,Execute,ATI,<CR><LF>OK<CR><LF>,"<CR><LF><manufacturer>
 <CR><LF><module_version>
 <CR><LF><soft_version>
 <CR><LF>OK<CR><LF>","ATI
 
-OK","获取模组厂商信息,包括厂家、型号和版本。
-命令格式",说明示例1,1,1,"- `<manufacturer>`：模组厂商信息、产品名称、版本号
+OK","Get module manufacturer information, including manufacturer, model, and version.
+Command Format",Example 1,1,1,"- `<manufacturer>`: Module manufacturer information, product name, version number
 
-- `<module_version>`：模组型号
+- `<module_version>`: Module model
 
-- `<soft_version>`：模组软件版本","{
+- `<soft_version>`: Module software version","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -19,12 +19,12 @@ OK","获取模组厂商信息,包括厂家、型号和版本。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+GMR,查询版本信息,执行,AT+GMR,<CR><LF>OK<CR><LF>,"<CR><LF>+GMR: <reversion>
+1,Basic Commands,AT+GMR,Query Version Information,Execute,AT+GMR,<CR><LF>OK<CR><LF>,"<CR><LF>+GMR: <reversion>
 <CR><LF>OK<CR><LF>","AT+CSMS=1
 
 +CSMS: 1,1,1
-OK","查询软件版本信息。
-命令格式",说明示例2,1,2,- `<reversion>`：模组软件版本信息,"{
+OK","Query software version information.
+Command Format",Example 2,1,2,- `<reversion>`: Module software version information,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -34,19 +34,19 @@ OK","查询软件版本信息。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CSQ,获取信号强度,执行,AT+CSQ,<CR><LF>OK<CR><LF>,,"AT+CSQ
+1,Basic Commands,AT+CSQ,Get Signal Strength,Execute,AT+CSQ,<CR><LF>OK<CR><LF>,,"AT+CSQ
 
-OK","查询接收信号强度<rssi>。
-命令格式",说明示例3,1,3,"- `<signal>`：以下为signal(CSQ)与rssi对应关系：
-  - `0`: <4或99 | <-107 dBm or unknown
+OK","Query received signal strength <rssi>.
+Command Format",Example 3,1,3,"- `<signal>`: The following is the correspondence between signal (CSQ) and rssi:
+  - `0`: <4 or 99 | <-107 dBm or unknown
   - `1`: <10 | <-93dBm
   - `2`: <16 | <-81 dBm
   - `3`: <22 | <-69dBm
   - `4`: <28 | <-57dBm
   - `5`: >=28 | >=-57 dBm
 
-- `<ber>`：—
-  - `99`: 误码率无法测量","{
+- `<ber>`: —
+  - `99`: Bit error rate cannot be measured","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -56,52 +56,52 @@ OK","查询接收信号强度<rssi>。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CREG,查询网络注册状态,执行,AT+CREG,<CR><LF>OK<CR><LF>,,"AT+CREG
+1,Basic Commands,AT+CREG,Query Network Registration Status,Execute,AT+CREG,<CR><LF>OK<CR><LF>,,"AT+CREG
 
-OK","查询模组的当前网络注册状态。
-命令格式",说明示例4,1,4,"- `<n>`：0：禁止网络注册主动提供结果代码（默认设置）
-1：允许网络注册主动提供结果代码
-2：允许网络注册主动提供所在地讯息（CELL ID、LOCAL ID）。
-  - `0`: 禁止网络注册主动提供结果代码（默认设置）
-  - `1`: 允许网络注册主动提供结果代码
-  - `2`: 允许网络注册主动提供所在地讯息（CELL ID、LOCAL ID）。
+OK","Query the current network registration status of the module.
+Command Format",See Example 4,1,4,"- `<n>`: 0: Disable active result code provision for network registration (default setting)
+1: Allow active result code provision for network registration
+2: Allow active location information provision (CELL ID, LOCAL ID).
+  - `0`: Disable active result code provision for network registration (default setting)
+  - `1`: Allow active result code provision for network registration
+  - `2`: Allow active location information provision (CELL ID, LOCAL ID).
 
-- `<stat>`：0：未注册，终端当前并未在搜寻新的运营商
-1：已注册本地网络
-2：未注册，终端正在搜寻基站
-3：注册被拒绝
-4：未知代码
-5：已注册，处于漫游状态
-6：ltesms only home
-7：ltesms only roaming
-8：EMER SVCE ONLY
-9：CSFB NOT PREFER HOME
-10：CSFB NOT PREFER ROAMING
-  - `0`: 未注册
-  - `1`: 已注册本地网络
-  - `2`: 未注册
-  - `3`: 注册被拒绝
-  - `4`: 未知代码
-  - `5`: 已注册
+- `<stat>`: 0: Not registered, the terminal is not currently searching for a new operator
+1: Registered to the local network
+2: Not registered, the terminal is searching for a base station
+3: Registration denied
+4: Unknown code
+5: Registered, in roaming state
+6: ltesms only home
+7: ltesms only roaming
+8: EMER SVCE ONLY
+9: CSFB NOT PREFER HOME
+10: CSFB NOT PREFER ROAMING
+  - `0`: Not registered
+  - `1`: Registered to the local network
+  - `2`: Not registered
+  - `3`: Registration denied
+  - `4`: Unknown code
+  - `5`: Registered
   - `6`: ltesms only home
   - `7`: ltesms only roaming
   - `8`: EMER SVCE ONLY
   - `9`: CSFB NOT PREFER HOME
   - `10`: CSFB NOT PREFER ROAMING
 
-- `<lac>`：字符串型，2字节十六进制位置区代码
+- `<lac>`: String type, 2-byte hexadecimal location area code
 
-- `<ci>`：字符串型，2字节十六进制小区编号
+- `<ci>`: String type, 2-byte hexadecimal cell ID
 
-- `<Act>`：0：GSM
-1：GSM compact
-2：UTRAN
-3：GSM w/EGPRS
-4：UTRAN w/HSDPA
-5：UTRAN w/HSUPA
-6：UTRAN w/HSDPA AND w/HSUPA
-7：E-UTRAN
-8：UTRAN w/HSPA+
+- `<Act>`: 0: GSM
+1: GSM compact
+2: UTRAN
+3: GSM w/EGPRS
+4: UTRAN w/HSDPA
+5: UTRAN w/HSUPA
+6: UTRAN w/HSDPA AND w/HSUPA
+7: E-UTRAN
+8: UTRAN w/HSPA+
   - `0`: GSM
   - `1`: GSM compact
   - `2`: UTRAN
@@ -120,43 +120,43 @@ OK","查询模组的当前网络注册状态。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CEREG,获取EPS网络注册状态,执行,AT+CEREG,<CR><LF>OK<CR><LF>,,"AT+CEREG
+1,Basic Commands,AT+CEREG,Get EPS Network Registration Status,Execute,AT+CEREG,<CR><LF>OK<CR><LF>,,"AT+CEREG
 
-OK","查询EPS网络注册状态。
-命令格式",说明示例5,1,5,"- `<n>`：0：禁止网络注册主动提供结果代码（默认设置）
-1：允许网络注册主动提供结果代码
-2：允许网络注册主动提供所在地信息（CELL ID、LOCAL ID）
-4：允许网络注册主动提供Active-Time和Periodic-TAU
-  - `0`: 禁止网络注册主动提供结果代码（默认设置）
-  - `1`: 允许网络注册主动提供结果代码
-  - `2`: 允许网络注册主动提供所在地信息（CELL ID、LOCAL ID）
-  - `4`: 允许网络注册主动提供Active-Time和Periodic-TAU
+OK","Query EPS network registration status.
+Command Format",See Example 5,1,5,"- `<n>`: 0: Disable active result code provision for network registration (default setting)
+1: Allow active result code provision for network registration
+2: Allow active location information provision (CELL ID, LOCAL ID)
+4: Allow active provision of Active-Time and Periodic-TAU
+  - `0`: Disable active result code provision for network registration (default setting)
+  - `1`: Allow active result code provision for network registration
+  - `2`: Allow active location information provision (CELL ID, LOCAL ID)
+  - `4`: Allow active provision of Active-Time and Periodic-TAU
 
-- `<stat>`：0：未注册，终端当前并未在搜寻新的运营商
-1：已注册本地网络
-2：未注册，终端正在搜寻基站
-3：注册被拒绝
-4：未知代码
-5：已注册，处于漫游状态
-  - `0`: 未注册
-  - `1`: 已注册本地网络
-  - `2`: 未注册
-  - `3`: 注册被拒绝
-  - `4`: 未知代码
-  - `5`: 已注册
+- `<stat>`: 0: Not registered, the terminal is not currently searching for a new operator
+1: Registered to the local network
+2: Not registered, the terminal is searching for a base station
+3: Registration denied
+4: Unknown code
+5: Registered, in roaming state
+  - `0`: Not registered
+  - `1`: Registered to the local network
+  - `2`: Not registered
+  - `3`: Registration denied
+  - `4`: Unknown code
+  - `5`: Registered
 
-- `<tac>`：字符串型，2字节十六进制位置区代码
+- `<tac>`: String type, 2-byte hexadecimal location area code
 
-- `<ci>`：字符串型，2字节十六进制小区编号
+- `<ci>`: String type, 2-byte hexadecimal cell ID
 
-- `<Act>`：0：GSM
-1：GSM compact
-2：UTRAN
-3：GSM w/EGPRS
-4：UTRAN w/HSDPA
-5：UTRAN w/HSUPA
-6：UTRAN w/HSDPA and HSUPA
-7：E-UTRAN
+- `<Act>`: 0: GSM
+1: GSM compact
+2: UTRAN
+3: GSM w/EGPRS
+4: UTRAN w/HSDPA
+5: UTRAN w/HSUPA
+6: UTRAN w/HSDPA and HSUPA
+7: E-UTRAN
   - `0`: GSM
   - `1`: GSM compact
   - `2`: UTRAN
@@ -174,36 +174,36 @@ OK","查询EPS网络注册状态。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+COPS,网络选择,执行,AT+COPS,<CR><LF>OK<CR><LF>,,"AT+COPS
+1,Basic Commands,AT+COPS,Network Selection,Execute,AT+COPS,<CR><LF>OK<CR><LF>,,"AT+COPS
 
-OK","查询网络。
-命令格式",说明示例6,1,6,"- `<mode>`：用来设置自动选择网络还是手动选择网络。
-0：自动选择网络（忽略参数<oper>）
-1：手动选择网络
-2：从网络侧撤销注册
-3：只设置<format>
-4：先手动选择网络后自动选择网络（若手动选择网络不成功，就进入自动选择网络）
-  - `0`: 自动选择网络（忽略参数<oper>）
-  - `1`: 手动选择网络
-  - `2`: 从网络侧撤销注册
-  - `3`: 只设置<format>
-  - `4`: 先手动选择网络后自动选择网络（若手动选择网络不成功
+OK","Query network.
+Command Format",See Example 6,1,6,"- `<mode>`: Used to set automatic network selection or manual network selection.
+0: Automatic network selection (ignore parameter <oper>)
+1: Manual network selection
+2: Deregister from the network
+3: Set <format> only
+4: First manually select the network, then automatically select the network (if manual selection fails, it will enter automatic selection)
+  - `0`: Automatic network selection (ignore parameter <oper>)
+  - `1`: Manual network selection
+  - `2`: Deregister from the network
+  - `3`: Set <format> only
+  - `4`: First manually select the network, then automatically select the network (if manual selection fails
 
-- `<format>`：0：长字母<oper>（默认设置）
-1：短格式字母<oper>
-2：数字<oper>
-  - `0`: 长字母<oper>（默认设置）
-  - `1`: 短格式字母<oper>
-  - `2`: 数字<oper>
+- `<format>`: 0: Long alphanumeric <oper> (default setting)
+1: Short format alphanumeric <oper>
+2: Numeric <oper>
+  - `0`: Long alphanumeric <oper> (default setting)
+  - `1`: Short format alphanumeric <oper>
+  - `2`: Numeric <oper>
 
-- `<oper>`：在<format>中被赋值，可以是16个符的长字母格式、8个符的短字母格式及5个符的数字格式（MCC/MNC）
+- `<oper>`: Assigned in <format>, can be a long alphanumeric format of 16 characters, a short alphanumeric format of 8 characters, or a numeric format of 5 characters (MCC/MNC)
 
-- `<AcT>`：显示无线接入技术，取值如下：
-0：GSM
-1：GSM compact
-3：GSM w/EGPRS
-7：E-UTRAN
-  - `取值如下`: 
+- `<AcT>`: Displays the radio access technology, with the following values:
+0: GSM
+1: GSM compact
+3: GSM w/EGPRS
+7: E-UTRAN
+  - `Values are as follows`: 
   - `0`: GSM
   - `1`: GSM compact
   - `3`: GSM w/EGPRS
@@ -217,11 +217,11 @@ OK","查询网络。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CIMI,查询国际移动用户识别码,执行,AT+CIMI,<CR><LF>OK<CR><LF>,,"AT+CIMI
+1,Basic Commands,AT+CIMI,Query International Mobile Subscriber Identity Code,Execute,AT+CIMI,<CR><LF>OK<CR><LF>,,"AT+CIMI
 
-OK","获取国际移动用户识别码IMSI（international mobile subscriber identification）。
-命令格式",说明示例7,1,7,"- `<IMSI>`：国际移动用户识别码。
-该识别码为15位数字，以3位MCC和2位MNC开头，用来对SIM卡进行鉴权。","{
+OK","Obtain the International Mobile Subscriber Identity (IMSI).
+Command Syntax",See Example 7,1,7,"- `<IMSI>`: International Mobile Subscriber Identity Code.
+This code consists of 15 digits, starting with a 3-digit MCC and a 2-digit MNC, used for authenticating the SIM card.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -231,10 +231,10 @@ OK","获取国际移动用户识别码IMSI（international mobile subscriber ide
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CGSN,获取通信模组IMEI号,执行,AT+CGSN,<CR><LF>OK<CR><LF>,,"AT+CGSN
+1,Basic Commands,AT+CGSN,Get Communication Module IMEI Number,Execute,AT+CGSN,<CR><LF>OK<CR><LF>,,"AT+CGSN
 
-OK","获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
-命令格式",说明示例8,1,8,- `<IMEI>`：模组的产品序列号。,"{
+OK","Obtain the product serial number of the module, which is the IMEI number (International Mobile Equipment Identity).
+Command Syntax",See Example 8,1,8,- `<IMEI>`: Product serial number of the module.,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -244,10 +244,10 @@ OK","获取模组的产品序列号,也就是IMEI号（International Mobile Equi
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+GSN,获取通信模组IMEI号,执行,AT+GSN,<CR><LF>OK<CR><LF>,,"AT+GSN
+1,Basic Commands,AT+GSN,Get Communication Module IMEI Number,Execute,AT+GSN,<CR><LF>OK<CR><LF>,,"AT+GSN
 
-OK","获取模组的产品序列号,也就是IMEI号（International Mobile Equipment Identity）。
-命令格式",说明示例9,1,9,- `<IMEI>`：模组的产品序列号，为15位数字。,"{
+OK","Obtain the product serial number of the module, which is the IMEI number (International Mobile Equipment Identity).
+Command Syntax",See Example 9,1,9,"- `<IMEI>`: Product serial number of the module, consisting of 15 digits.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -257,12 +257,12 @@ OK","获取模组的产品序列号,也就是IMEI号（International Mobile Equi
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CCID,获取SIM卡标识,执行,AT+CCID,<CR><LF>OK<CR><LF>,,"AT+CCID
+1,Basic Commands,AT+CCID,Get SIM Card Identifier,Execute,AT+CCID,<CR><LF>OK<CR><LF>,,"AT+CCID
 
-OK","获取SIM卡的ICCID。
-命令格式",说明示例10,1,10,"- `<ICCID>`：Integrate circuit card identity 集成电路卡识别码，即所插入卡的识别码
-ICCID为20位。
-  - `Integrate`: circuit card identity 集成电路卡识别码","{
+OK","Get the ICCID of the SIM card.
+Command Format",See Example 10,1,10,"- `<ICCID>`: Integrated circuit card identity, which is the identification code of the inserted card.
+ICCID is 20 digits.
+  - `Integrate`: circuit card identity","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -272,10 +272,10 @@ ICCID为20位。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CGMM,查询模组型号,执行,AT+CGMM,<CR><LF>OK<CR><LF>,,"AT+CGMM
+1,Basic Commands,AT+CGMM,Query Module Model,Execute,AT+CGMM,<CR><LF>OK<CR><LF>,,"AT+CGMM
 
-OK","查询模组型号。
-命令格式",说明示例11,1,11,- `<model>`：模组型号,"{
+OK","Query the module model.
+Command Format",See Example 11,1,11,- `<model>`: Module model,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -285,10 +285,10 @@ OK","查询模组型号。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+GMM,查询模组型号,执行,AT+GMM,<CR><LF>OK<CR><LF>,,"AT+GMM
+1,Basic Commands,AT+GMM,Query Module Model,Execute,AT+GMM,<CR><LF>OK<CR><LF>,,"AT+GMM
 
-OK","查询模组型号。
-命令格式",说明示例12,1,12,- `<model>`：模组型号。,"{
+OK","Query the module model.
+Command Format",See Example 12,1,12,- `<model>`: Module model.,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -298,11 +298,11 @@ OK","查询模组型号。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+IPR,设置模组波特率,执行,AT+IPR,<CR><LF>OK<CR><LF>,,"AT+IPR
+1,Basic Commands,AT+IPR,Set Module Baud Rate,Execute,AT+IPR,<CR><LF>OK<CR><LF>,,"AT+IPR
 
-OK","设置模组波特率,默认掉电保存。
-若波特率查询返回为0,表示模组波特率自适应。默认为波特率自适应（备注：自适应波特率不超过115200）。
-命令格式",说明示例13,1,13,"- `<baud rate>`：波特率
+OK","Set the module baud rate, saved by default when powered off.
+If the baud rate query returns 0, it indicates that the module baud rate is adaptive. The default is adaptive baud rate (Note: adaptive baud rate does not exceed 115200).
+Command Format",Example 13,1,13,"- `<baud rate>`: Baud rate
 (0,1200,2400,4800,9600,14400,19200,28800,38400,57600,115200,256000,512000,921600)","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
@@ -313,21 +313,21 @@ OK","设置模组波特率,默认掉电保存。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CFUN,设置模组功能,执行,AT+CFUN,<CR><LF>OK<CR><LF>,,"AT+CFUN
+1,Basic Commands,AT+CFUN,Set Module Function,Execute,AT+CFUN,<CR><LF>OK<CR><LF>,,"AT+CFUN
 
-OK","通过设置<fun>来选择模组的功能。<fun>只支持某些值。
-设置该参数后,掉电不保存。
-命令格式",说明示例14,1,14,"- `<fun>`：0：最小功能（turn off radio and SIM power）
-1：全功能（默认）
-4：关闭模组的发送和接收射频电路（飞行模式）
-9：升级功能（可通过上位机工具升级版本）
-  - `0`: 最小功能（turn off radio and SIM power）
-  - `1`: 全功能（默认）
-  - `4`: 关闭模组的发送和接收射频电路（飞行模式）
-  - `9`: 升级功能（可通过上位机工具升级版本）
+OK","Select the module's function by setting <fun>. <fun> only supports certain values.
+This parameter is not saved when powered off.
+Command Format",Example 14,1,14,"- `<fun>`: 0: Minimum function (turn off radio and SIM power)
+1: Full function (default)
+4: Turn off the module's RF transmission and reception circuits (flight mode)
+9: Upgrade function (can upgrade version via upper computer tool)
+  - `0`: Minimum function (turn off radio and SIM power)
+  - `1`: Full function (default)
+  - `4`: Turn off the module's RF transmission and reception circuits (flight mode)
+  - `9`: Upgrade function (can upgrade version via upper computer tool)
 
-- `<rst>`：0：do not reset the MT before setting it to <fun> power level
-1：reset the MT before setting it to <fun> power level
+- `<rst>`: 0: do not reset the MT before setting it to <fun> power level
+1: reset the MT before setting it to <fun> power level
   - `0`: do not reset the MT before setting it to <fun> power level
   - `1`: reset the MT before setting it to <fun> power level","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
@@ -339,58 +339,57 @@ OK","通过设置<fun>来选择模组的功能。<fun>只支持某些值。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CMUX,串口多路复用指令,执行,AT+CMUX,<CR><LF>OK<CR><LF>,,"AT+CMUX
+1,Basic Commands,AT+CMUX,Serial Port Multiplexing Command,Execute,AT+CMUX,<CR><LF>OK<CR><LF>,,"AT+CMUX
 
-OK","启用通信模组串口多路复用功能。
-基于一个物理通信串口,通过规范协议虚拟出两个甚至多个串口,一般虚拟三个串口,一个串口进行外部协议栈拨号上网,另外两个收发AT指令。建议使用AT+CMUX=0启用串口多路复用功能。
-建议使用AT+CMUX=0启用串口多路复用功能。
-命令格式",说明示例15,1,15,"- `<mode>`：整数类型，MUX打开状态下的模式，本规范中至少需要支持基本模式
-0：基本模式（默认值）
-1：增强模式（目前不支持）
-  - `0`: 基本模式（默认值）
-  - `1`: 增强模式（目前不支持）
+OK","Enable the communication module's serial port multiplexing function.
+Based on a physical communication serial port, virtualize two or even more serial ports through a standardized protocol, generally virtualizing three serial ports, one for external protocol stack dial-up internet access, and the other two for sending and receiving AT commands. It is recommended to use AT+CMUX=0 to enable the serial port multiplexing function.
+Command Format",Example 15,1,15,"- `<mode>`: Integer type, mode under MUX open state, at least basic mode needs to be supported in this specification
+0: Basic mode (default value)
+1: Enhanced mode (currently not supported)
+  - `0`: Basic mode (default value)
+  - `1`: Enhanced mode (currently not supported)
 
-- `<subset>`：整数类型，帧格式子集
-0：UIH frames used only（默认值）
-1：UI frames used only（目前不支持）
-2：目前不支持
-  - `0`: UIH frames used only（默认值）
-  - `1`: UI frames used only（目前不支持）
-  - `2`: 目前不支持
+- `<subset>`: Integer type, frame format subset
+0: UIH frames used only (default value)
+1: UI frames used only (currently not supported)
+2: Currently not supported
+  - `0`: UIH frames used only (default value)
+  - `1`: UI frames used only (currently not supported)
+  - `2`: Currently not supported
 
-- `<port_speed>`：整数类型，串口速率
-1：9600bit/s
-2：19200bit/s
-3：38400bit/s
-4：57600bit/s
-5：115200bit/s（默认值）
-6：230400bit/s
-7：目前不支持
-8：目前不支持
+- `<port_speed>`: Integer type, serial port speed
+1: 9600bit/s
+2: 19200bit/s
+3: 38400bit/s
+4: 57600bit/s
+5: 115200bit/s (default value)
+6: 230400bit/s
+7: Currently not supported
+8: Currently not supported
   - `1`: 9600bit/s
   - `2`: 19200bit/s
   - `3`: 38400bit/s
   - `4`: 57600bit/s
-  - `5`: 115200bit/s（默认值）
+  - `5`: 115200bit/s (default value)
   - `6`: 230400bit/s
-  - `7`: 目前不支持
-  - `8`: 目前不支持
+  - `7`: Currently not supported
+  - `8`: Currently not supported
 
-- `<N1>`：整数类型，最大帧长，1~32768；目前仅支持的设置范围为1~2048
-基本模式下默认值31
-增强模式下默认值64
+- `<N1>`: Integer type, maximum frame length, 1~32768; currently only supports the setting range of 1~2048
+Default value in basic mode is 31
+Default value in enhanced mode is 64
 
-- `<T1>`：整数类型，接收确认定时器，1~255，1代表10ms，默认值为10（100ms）
+- `<T1>`: Integer type, receive confirmation timer, 1~255, 1 represents 10ms, default value is 10 (100ms)
 
-- `<N2>`：整数类型，最大重连次数，0~100，默认值为3，目前仅支持0~5
+- `<N2>`: Integer type, maximum reconnection times, 0~100, default value is 3, currently only supports 0~5
 
-- `<T2>`：整数类型，多路控制通道响应定时器，2~255，2代表20ms，默认值为30（300ms）
+- `<T2>`: Integer type, multiplex control channel response timer, 2~255, 2 represents 20ms, default value is 30 (300ms)
 
-- `<T3>`：整数类型，唤醒响应定时器，1~255，1代表1s，默认值为10（10s）
-（目前不支持该参数，读命令时返回0值）
+- `<T3>`: Integer type, wake-up response timer, 1~255, 1 represents 1s, default value is 10 (10s)
+(Currently does not support this parameter, returns 0 value when reading the command)
 
-- `<k>`：整数类型，窗口大小，1~7，默认值为2，用于支持错误恢复的增强模式。
-（目前不支持该参数，读命令时返回0值）","{
+- `<k>`: Integer type, window size, 1~7, default value is 2, used to support error recovery in enhanced mode.
+(Currently does not support this parameter, returns 0 value when reading the command)","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -400,16 +399,16 @@ OK","启用通信模组串口多路复用功能。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CCLK,时钟管理,执行,AT+CCLK,<CR><LF>OK<CR><LF>,,"AT+CCLK
+1,Basic Commands,AT+CCLK,Clock Management,Execute,AT+CCLK,<CR><LF>OK<CR><LF>,,"AT+CCLK
 
-OK","设置和查询模组的实时时钟。
-设置的时间立即生效,掉电保存,默认时钟为0时区,使用1/4时区。
-命令格式",说明示例16,1,16,"- `<time>`：字符串，格式为 “yy/MM/dd,hh:mm:ss[TZ]”，指示年、月、日、小时、分钟、秒
-  - `格式为`: “yy/MM/dd
+OK","Set and query the module's real-time clock.
+The set time takes effect immediately, is saved during power off, and the default clock is in the 0 timezone, using 1/4 timezone.
+Command Format",Example 16,1,16,"- `<time>`: String, format is “yy/MM/dd,hh:mm:ss[TZ]”, indicating year, month, day, hour, minute, second
+  - `Format is`: “yy/MM/dd
   - `hh`: mm:ss[TZ]”
 
-- `TZ`：2位数字表示当地时间与GMT之间时差。
-该信息可选，只有当网络支持时该信息才显示。当地时间为GMT时间时不显示。","{
+- `TZ`: A 2-digit number representing the time difference between local time and GMT.
+This information is optional and will only be displayed if supported by the network. It will not be displayed when local time is GMT.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -419,24 +418,24 @@ OK","设置和查询模组的实时时钟。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CPIN,输入PIN码,执行,AT+CPIN,<CR><LF>OK<CR><LF>,,"AT+CPIN
+1,Basic Commands,AT+CPIN,Input PIN Code,Execute,AT+CPIN,<CR><LF>OK<CR><LF>,,"AT+CPIN
 
-OK","查询PIN状态以及输入PIN码。
-若要输入PIN码,需锁定当前SIM卡（AT+CLCK=""SC"",1,""1234""）后,重启模组才能输入PIN码,输入三次错误的PIN码后,会要求输入PUK码才能解锁。
-命令格式",说明示例17,1,17,"- `<pin>, <newpin>`：字符串类型
+OK","Query the PIN status and input the PIN code.
+To input the PIN code, the current SIM card must be locked (AT+CLCK=""SC"",1,""1234"") and the module must be restarted to input the PIN code. After three incorrect PIN entries, a PUK code will be required to unlock.
+Command Format",Example 17,1,17,"- `<pin>, <newpin>`: String type
 
-- `<code>`：READY：不需要输入任何密码
-NO SIM：未检测到卡
-SIM PIN：需要输入PIN码
-SIM PUK：需要输入PUK码
-SIM PIN2：需要输入PIN2码
-SIM PUK2：需要输入PUK2码
-  - `READY`: 不需要输入任何密码
-  - `NO SIM`: 未检测到卡
-  - `SIM PIN`: 需要输入PIN码
-  - `SIM PUK`: 需要输入PUK码
-  - `SIM PIN2`: 需要输入PIN2码
-  - `SIM PUK2`: 需要输入PUK2码","{
+- `<code>`: READY: No password required
+NO SIM: Card not detected
+SIM PIN: PIN code required
+SIM PUK: PUK code required
+SIM PIN2: PIN2 code required
+SIM PUK2: PUK2 code required
+  - `READY`: No password required
+  - `NO SIM`: Card not detected
+  - `SIM PIN`: PIN code required
+  - `SIM PUK`: PUK code required
+  - `SIM PIN2`: PIN2 code required
+  - `SIM PUK2`: PUK2 code required","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -446,51 +445,51 @@ SIM PUK2：需要输入PUK2码
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CLCK,PIN使能与查询功能指令,执行,AT+CLCK,<CR><LF>OK<CR><LF>,,"AT+CLCK
+1,Basic Commands,AT+CLCK,PIN Enable and Query Function Command,Execute,AT+CLCK,<CR><LF>OK<CR><LF>,,"AT+CLCK
 
-OK","锁、解锁以及查询MT和网络设备。设置该参数,重启模组后生效。
-命令格式",说明示例18,1,18,"- `<fac>`：需带双引号""""
-""OI""：呼出国际电话
-""SC""：SIM卡
-""AO""：呼出电话
-""OX""：除了归属地外所有呼出国际电话
-""FD""：SIM卡固定拨号空间
-  - `""OI""`: 呼出国际电话
-  - `""SC""`: SIM卡
-  - `""AO""`: 呼出电话
-  - `""OX""`: 除了归属地外所有呼出国际电话
-  - `""FD""`: SIM卡固定拨号空间
+OK","Lock, unlock, and query MT and network devices. Set this parameter, and it will take effect after restarting the module.
+Command Format",Example 18,1,18,"- `<fac>`: Must be enclosed in double quotes """"
+""OI"": Outgoing international calls
+""SC"": SIM card
+""AO"": Outgoing calls
+""OX"": All outgoing international calls except local
+""FD"": SIM card fixed dialing space
+  - `""OI""`: Outgoing international calls
+  - `""SC""`: SIM card
+  - `""AO""`: Outgoing calls
+  - `""OX""`: All outgoing international calls except local
+  - `""FD""`: SIM card fixed dialing space
 
-- `<mode>`：0：解锁
-1：锁定
-2：查询状态
-  - `0`: 解锁
-  - `1`: 锁定
-  - `2`: 查询状态
+- `<mode>`: 0: Unlock
+1: Lock
+2: Query status
+  - `0`: Unlock
+  - `1`: Lock
+  - `2`: Query status
 
-- `<status>`：0：not active
-1：active
+- `<status>`: 0: not active
+1: active
   - `0`: not active
   - `1`: active
 
-- `<passwd>`：密码或操作码，字符串类型，需带双引号""""
+- `<passwd>`: Password or operation code, string type, must be enclosed in double quotes """"
 
-- `<classx>`：1：语音服务类型
-2：数据服务类型
-4：fax服务类型
-8：短消息
-16：同步数据业务
-32：异步数据业务
-64：专用包接入
-128：专用数据包装拆器接入
-  - `1`: 语音服务类型
-  - `2`: 数据服务类型
-  - `4`: fax服务类型
-  - `8`: 短消息
-  - `16`: 同步数据业务
-  - `32`: 异步数据业务
-  - `64`: 专用包接入
-  - `128`: 专用数据包装拆器接入","{
+- `<classx>`: 1: Voice service type
+2: Data service type
+4: Fax service type
+8: Short message
+16: Synchronous data service
+32: Asynchronous data service
+64: Dedicated packet access
+128: Dedicated data packet dismantler access
+  - `1`: Voice service type
+  - `2`: Data service type
+  - `4`: Fax service type
+  - `8`: Short message
+  - `16`: Synchronous data service
+  - `32`: Asynchronous data service
+  - `64`: Dedicated packet access
+  - `128`: Dedicated data packet dismantler access","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -500,19 +499,19 @@ OK","锁、解锁以及查询MT和网络设备。设置该参数,重启模组后
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CPWD,修改密码指令,执行,AT+CPWD,<CR><LF>OK<CR><LF>,,"AT+CPWD
+1,Basic Commands,AT+CPWD,Change Password Command,Execute,AT+CPWD,<CR><LF>OK<CR><LF>,,"AT+CPWD
 
-OK","修改模组锁功能的密码。
-若需修改PIN码,需锁定SIM卡（AT+CLCK=""SC"",1,""1234""）后才能修改。
-命令格式",说明示例19,1,19,"- `<fac>`：需带双引号""""
-""P2""：SIM PIN2
-""SC""：SIM卡
+OK","Change the password for the module lock function.
+To change the PIN code, the SIM card must be locked first (AT+CLCK=""SC"",1,""1234"").
+Command Format",Example 19,1,19,"- `<fac>`: must be enclosed in double quotes """"
+""P2"": SIM PIN2
+""SC"": SIM card
   - `""P2""`: SIM PIN2
-  - `""SC""`: SIM卡
+  - `""SC""`: SIM card
 
-- `<oldpwd>`：需带双引号""""，旧密码或操作码，字符串类型
+- `<oldpwd>`: must be enclosed in double quotes """", old password or operation code, string type
 
-- `<newpwd>`：需带双引号""""，新密码或操作码，字符串类型","{
+- `<newpwd>`: must be enclosed in double quotes """", new password or operation code, string type","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -522,33 +521,33 @@ OK","修改模组锁功能的密码。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CGDCONT,设置PDP格式,执行,AT+CGDCONT,<CR><LF>OK<CR><LF>,,"AT+CGDCONT
+1,Basic Commands,AT+CGDCONT,Set PDP Format,Execute,AT+CGDCONT,<CR><LF>OK<CR><LF>,,"AT+CGDCONT
 
-OK","设置GPRS的PDP（Packet Data Protocol,分组数据协议）格式。APN允许设置的长度最长是50。
-命令格式",说明示例20,1,20,"- `<cid>`：(PDP Context Identifier)一个数字参数，指定一个PDP上下文定义，这个参数是当地的TE-MT接口并且被应用到其他PDP上下文相关的命令当中，使用查询命令可以查询到允许的值(最小值为1)。
-  - `(PDP`: Context Identifier)一个数字参数
-  - `这个参数是当地的TE`: MT接口并且被应用到其他PDP上下文相关的命令当中
+OK","Set the PDP (Packet Data Protocol) format for GPRS. The maximum length allowed for APN is 50.
+Command Format",Example 20,1,20,"- `<cid>`: (PDP Context Identifier) a numeric parameter that specifies a PDP context definition, this parameter is local to the TE-MT interface and is applied to other PDP context-related commands, allowed values can be queried using the query command (minimum value is 1).
+  - `(PDP`: Context Identifier) a numeric parameter
+  - `this parameter is local to the TE`: MT interface and is applied to other PDP context-related commands
 
-- `<PDP_type>`：(Packet Data Protocol type)字符串参数，用于指定分组数据协议的类型
-“IP”网络协议（Internet Protocol）（IETFSTD 5）
-  - `(Packet`: Data Protocol type)字符串参数
-  - `“IP”网络协议（Internet`: Protocol）（IETFSTD 5）
+- `<PDP_type>`: (Packet Data Protocol type) string parameter used to specify the type of packet data protocol
+""IP"" network protocol (Internet Protocol) (IETFSTD 5)
+  - `(Packet`: Data Protocol type) string parameter
+  - `""IP"" network protocol (Internet`: Protocol) (IETFSTD 5)
 
-- `<APN>`：(Access Point Name)字符串形式，是一个逻辑名称，用来选择GGSN或者外部分组数据网。
-  - `(Access`: Point Name)字符串形式
+- `<APN>`: (Access Point Name) in string form, is a logical name used to select GGSN or external packet data networks.
+  - `(Access`: Point Name) in string form
 
-- `<PDP_address>`：字符串形式，用来在地址空间中区分MT。
-如果不写这个参数，则在PDP的启动过程当中由TE提供这个值。
-如果TE提供失败，就请求动态地址，即使在PDP的启动过程当中分配了地址，在使用这条指令查询的时候仍然会返回空。
+- `<PDP_address>`: in string form, used to distinguish MT in the address space.
+If this parameter is not provided, the value will be provided by TE during the PDP startup process.
+If TE fails to provide it, a dynamic address will be requested, even if an address was allocated during the PDP startup process, it will still return empty when querying with this command.
 
-- `<d_comp>`：数字参数用来控制PDP数据压缩（仅适用于SNDCP）
-0 - off (缺省情况下默认值)
-  - `0`: off (缺省情况下默认值)
+- `<d_comp>`: numeric parameter used to control PDP data compression (only applicable to SNDCP)
+0 - off (default value)
+  - `0`: off (default value)
 
-- `<h_comp>`：数字参数用来控制PDP头部压缩0 - off (缺省情况下默认值)
-  - `数字参数用来控制PDP头部压缩0`: off (缺省情况下默认值)
+- `<h_comp>`: numeric parameter used to control PDP header compression 0 - off (default value)
+  - `numeric parameter used to control PDP header compression 0`: off (default value)
 
-- `<pd1>, … <pdN>`：0到N，字符串类型，意义与<PDP_type>有关","{
+- `<pd1>, … <pdN>`: 0 to N, string type, related to the meaning of <PDP_type>","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -558,29 +557,29 @@ OK","设置GPRS的PDP（Packet Data Protocol,分组数据协议）格式。APN�
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+XGAUTH,用户认证,执行,AT+XGAUTH,<CR><LF>OK<CR><LF>,,"AT+XGAUTH
+1,Basic Commands,AT+XGAUTH,User Authentication,Execute,AT+XGAUTH,<CR><LF>OK<CR><LF>,,"AT+XGAUTH
 
-OK","PDP认证。
-该指令要放在AT+CGDCONT这条指令后面。目前在专网中各个地方逐渐增加了用户身份认证需求,使用内部协议栈,需要使用到这条指令,因此,请在代码流程上加上这条指令。
-联通卡默认用户名和密码是“card”和“card”。
-<cid>对应+CGDCONT中的<cid>。
-<name>和<pwd>允许设置的最大字符串长度都是50
-命令格式",说明示例21,1,21,"- `<cid>`：(PDP Context Identifier)一个数字参数，指定一个PDP上下文定义
-<cid>对应+CGDCONT中的<cid>。
-  - `(PDP`: Context Identifier)一个数字参数
+OK","PDP authentication.
+This command should be placed after the AT+CGDCONT command. Currently, there is a growing demand for user identity authentication in various places within private networks, using the internal protocol stack, this command needs to be used, so please add this command in the code flow.
+The default username and password for Unicom cards are ""card"" and ""card"".
+<cid> corresponds to <cid> in +CGDCONT.
+The maximum string length allowed for <name> and <pwd> is 50.
+Command Format",Example 21,1,21,"- `<cid>`: (PDP Context Identifier) a numeric parameter that specifies a PDP context definition
+<cid> corresponds to <cid> in +CGDCONT.
+  - `(PDP`: Context Identifier) a numeric parameter
 
-- `<auth>`：鉴权类型，默认为1
-0：NONE
-1：PAP
-2：CHAP
-鉴权类型为非NONE时，需带<name>和<pwd>参数
+- `<auth>`: authentication type, default is 1
+0: NONE
+1: PAP
+2: CHAP
+When the authentication type is not NONE, <name> and <pwd> parameters must be included
   - `0`: NONE
   - `1`: PAP
   - `2`: CHAP
 
-- `<name>`：用户名
+- `<name>`: username
 
-- `<pwd>`：密码","{
+- `<pwd>`: password","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -590,17 +589,17 @@ OK","PDP认证。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CGATT,设置GPRS附着和分离,执行,AT+CGATT,<CR><LF>OK<CR><LF>,,"AT+CGATT
+1,Basic Commands,AT+CGATT,Set GPRS Attach and Detach,Execute,AT+CGATT,<CR><LF>OK<CR><LF>,,"AT+CGATT
 
-OK","该指令用来查询、设置GPRS附着和分离。掉电不保存。
-模组默认情况下,会主动进行GPRS附着。
-进行PPP连接之前要确保GPRS是处于附着状态,AT流程增加查询指令AT+CGATT?：
-如果返回值是1,则可以直接进行PPP连接,如果返回值是0,则需进行手动附着,即AT+CGATT=1。
-命令格式",说明示例22,1,22,"- `<state>`：取值范围（0,1）
-0：表示分离
-1：表示附着
-  - `0`: 表示分离
-  - `1`: 表示附着","{
+OK","This command is used to query and set GPRS attach and detach. It does not persist after power off.
+By default, the module actively performs GPRS attach.
+Before establishing a PPP connection, ensure that GPRS is in the attached state. Add the query command AT+CGATT?:
+If the return value is 1, you can directly proceed with the PPP connection; if the return value is 0, manual attachment is required, i.e., AT+CGATT=1.
+Command Format",Example 22,1,22,"- `<state>`: Value range (0,1)
+0: Indicates detach
+1: Indicates attach
+  - `0`: Indicates detach
+  - `1`: Indicates attach","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -610,16 +609,16 @@ OK","该指令用来查询、设置GPRS附着和分离。掉电不保存。
 ""1"": ""支持""
 }
 }"
-1,基础命令,ATE1,/ATE0：打开&关闭回显,执行,ATE1,<CR><LF>OK<CR><LF>,,"ATE1
+1,Basic Commands,ATE1,/ATE0: Turn On & Off Echo,Execute,ATE1,<CR><LF>OK<CR><LF>,,"ATE1
 
-OK","打开（或关闭）模组AT指令回显功能。
-该模组默认回显功能为打开状态。
-该指令设置后掉电不保存。
-命令格式",说明示例23,1,23,"- `<value>`：回显开关
-0 关闭回显（默认）
-1 打开回显
-  - `0`: 关闭回显（默认）
-  - `1`: 打开回显","{
+OK","Turn on (or off) the module's AT command echo function.
+The module's default echo function is in the on state.
+This setting does not persist after power off.
+Command Format",Example 23,1,23,"- `<value>`: Echo switch
+0 Turn off echo (default)
+1 Turn on echo
+  - `0`: Turn off echo (default)
+  - `1`: Turn on echo","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -629,11 +628,11 @@ OK","打开（或关闭）模组AT指令回显功能。
 ""1"": ""支持""
 }
 }"
-1,基础命令,ATD,*99#：GPRS,执行,ATD,<CR><LF>OK<CR><LF>,,"ATD
+1,Basic Commands,ATD,*99#: GPRS,Execute,ATD,<CR><LF>OK<CR><LF>,,"ATD
 
-OK","使用外部协议栈,进行GPRS拨号连接。
-进行拨号之前一定要确保CREG已经注册成功,并且设置了APN。
-命令格式",说明示例24,0,24,,"{
+OK","Use an external protocol stack to perform GPRS dialing connection.
+Before dialing, ensure that CREG has registered successfully and that the APN is set.
+Command Format",Example 24,0,24,,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -643,17 +642,17 @@ OK","使用外部协议栈,进行GPRS拨号连接。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+CESQ,扩展信号强度,执行,AT+CESQ,<CR><LF>OK<CR><LF>,,"AT+CESQ
+1,Basic Commands,AT+CESQ,Extended Signal Strength,Execute,AT+CESQ,<CR><LF>OK<CR><LF>,,"AT+CESQ
 
-OK",查询扩展信号强度。,说明示例25,1,25,"- `<rxlev>`：信号接收功率
+OK",Query extended signal strength.,See Example 25,1,25,"- `<rxlev>`: Signal reception power
 
-- `<ber>`：误码率
+- `<ber>`: Bit error rate
 
-- `<ecno>`：下行载波干扰比率
+- `<ecno>`: Downlink carrier interference ratio
 
-- `<rsrq>`：参考信号质量
+- `<rsrq>`: Reference signal quality
 
-- `<rsrp>`：参考信号接收功率","{
+- `<rsrp>`: Reference signal reception power","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -663,16 +662,16 @@ OK",查询扩展信号强度。,说明示例25,1,25,"- `<rxlev>`：信号接收�
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+NWDNS,域名解析,执行,AT+NWDNS,<CR><LF>OK<CR><LF>,,"AT+NWDNS
+1,Basic Commands,AT+NWDNS,Domain Name Resolution,Execute,AT+NWDNS,<CR><LF>OK<CR><LF>,,"AT+NWDNS
 
-OK","内置协议栈拨号后,查询DNS解析结果。
-先使用AT+XIIC命令拨号成功后,才能执行该命令。
-域名填入不校验正确性,需保证填入内容的正确性。
-命令格式",说明示例26,1,26,"- `<hostname>`：字符串，域名，可不带双引号，最大长度128
+OK","After dialing with the built-in protocol stack, query the DNS resolution result.
+This command can only be executed after successfully dialing with AT+XIIC command.
+The domain name is not validated for correctness; ensure the correctness of the input content.
+Command format",See Example 26,1,26,"- `<hostname>`: String, domain name, can be without double quotes, maximum length 128
 
-- `<IP>`：字符串，IP地址
+- `<IP>`: String, IP address
 
-- `<Sign>`：字符串，IP类型，IPV4，IPV6","{
+- `<Sign>`: String, IP type, IPV4, IPV6","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -682,22 +681,22 @@ OK","内置协议栈拨号后,查询DNS解析结果。
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+NWENPWRSAVE,休眠（Sleep）设置,执行,AT+NWENPWRSAVE,<CR><LF>OK<CR><LF>,,"AT+NWENPWRSAVE
+1,Basic Commands,AT+NWENPWRSAVE,Sleep Setting,Execute,AT+NWENPWRSAVE,<CR><LF>OK<CR><LF>,,"AT+NWENPWRSAVE
 
-OK","设置是否允许模组进入休眠（Sleep）模式。该命令设置掉电不保存。
-模组DTR信号默认为低电平：
-发送允许进入休眠模式指令之后,且模组DTR信号为低（或高）电平,模组内部各个部分的电路都允许进入休眠状态模组才能进入休眠。
-命令格式",说明示例27,1,27,"- `<n>`：0：不允许进入休眠模式（默认）
-1：允许进入休眠模式（DTR信号低电平进入休眠，高电平退出休眠）
-2：允许进入休眠模式（DTR信号高电平进入休眠，低电平退出休眠）
-  - `0`: 不允许进入休眠模式（默认）
-  - `1`: 允许进入休眠模式（DTR信号低电平进入休眠
-  - `2`: 允许进入休眠模式（DTR信号高电平进入休眠
+OK","Set whether to allow the module to enter sleep mode. This command does not save settings after power off.
+The module DTR signal is low by default:
+After sending the command to allow entering sleep mode, and the module DTR signal is low (or high), all circuits of the module must be allowed to enter sleep state for the module to enter sleep.
+Command format",See Example 27,1,27,"- `<n>`: 0: Do not allow entering sleep mode (default)
+1: Allow entering sleep mode (DTR signal low level enters sleep, high level exits sleep)
+2: Allow entering sleep mode (DTR signal high level enters sleep, low level exits sleep)
+  - `0`: Do not allow entering sleep mode (default)
+  - `1`: Allow entering sleep mode (DTR signal low level enters sleep
+  - `2`: Allow entering sleep mode (DTR signal high level enters sleep
 
-- `<usb>`：0：不允许USB远程休眠唤醒（缺省）
-1：使能USB远程休眠唤醒（USB主机挂起USB总线模组才能进入休眠，USB主机恢复USB总线会唤醒模组，有网络下行事件（数据、短信、电话）时模组会通过USB总线唤醒USB主机）
-  - `0`: 不允许USB远程休眠唤醒（缺省）
-  - `1`: 使能USB远程休眠唤醒（USB主机挂起USB总线模组才能进入休眠","{
+- `<usb>`: 0: Do not allow USB remote sleep wakeup (default)
+1: Enable USB remote sleep wakeup (the module can only enter sleep when the USB host suspends the USB bus; waking the module will occur when the USB host resumes the USB bus, and the module will wake the USB host on downlink network events (data, SMS, call))
+  - `0`: Do not allow USB remote sleep wakeup (default)
+  - `1`: Enable USB remote sleep wakeup (the module can only enter sleep when the USB host suspends the USB bus)","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -707,15 +706,15 @@ OK","设置是否允许模组进入休眠（Sleep）模式。该命令设置掉�
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+NWPWROFF,模组关机指令,执行,AT+NWPWROFF,<CR><LF>OK<CR><LF>,,"AT+NWPWROFF
+1,Basic Commands,AT+NWPWROFF,Module Power Off Command,Execute,AT+NWPWROFF,<CR><LF>OK<CR><LF>,,"AT+NWPWROFF
 
-OK","模组关机指令。发送 AT+NWPWROFF 之前,需悬空或拉高模组 POWERKEY 管脚电平。返回 OK 后,若需重新开机,可拉低 POWERKEY 管脚电平。
-命令格式",说明示例28,1,28,"- `<n>`：关机选项，数值形式，取值如下：
-0：快速关机
-1：正常流程关机
-  - `取值如下`: 
-  - `0`: 快速关机
-  - `1`: 正常流程关机","{
+OK","Module power off command. Before sending AT+NWPWROFF, the POWERKEY pin level of the module must be suspended or pulled high. After returning OK, if a reboot is needed, the POWERKEY pin level can be pulled low.
+Command Format",Example 28,1,28,"- `<n>`: Power off option, in numeric form, with the following values:
+0: Quick power off
+1: Normal process power off
+  - `Values are as follows`: 
+  - `0`: Quick power off
+  - `1`: Normal process power off","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -725,75 +724,75 @@ OK","模组关机指令。发送 AT+NWPWROFF 之前,需悬空或拉高模组 POW
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+NWRFTEST,模组强发强收指令（仅可用于测试）,执行,AT+NWRFTEST,<CR><LF>OK<CR><LF>,,"AT+NWRFTEST
+1,Basic Commands,AT+NWRFTEST,Module Strong Transmit and Receive Command (For Testing Only),Execute,AT+NWRFTEST,<CR><LF>OK<CR><LF>,,"AT+NWRFTEST
 
-OK","用于在测试模式下验证模组强发强收功能,只能测试每个频段的中心频点的发射功率和接收功率精度。由于平台限制,强收强发测试精度均有一些误差。
-强发测试只能验证最大发射功率23db和10db,其他值无法验证。
-命令格式",说明示例29,1,29,"- `<rftest_mode>`：0：退出强发强收测试模式
-1：进入强发强收测试模式
-  - `0`: 退出强发强收测试模式
-  - `1`: 进入强发强收测试模式
+OK","Used to verify the module's strong transmit and receive capabilities in test mode, only testing the transmit power and receive power accuracy at the center frequency of each frequency band. Due to platform limitations, there are some errors in the accuracy of strong receive and transmit tests.
+Strong transmit testing can only verify maximum transmit power of 23dB and 10dB, other values cannot be verified.
+Command Format",Example 29,1,29,"- `<rftest_mode>`: 0: Exit strong transmit and receive test mode
+1: Enter strong transmit and receive test mode
+  - `0`: Exit strong transmit and receive test mode
+  - `1`: Enter strong transmit and receive test mode
 
-- `<rat>`：1：LTE 当前仅支持rat为LTE 的测试
-  - `1`: LTE 当前仅支持rat为LTE 的测试
+- `<rat>`: 1: LTE currently only supports testing with rat as LTE
+  - `1`: LTE currently only supports testing with rat as LTE
 
-- `<band>`：频段指示
-1：LTE band 1
-2：LTE band 2
+- `<band>`: Frequency band indication
+1: LTE band 1
+2: LTE band 2
   - `1`: LTE band 1
   - `2`: LTE band 2
 
-- `<bw>`：带宽，平台限制，当前仅支持bw传入为0
+- `<bw>`: Bandwidth, platform limitation, currently only supports bw input as 0
 
-- `<channel>`：频点信息（平台限制，当前仅支持每个频段的中心频点，默认值0 即表示中心频点），各频段中心频点信息如下：
-LTE Band 1：上行频点18300   下行频点300
-LTE Band 2：上行频点18900下行频点900
-LTE Band 3：上行频点19500下行频点1575
-LTE Band 4：上行频点20175下行频点2175
-LTE Band 5：上行频点20525下行频点2525
-LTE Band 6：上行频点20700下行频点2700
-LTE Band 7：上行频点21100下行频点3100
-LTE Band 8：上行频点12625下行频点3625
-LTE Band 20：上行频点24300下行频点6300
-LTE Band 28：上行频点27435下行频点9435
-LTE Band 34：上行频点36275下行频点36275
-LTE Band 38：上行频点38000下行频点38000
-LTE Band 39：上行频点38450下行频点38450
-LTE Band 40：上行频点39150下行频点39150
-LTE Band 41：上行频点40620下行频点40620
-LTE Band 66：上行频点59250下行频点59350
-  - `默认值0`: 即表示中心频点）
-  - `各频段中心频点信息如下`: 
-  - `LTE Band 1`: 上行频点18300   下行频点300
-  - `LTE Band 2`: 上行频点18900下行频点900
-  - `LTE Band 3`: 上行频点19500下行频点1575
-  - `LTE Band 4`: 上行频点20175下行频点2175
-  - `LTE Band 5`: 上行频点20525下行频点2525
-  - `LTE Band 6`: 上行频点20700下行频点2700
-  - `LTE Band 7`: 上行频点21100下行频点3100
-  - `LTE Band 8`: 上行频点12625下行频点3625
-  - `LTE Band 20`: 上行频点24300下行频点6300
-  - `LTE Band 28`: 上行频点27435下行频点9435
-  - `LTE Band 34`: 上行频点36275下行频点36275
-  - `LTE Band 38`: 上行频点38000下行频点38000
-  - `LTE Band 39`: 上行频点38450下行频点38450
-  - `LTE Band 40`: 上行频点39150下行频点39150
-  - `LTE Band 41`: 上行频点40620下行频点40620
-  - `LTE Band 66`: 上行频点59250下行频点59350
+- `<channel>`: Frequency point information (platform limitation, currently only supports the center frequency of each band, default value 0 indicates center frequency), center frequency information for each band is as follows:
+LTE Band 1: Uplink frequency 18300   Downlink frequency 300
+LTE Band 2: Uplink frequency 18900 Downlink frequency 900
+LTE Band 3: Uplink frequency 19500 Downlink frequency 1575
+LTE Band 4: Uplink frequency 20175 Downlink frequency 2175
+LTE Band 5: Uplink frequency 20525 Downlink frequency 2525
+LTE Band 6: Uplink frequency 20700 Downlink frequency 2700
+LTE Band 7: Uplink frequency 21100 Downlink frequency 3100
+LTE Band 8: Uplink frequency 12625 Downlink frequency 3625
+LTE Band 20: Uplink frequency 24300 Downlink frequency 6300
+LTE Band 28: Uplink frequency 27435 Downlink frequency 9435
+LTE Band 34: Uplink frequency 36275 Downlink frequency 36275
+LTE Band 38: Uplink frequency 38000 Downlink frequency 38000
+LTE Band 39: Uplink frequency 38450 Downlink frequency 38450
+LTE Band 40: Uplink frequency 39150 Downlink frequency 39150
+LTE Band 41: Uplink frequency 40620 Downlink frequency 40620
+LTE Band 66: Uplink frequency 59250 Downlink frequency 59350
+  - `Default value 0`: indicates center frequency)
+  - `Center frequency information for each band is as follows`: 
+  - `LTE Band 1`: Uplink frequency 18300   Downlink frequency 300
+  - `LTE Band 2`: Uplink frequency 18900 Downlink frequency 900
+  - `LTE Band 3`: Uplink frequency 19500 Downlink frequency 1575
+  - `LTE Band 4`: Uplink frequency 20175 Downlink frequency 2175
+  - `LTE Band 5`: Uplink frequency 20525 Downlink frequency 2525
+  - `LTE Band 6`: Uplink frequency 20700 Downlink frequency 2700
+  - `LTE Band 7`: Uplink frequency 21100 Downlink frequency 3100
+  - `LTE Band 8`: Uplink frequency 12625 Downlink frequency 3625
+  - `LTE Band 20`: Uplink frequency 24300 Downlink frequency 6300
+  - `LTE Band 28`: Uplink frequency 27435 Downlink frequency 9435
+  - `LTE Band 34`: Uplink frequency 36275 Downlink frequency 36275
+  - `LTE Band 38`: Uplink frequency 38000 Downlink frequency 38000
+  - `LTE Band 39`: Uplink frequency 38450 Downlink frequency 38450
+  - `LTE Band 40`: Uplink frequency 39150 Downlink frequency 39150
+  - `LTE Band 41`: Uplink frequency 40620 Downlink frequency 40620
+  - `LTE Band 66`: Uplink frequency 59250 Downlink frequency 59350
 
-- `<chain_idx>`：不适用，直接填入默认值0
+- `<chain_idx>`: Not applicable, directly fill in default value 0
 
-- `<expected_rxagc>`：预期接收功率，为负值
+- `<expected_rxagc>`: Expected receive power, as a negative value
 
-- `<tx_enable>,`：强发测试设置为1，强收测试设置为0
+- `<tx_enable>,`: Strong transmit test set to 1, strong receive test set to 0
 
-- `<tx_power>`：发射功率，平台限制，当前仅支持传入23和10，分别表示最大发射功率23db和发射功率10db
+- `<tx_power>`: Transmit power, platform limitation, currently only supports input of 23 and 10, representing maximum transmit power of 23dB and transmit power of 10dB respectively
 
-- `<lte_start_rb>`：不适用，直接填入默认值0
+- `<lte_start_rb>`: Not applicable, directly fill in default value 0
 
-- `<lte_num_rb>`：不适用，直接填入默认值0
+- `<lte_num_rb>`: Not applicable, directly fill in default value 0
 
-- `<waveform>`：不适用，直接填入默认值0","{
+- `<waveform>`: Not applicable, directly fill in default value 0","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -803,10 +802,10 @@ LTE Band 66：上行频点59250下行频点59350
 ""1"": ""支持""
 }
 }"
-1,基础命令,AT+NSTGETRSSI,获取强收模式下模组的接收功率（仅可用于测试）,执行,AT+NSTGETRSSI,<CR><LF>OK<CR><LF>,,"AT+NSTGETRSSI
+1,Basic Commands,AT+NSTGETRSSI,Get Receive Power of the Module in Strong Receive Mode (For Testing Only),Execute,AT+NSTGETRSSI,<CR><LF>OK<CR><LF>,,"AT+NSTGETRSSI
 
-OK","用于在测试模式下验证模组的接收功率,强收测试精度会有一些误差。
-命令格式",说明示例30,1,30,- `<value>`：接收功率,"{
+OK","Used to verify the module's receive power in test mode, strong receive test accuracy will have some errors.
+Command Format",Example 30,1,30,- `<value>`: Receive power,"{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -816,7 +815,7 @@ OK","用于在测试模式下验证模组的接收功率,强收测试精度会�
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CSMS,选择短信服务,执行;查询;测试,AT+CSMS=<service><CR>;AT+CSMS?<CR>;AT+CSMS=?<CR>,"<CR><LF>+CSMS: <mt>,<mo>,<bm>
+2,SMS Command,AT+CSMS,Select SMS Service,Execute; Query; Test,AT+CSMS=<service><CR>;AT+CSMS?<CR>;AT+CSMS=?<CR>,"<CR><LF>+CSMS: <mt>,<mo>,<bm>
 <CR><LF>OK<CR><LF>
 Or
 <CR><LF>ERROR<CR><LF>,<CR><LF>+CSMS: <service>,<mt>,<mo>,<bm>
@@ -840,56 +839,56 @@ OK
 AT+CSMS=?
 
 +CSMS: (0,1)
-OK",用于支持的短消息包括：发送（SMS-MO）、接收（SMS-MT）、小区广播（SMS-CB）。,支持多种短消息服务类型,1,2,"{
-""<service>"": {""__desc__"": ""短信服务模式选择"",
+OK","Supported short messages include: sending (SMS-MO), receiving (SMS-MT), cell broadcast (SMS-CB).",Supports multiple short message service types,1,2,"{
+""<service>"": {""__desc__"": ""SMS service mode selection"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
 },
-""<mt>,<mo>,<bm>"": {""__desc__"": ""下行/上行/广播支持"",
-""0"": ""不支持"",
-""1"": ""支持""
+""<mt>,<mo>,<bm>"": {""__desc__"": ""Downlink/Uplink/Broadcast support"",
+""0"": ""Not supported"",
+""1"": ""Supported""
 }
 }","{
-""<service>"": {""__desc__"": ""短信服务模式选择"",
+""<service>"": {""__desc__"": ""SMS service mode selection"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
 },
-""<mt>,<mo>,<bm>"": {""__desc__"": ""下行/上行/广播支持"",
-""0"": ""示例"",
-""1"": ""示例""
+""<mt>,<mo>,<bm>"": {""__desc__"": ""Downlink/Uplink/Broadcast support"",
+""0"": ""Not supported"",
+""1"": ""Supported""
 }
 }"
-2,SMS命令,AT+CPMS,首选短信存储器,执行,AT+CPMS,<CR><LF>OK<CR><LF>,,"AT+CPMS
+2,SMS Command,AT+CPMS,Preferred SMS Storage,Execute,AT+CPMS,<CR><LF>OK<CR><LF>,,"AT+CPMS
 
-OK","用于首选短信存储器。
-命令格式",说明示例32,1,32,"- `<mem1>
+OK","For preferred SMS storage.
+Command format",See example 32,1,32,"- `<mem1>
 <mem2>
 <mem3>
-""SM""：
-""ME""：
-""MT""：`：读取和删除 SMS 时使用的存储器,字符串类型
-存储和发送 SMS 时使用的存储器
-若没有建立到 TE 的路由，则将接收的 SMS 存储在该存储器内
-SIM 卡 SMS 存储器
-ME SMS 存储器
-SIM 卡和 ME SMS 存储器
-  - `读取和删除`: SMS 时使用的存储器
-  - `存储和发送`: SMS 时使用的存储器
-  - `若没有建立到`: TE 的路由
-  - `则将接收的`: SMS 存储在该存储器内
-  - `SIM`: 卡和 ME SMS 存储器
-  - `ME`: SMS 存储器
+""SM"":
+""ME"":
+""MT"":`:Memory used for reading and deleting SMS, string type
+Memory used for storing and sending SMS
+If there is no route established to TE, the received SMS will be stored in this memory
+SIM card SMS storage
+ME SMS storage
+SIM card and ME SMS storage
+  - `Read and delete`: Memory used for SMS
+  - `Store and send`: Memory used for SMS
+  - `If there is no established`: route to TE
+  - `then the received`: SMS will be stored in this memory
+  - `SIM`: card and ME SMS storage
+  - `ME`: SMS storage
 
-- `<mem1>`：字符串类型, 例如：""SM"", ""ME""
-""SM""：SIM only
-""ME""：ME only
-  - `例如`: ""SM""
+- `<mem1>`: string type, e.g.: ""SM"", ""ME""
+""SM"": SIM only
+""ME"": ME only
+  - `For example`: ""SM""
   - `""SM""`: SIM only
   - `""ME""`: ME only
 
-- `<used>`：已使用数目。
+- `<used>`: Number of used.
 
-- `<total>`：存储器总容量数目。","{
+- `<total>`: Total capacity of the memory.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -899,13 +898,13 @@ SIM 卡和 ME SMS 存储器
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGF,设置短消息模式,执行,AT+CMGF,<CR><LF>OK<CR><LF>,,"AT+CMGF
+2,SMS Command,AT+CMGF,Set Short Message Mode,Execute,AT+CMGF,<CR><LF>OK<CR><LF>,,"AT+CMGF
 
-OK","设置短信的输入模式。
-命令格式",说明示例33,1,33,"- `<mode>`：0：PDU模式(默认)
-1：文本模式
-  - `0`: PDU模式(默认)
-  - `1`: 文本模式","{
+OK","Set the input mode for SMS.
+Command format",See example 33,1,33,"- `<mode>`: 0: PDU mode (default)
+1: Text mode
+  - `0`: PDU mode (default)
+  - `1`: Text mode","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -915,20 +914,20 @@ OK","设置短信的输入模式。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CSCS,设置TE字符集,执行,AT+CSCS,<CR><LF>OK<CR><LF>,,"AT+CSCS
+2,SMS Command,AT+CSCS,Set TE Character Set,Execute,AT+CSCS,<CR><LF>OK<CR><LF>,,"AT+CSCS
 
-OK","设置TE字符集格式。
-命令格式",说明示例34,1,34,"- `<chset>`：""GSM""：GSM默认字母表（GSM03.38.6.2.1）
-""IRA""：国际参考字母表(international reference alphabet)(ITU-T T.50)
-""UCS2""：16-bit universal multiple-octet coded character set (USO/IEC10646)。UCS2字符串被转换成一个十六进制数（0x0000～0xFFFF），只有在相应语句中的字符串才用UCS2编码，其余的命令和响应仍旧是IRA字母表格式的。
-""PCCP936""：等同GBK编码格式
-""IRA""：国际参考字母表(international reference alphabet)(ITU-T T.50)
-""UTF-8""：针对Unicode的一种可变长度字符编码
-  - `""GSM""`: GSM默认字母表（GSM03.38.6.2.1）
-  - `""IRA""`: 国际参考字母表(international reference alphabet)(ITU-T T.50)
-  - `""UCS2""`: 16-bit universal multiple-octet coded character set (USO/IEC10646)。UCS2字符串被转换成一个十六进制数（0x0000～0xFFFF）
-  - `""PCCP936""`: 等同GBK编码格式
-  - `""UTF-8""`: 针对Unicode的一种可变长度字符编码","{
+OK","Set the format of the TE character set.
+Command Format",Example 34,1,34,"- `<chset>`: ""GSM"": GSM default alphabet (GSM03.38.6.2.1)
+""IRA"": International Reference Alphabet (ITU-T T.50)
+""UCS2"": 16-bit universal multiple-octet coded character set (USO/IEC10646). UCS2 strings are converted into a hexadecimal number (0x0000～0xFFFF), only the strings in the corresponding statement are encoded in UCS2, while the rest of the commands and responses remain in IRA alphabet format.
+""PCCP936"": Equivalent to GBK encoding format
+""IRA"": International Reference Alphabet (ITU-T T.50)
+""UTF-8"": A variable-length character encoding for Unicode
+  - `""GSM""`: GSM default alphabet (GSM03.38.6.2.1)
+  - `""IRA""`: International Reference Alphabet (ITU-T T.50)
+  - `""UCS2""`: 16-bit universal multiple-octet coded character set (USO/IEC10646). UCS2 strings are converted into a hexadecimal number (0x0000～0xFFFF)
+  - `""PCCP936""`: Equivalent to GBK encoding format
+  - `""UTF-8""`: A variable-length character encoding for Unicode","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -938,50 +937,50 @@ OK","设置TE字符集格式。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CNMI,设置短信指示格式,执行,AT+CNMI,<CR><LF>OK<CR><LF>,,"AT+CNMI
+2,SMS Command,AT+CNMI,Set SMS Indication Format,Execute,AT+CNMI,<CR><LF>OK<CR><LF>,,"AT+CNMI
 
-OK","设置模组从网络接收到短信息后如何通知用户。
-命令格式",说明示例35,1,35,"- `<mode>`：设置收到短信后向用户发送的指示方式。
-0：短信指示代码在模组中缓存,如果TA已满，代码可存贮在其它地方或者将最旧的代码丢弃，并用最新接收到的代码去替代。
-1：当On-line State时，舍弃保存的短信指示代码并拒绝新的指示代码，其它情况下，直接将代码显示在终端设备上。
-2：当模组在On-line State时，短信指示代码在模组中缓存，当连接释放后，将短信指示代码通过串口输出，在其他state下，直接将代码显示在终端设备上。
-3：当模组在On-line State时，短信指示代码和其它数据一起传输，代码显示在终端设备上。
-  - `0`: 短信指示代码在模组中缓存
-  - `1`: 当On-line State时
-  - `2`: 当模组在On-line State时
-  - `3`: 当模组在On-line State时
+OK","Set how the module notifies the user after receiving a short message from the network.
+Command Format",Example 35,1,35,"- `<mode>`: Set the indication method sent to the user after receiving an SMS.
+0: SMS indication codes are cached in the module; if the TA is full, codes can be stored elsewhere or the oldest code can be discarded and replaced with the latest received code.
+1: When in On-line State, discard the saved SMS indication codes and reject new indication codes; otherwise, directly display the codes on the terminal device.
+2: When the module is in On-line State, SMS indication codes are cached in the module; after the connection is released, the SMS indication codes are output through the serial port; in other states, directly display the codes on the terminal device.
+3: When the module is in On-line State, SMS indication codes are transmitted along with other data, and the codes are displayed on the terminal device.
+  - `0`: SMS indication codes are cached in the module
+  - `1`: When in On-line State
+  - `2`: When the module is in On-line State
+  - `3`: When the module is in On-line State
 
-- `<mt>`：设置新短信指示代码的格式，默认值为0
-0：不向终端发送新短信指示代码。
-1：新短信指示代码格式为+CMTI: ""MT"",<index>，短信内容存贮而不直接显示。
-2：新短信指示代码格式为+CMT: <oa>,<scts>,<tooa>,<lang>,<encod>,<priority>
-[,<cbn>],<length><CR><LF><CR><LF><data>(文本模式)，短信内容直接显示而不存贮。
-3：使用<mt>=2所定义的主动上报代码直接将短信指示代码传送到终端设备，其它模式的信息指示代码和<mt>=1相同。
-  - `0`: 不向终端发送新短信指示代码。
-  - `1`: 新短信指示代码格式为+CMTI: ""MT""
-  - `2`: 新短信指示代码格式为+CMT: <oa>
-  - `3`: 使用<mt>=2所定义的主动上报代码直接将短信指示代码传送到终端设备
+- `<mt>`: Set the format of the new SMS indication code, default value is 0
+0: Do not send new SMS indication codes to the terminal.
+1: New SMS indication code format is +CMTI: ""MT"",<index>, SMS content is stored but not directly displayed.
+2: New SMS indication code format is +CMT: <oa>,<scts>,<tooa>,<lang>,<encod>,<priority>
+[,<cbn>],<length><CR><LF><CR><LF><data> (text mode), SMS content is directly displayed but not stored.
+3: Use the active reporting code defined by <mt>=2 to directly send the SMS indication code to the terminal device; other modes have the same indication code as <mt>=1.
+  - `0`: Do not send new SMS indication codes to the terminal.
+  - `1`: New SMS indication code format is +CMTI: ""MT""
+  - `2`: New SMS indication code format is +CMT: <oa>
+  - `3`: Use the active reporting code defined by <mt>=2 to directly send the SMS indication code to the terminal device
 
-- `<bm>`：设置新小区广播指示代码的格式，默认值为1。
-0：不发送新小区广播的指示信息，小区广播也不会存贮
-2：新小区广播指示代码格式为+CBM: <oa>,[<alpha>,]<scts>[,<tooa>,<length>]
-<CR><LF><data>(文本模式),小区广播内容直接显示而不存贮。
-  - `0`: 不发送新小区广播的指示信息
-  - `2`: 新小区广播指示代码格式为+CBM: <oa>
+- `<bm>`: Set the format of the new cell broadcast indication code, default value is 1.
+0: Do not send new cell broadcast indication information; cell broadcast will not be stored.
+2: New cell broadcast indication code format is +CBM: <oa>,[<alpha>,]<scts>[,<tooa>,<length>]
+<CR><LF><data> (text mode), cell broadcast content is directly displayed but not stored.
+  - `0`: Do not send new cell broadcast indication information
+  - `2`: New cell broadcast indication code format is +CBM: <oa>
 
-- `<ds>`：短信发送的状态报告，默认值为1。
-0：无短信发送状态报告
-1：短信发送状态报告代码格式为+CDS: <fo>,<mr>,[<ra>],[<tora>],<scts>,
-<dt>,<st>(文本模式)
-  - `0`: 无短信发送状态报告
-  - `1`: 短信发送状态报告代码格式为+CDS: <fo>
+- `<ds>`: SMS sending status report, default value is 1.
+0: No SMS sending status report
+1: SMS sending status report code format is +CDS: <fo>,<mr>,[<ra>],[<tora>],<scts>,
+<dt>,<st> (text mode)
+  - `0`: No SMS sending status report
+  - `1`: SMS sending status report code format is +CDS: <fo>
 
-- `<bfr>`：默认值为 0。
-0：当<mode>设为1、2时，存贮在TA中的该指令定义的代码将会被发送到TE，模组在传送代码之前，会先返回""OK""。
-1：当<mode>设为1、2时，存贮在TA中的该指令定义的代码将会被清除。
-  - `默认值为`: 0。
-  - `0`: 当<mode>设为1、2时
-  - `1`: 当<mode>设为1、2时","{
+- `<bfr>`: Default value is 0.
+0: When <mode> is set to 1 or 2, the codes defined by this command stored in the TA will be sent to the TE, and the module will return ""OK"" before sending the codes.
+1: When <mode> is set to 1 or 2, the codes defined by this command stored in the TA will be cleared.
+  - `Default value is`: 0.
+  - `0`: When <mode> is set to 1 or 2
+  - `1`: When <mode> is set to 1 or 2","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -991,36 +990,36 @@ OK","设置模组从网络接收到短信息后如何通知用户。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGR,读短消息,执行,AT+CMGR,<CR><LF>OK<CR><LF>,,"AT+CMGR
+2,SMS Command,AT+CMGR,Read Short Message,Execute,AT+CMGR,<CR><LF>OK<CR><LF>,,"AT+CMGR
 
-OK","读取当前存储器中的短消息（需预先通过AT+CPMS指令设定当前存储器）。
-如果接收到的短信状态是未读的,执行该指令后,短信存储状态就变成已读。
-命令格式",说明示例36,1,36,"- `<index>`：短信在<mem1>的索引号，CMGR读取的是<mem1>的短信
+OK","Read the short message in the current storage (must be set in advance using the AT+CPMS command).
+If the status of the received SMS is unread, executing this command will change the SMS storage status to read.
+Command Format",Example 36,1,36,"- `<index>`: The index number of the SMS in <mem1>, CMGR reads the SMS from <mem1>
 
-- `<stat>`：TEXT mode
-“REC UNREAD”已接收未读取的消息
-“REC READ”已接收已读取的消息
-“STO UNSENT”已存储未发送的消息
-“STO SENT”已存储已发送的消息
+- `<stat>`: TEXT mode
+“REC UNREAD” received unread message
+“REC READ” received read message
+“STO UNSENT” stored unsent message
+“STO SENT” stored sent message
 PDU mode
-0 已接收未读取的消息
-1 已接收已读取的消息
-2 已存储未发送的消息
-3 已存储已发送的消息
+0 received unread message
+1 received read message
+2 stored unsent message
+3 stored sent message
   - `TEXT`: mode
-  - `“REC`: READ”已接收已读取的消息
-  - `“STO`: SENT”已存储已发送的消息
+  - `“REC`: READ” received read message
+  - `“STO`: SENT” stored sent message
   - `PDU`: mode
-  - `0`: 已接收未读取的消息
-  - `1`: 已接收已读取的消息
-  - `2`: 已存储未发送的消息
-  - `3`: 已存储已发送的消息
+  - `0`: received unread message
+  - `1`: received read message
+  - `2`: stored unsent message
+  - `3`: stored sent message
 
-- `<alpha>`：以字符型的数字来表示。
+- `<alpha>`: Represented as a character-type number.
 
-- `<length>`：给定的TP层数据单元的八位位组代码数目（不包含服务中心地址的八位位组）。
+- `<length>`: The number of octets of the given TP layer data unit (excluding the octets of the service center address).
 
-- `<pdu>`：PDU数据。","{
+- `<pdu>`: PDU data.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1030,34 +1029,34 @@ PDU mode
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGL,短信列表,执行,AT+CMGL,<CR><LF>OK<CR><LF>,,"AT+CMGL
+2,SMS Commands,AT+CMGL,Message List,Execute,AT+CMGL,<CR><LF>OK<CR><LF>,,"AT+CMGL
 
-OK","读取某一类存储的短信,短信会被从+CPMS 指令选取的当前的存储器中读出来。
-命令格式",说明示例37,1,37,"- `<stat>`：字符串类型或者数字类型
-当设置AT+CMGF=1时：
-""REC UNREAD""：接收到的未读的短信
-""REC READ""：接收到的已读的短信
-""STO UNSENT""：存储的未发送的短信
-""STO SENT""：存储的已发送的短信
-""ALL""：所有短信
-当设置AT+CMGF=0时：
-0：接收到的未读的短信
-1：接收到的已读的短信
-2：存储的未发送的短信
-3：存储的已发送的短信
-4：所有短信
-  - `当设置AT+CMGF=1时`: 
-  - `""REC UNREAD""`: 接收到的未读的短信
-  - `""REC READ""`: 接收到的已读的短信
-  - `""STO UNSENT""`: 存储的未发送的短信
-  - `""STO SENT""`: 存储的已发送的短信
-  - `""ALL""`: 所有短信
-  - `当设置AT+CMGF=0时`: 
-  - `0`: 接收到的未读的短信
-  - `1`: 接收到的已读的短信
-  - `2`: 存储的未发送的短信
-  - `3`: 存储的已发送的短信
-  - `4`: 所有短信","{
+OK","Read a certain type of stored SMS, the messages will be read from the current storage selected by the +CPMS command.
+Command Format",See Example 37,1,37,"- `<stat>`: String type or numeric type
+When AT+CMGF=1 is set:
+""REC UNREAD"": Received unread messages
+""REC READ"": Received read messages
+""STO UNSENT"": Stored unsent messages
+""STO SENT"": Stored sent messages
+""ALL"": All messages
+When AT+CMGF=0 is set:
+0: Received unread messages
+1: Received read messages
+2: Stored unsent messages
+3: Stored sent messages
+4: All messages
+  - `When AT+CMGF=1 is set`: 
+  - `""REC UNREAD""`: Received unread messages
+  - `""REC READ""`: Received read messages
+  - `""STO UNSENT""`: Stored unsent messages
+  - `""STO SENT""`: Stored sent messages
+  - `""ALL""`: All messages
+  - `When AT+CMGF=0 is set`: 
+  - `0`: Received unread messages
+  - `1`: Received read messages
+  - `2`: Stored unsent messages
+  - `3`: Stored sent messages
+  - `4`: All messages","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1067,26 +1066,26 @@ OK","读取某一类存储的短信,短信会被从+CPMS 指令选取的当前�
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGS,发送短消息,执行,AT+CMGS,<CR><LF>OK<CR><LF>,,"AT+CMGS
+2,SMS Commands,AT+CMGS,Send Short Message,Execute,AT+CMGS,<CR><LF>OK<CR><LF>,,"AT+CMGS
 
-OK","将短消息从模组发送到网络,短消息发送成功后网络返回参考值<mr>给模组。
-命令格式",说明示例38,1,38,"- `<da>`：文本模式下短信发送目的号码
+OK","Send a short message from the module to the network, after the short message is successfully sent, the network returns the reference value <mr> to the module.
+Command Format",See Example 38,1,38,"- `<da>`: Destination number for SMS in text mode
 
-- `<text>`：文本模式下短信内容
+- `<text>`: SMS content in text mode
 
-- `<length>`：PDU模式下短信内容的字节长度
+- `<length>`: Byte length of SMS content in PDU mode
 
-- `<mr>`：存储位置
+- `<mr>`: Storage location
 
-- `<CR>`：结束符
+- `<CR>`: Termination character
 
-- `<Ctrl+Z>`：表示输入消息体的结束，即示例中的符号“”
+- `<Ctrl+Z>`: Indicates the end of the message body input, i.e., the symbol """" in the example
 
-- `<ESC>`：表示放弃输入消息体
+- `<ESC>`: Indicates abandonment of message body input
 
-- `<scts>`：服务中心时间戳
+- `<scts>`: Service center timestamp
 
-- `<ackpdu>`：GPP 23.040 RP-User-Data element of RP-ACK PDU
+- `<ackpdu>`: GPP 23.040 RP-User-Data element of RP-ACK PDU
   - `GPP`: 23.040 RP-User-Data element of RP-ACK PDU","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
@@ -1097,22 +1096,22 @@ OK","将短消息从模组发送到网络,短消息发送成功后网络返回�
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGW,写短消息,执行,AT+CMGW,<CR><LF>OK<CR><LF>,,"AT+CMGW
+2,SMS Commands,AT+CMGW,Write Short Message,Execute,AT+CMGW,<CR><LF>OK<CR><LF>,,"AT+CMGW
 
-OK","往存储器中写入短消息,正确存储后返回位置信息<index>。
-命令格式",说明示例39,1,39,"- `<da>`：文本模式下短信发送目的号码
+OK","Write a short message to the storage, after successful storage, return the location information <index>.
+Command Format",See Example 39,1,39,"- `<da>`: Destination number for SMS in text mode
 
-- `<text>`：文本模式下短信内容
+- `<text>`: SMS content in text mode
 
-- `<length>`：PDU模式下短信内容的字节长度
+- `<length>`: Byte length of SMS content in PDU mode
 
-- `<index>`：位置信息
+- `<index>`: Location information
 
-- `<CR>`：结束符
+- `<CR>`: Termination character
 
-- `<Ctrl+Z>`：表示输入消息体的结束，即示例中的符号“”
+- `<Ctrl+Z>`: Indicates the end of the message body input, i.e., the symbol """" in the example
 
-- `<ESC>`：表示放弃输入消息体","{
+- `<ESC>`: Indicates abandonment of message body input","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1122,21 +1121,21 @@ OK","往存储器中写入短消息,正确存储后返回位置信息<index>。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMSS,发送已保存的短消息,执行,AT+CMSS,<CR><LF>OK<CR><LF>,,"AT+CMSS
+2,SMS Commands,AT+CMSS,Send Saved Short Message,Execute,AT+CMSS,<CR><LF>OK<CR><LF>,,"AT+CMSS
 
-OK","发送存储器中<index>指定位置的短消息（SMS-SUBMIT）,短消息发送成功后网络返回参考值<mr>给终端。
-命令格式",说明示例40,1,40,"- `<index>`：存储器中短信序号
+OK","Send the short message (SMS-SUBMIT) located at the position specified by <index> in the memory. After the short message is successfully sent, the network returns the reference value <mr> to the terminal.
+Command Format",Example 40,1,40,"- `<index>`: SMS sequence number in the memory
 
-- `<da>`：文本模式下短信发送目的号码
+- `<da>`: Destination number for SMS in text mode
 
-- `<toda>`：type of address
+- `<toda>`: type of address
   - `type`: of address
 
-- `<mr>`：存储位置
+- `<mr>`: storage location
 
-- `<scts>`：服务中心时间戳
+- `<scts>`: service center timestamp
 
-- `<ackpdu>`：3GPP 23.040 RP-User-Data element of RP-ACK PDU
+- `<ackpdu>`: 3GPP 23.040 RP-User-Data element of RP-ACK PDU
   - `3GPP`: 23.040 RP-User-Data element of RP-ACK PDU","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
@@ -1147,22 +1146,22 @@ OK","发送存储器中<index>指定位置的短消息（SMS-SUBMIT）,短消息
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CMGD,删除短消息,执行,AT+CMGD,<CR><LF>OK<CR><LF>,,"AT+CMGD
+2,SMS Commands,AT+CMGD,Delete Short Message,Execute,AT+CMGD,<CR><LF>OK<CR><LF>,,"AT+CMGD
 
-OK","从当前存储器中删除短消息。
-命令格式",说明示例41,1,41,"- `<index>`：存贮的短消息的记录号
+OK","Delete short messages from the current memory.
+Command Format",Example 41,1,41,"- `<index>`: Record number of the stored short message
 
-- `<delflag>`：整型值
-0：删除指定记录号的短信
-1：删除所有已读短信
-2：删除所有已读和已发送的短信
-3：删除所有已读、已发送和未发送的短信
-4：删除所有短信
-  - `0`: 删除指定记录号的短信
-  - `1`: 删除所有已读短信
-  - `2`: 删除所有已读和已发送的短信
-  - `3`: 删除所有已读、已发送和未发送的短信
-  - `4`: 删除所有短信","{
+- `<delflag>`: Integer value
+0: Delete the short message with the specified record number
+1: Delete all read short messages
+2: Delete all read and sent short messages
+3: Delete all read, sent, and unsent short messages
+4: Delete all short messages
+  - `0`: Delete the short message with the specified record number
+  - `1`: Delete all read short messages
+  - `2`: Delete all read and sent short messages
+  - `3`: Delete all read, sent, and unsent short messages
+  - `4`: Delete all short messages","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1172,12 +1171,12 @@ OK","从当前存储器中删除短消息。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CSCA,短信中心号码,执行,AT+CSCA,<CR><LF>OK<CR><LF>,,"AT+CSCA
+2,SMS Commands,AT+CSCA,SMS Center Number,Execute,AT+CSCA,<CR><LF>OK<CR><LF>,,"AT+CSCA
 
-OK","设置短信中心号码。CDMA模式下,不支持这条指令。
-命令格式",说明示例42,1,42,"- `<sca>`：短信中心号码，字符串类型。
+OK","Set the SMS center number. This command is not supported in CDMA mode.
+Command Format",Example 42,1,42,"- `<sca>`: SMS center number, string type.
 
-- `<tosca>`：短信中心号码格式。129表示普通号码类型，145表示国际号码类型","{
+- `<tosca>`: SMS center number format. 129 indicates a normal number type, 145 indicates an international number type.","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1187,26 +1186,26 @@ OK","设置短信中心号码。CDMA模式下,不支持这条指令。
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CSMP,设置文本模式参数,执行,AT+CSMP,<CR><LF>OK<CR><LF>,,"AT+CSMP
+2,SMS Command,AT+CSMP,Set Text Mode Parameters,Execute,AT+CSMP,<CR><LF>OK<CR><LF>,,"AT+CSMP
 
-OK","文本模式下,选择需要的附加参数取值,设置从SMSC接收到该消息时算起的有效期或定义有效期终止的绝对时间。
-命令格式",说明示例43,1,43,"- `<fo>`：<fo>：取决于该命令或结果码：GSM 03.40 SMS-DELIVER的前8位；
-SMS-SUBMIT(缺省值：17)；或采用整数型的SMS-COMMAND（缺省值：2）
-  - `<fo>`: 取决于该命令或结果码：GSM 03.40 SMS-DELIVER的前8位
-  - `SMS-SUBMIT(缺省值`: 17)
-  - `或采用整数型的SMS-COMMAND（缺省值`: 2）
+OK","In text mode, select the required values for additional parameters, set the validity period starting from when the message is received from the SMSC, or define the absolute time that terminates the validity period.
+Command Format",See Example 43,1,43,"- `<fo>`: <fo>: Depends on the command or result code: the first 8 bits of GSM 03.40 SMS-DELIVER;
+SMS-SUBMIT (default value: 17); or use an integer type SMS-COMMAND (default value: 2)
+  - `<fo>`: Depends on the command or result code: the first 8 bits of GSM 03.40 SMS-DELIVER
+  - `SMS-SUBMIT (default value`: 17)
+  - `or use an integer type SMS-COMMAND (default value`: 2)
 
-- `<vp>`：—
-  - `0-143`: (vp+1)*5mins，最大为12小时
-  - `144-167`: 12hours +((vp–143)*30mins)，最大为24小时
+- `<vp>`: —
+  - `0-143`: (vp+1)*5mins, maximum 12 hours
+  - `144-167`: 12 hours +((vp–143)*30mins), maximum 24 hours
   - `168-196`: (vp–166)*1day
   - `197-255`: (vp–192)*1week
 
-- `<pid>`：整数型的TP-协议-标识（缺省值：0）
-  - `整数型的TP-协议-标识（缺省值`: 0）
+- `<pid>`: Integer type TP-Protocol-Identifier (default value: 0)
+  - `Integer type TP-Protocol-Identifier (default value`: 0)
 
-- `<dcs>`：整数型的小区广播数据编码方案（缺省值：0）
-  - `整数型的小区广播数据编码方案（缺省值`: 0）","{
+- `<dcs>`: Integer type Cell Broadcast Data Coding Scheme (default value: 0)
+  - `Integer type Cell Broadcast Data Coding Scheme (default value`: 0)","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""
@@ -1216,13 +1215,13 @@ SMS-SUBMIT(缺省值：17)；或采用整数型的SMS-COMMAND（缺省值：2）
 ""1"": ""支持""
 }
 }"
-2,SMS命令,AT+CSDH,显示文本模式参数,执行,AT+CSDH,<CR><LF>OK<CR><LF>,,"AT+CSDH
+2,SMS Command,AT+CSDH,Display Text Mode Parameters,Execute,AT+CSDH,<CR><LF>OK<CR><LF>,,"AT+CSDH
 
-OK","设置是否在文本模式下的结果码中显示详细的头信息。该指令在短信文本模式下有效,需发送AT+CMGF=1设置成文本模式。
-命令格式",说明示例44,1,44,"- `<show>`：0：不显示（默认值）
-1：显示
-  - `0`: 不显示（默认值）
-  - `1`: 显示","{
+OK","Set whether to display detailed header information in the result code in text mode. This command is valid in SMS text mode and requires sending AT+CMGF=1 to set to text mode.
+Command Format",See Example 44,1,44,"- `<show>`: 0: Do not display (default value)
+1: Display
+  - `0`: Do not display (default value)
+  - `1`: Display","{
 ""<service>"": {""__desc__"": ""短信服务模式选择"",
 ""0"": ""GSM03.40/GSM03.41 Phase 2"",
 ""1"": ""GSM03.40/GSM03.41 Phase 2+""

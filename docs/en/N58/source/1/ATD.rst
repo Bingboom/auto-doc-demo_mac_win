@@ -1,15 +1,15 @@
 .. _cmd-atd:
 
-ATD：*99#：GPRS
------------------
+ATD：*99#: GPRS
+------------------
 
-使用外部协议栈,进行GPRS拨号连接。
-进行拨号之前一定要确保CREG已经注册成功,并且设置了APN。
-命令格式
+Use an external protocol stack to perform GPRS dialing connection.
+Before dialing, ensure that CREG has registered successfully and that the APN is set.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ ATD：*99#：GPRS
 
 说明
 ^^^^
-说明示例24
+Example 24

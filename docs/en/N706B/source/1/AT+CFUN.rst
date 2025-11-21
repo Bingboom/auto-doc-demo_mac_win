@@ -1,15 +1,15 @@
 .. _cmd-at+cfun:
 
-AT+CFUN：设置模组功能
-------------------
+AT+CFUN：Set Module Function
+-------------------------------
 
-通过设置<fun>来选择模组的功能。<fun>只支持某些值。
-设置该参数后,掉电不保存。
-命令格式
+Select the module's function by setting <fun>. <fun> only supports certain values.
+This parameter is not saved when powered off.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+CFUN：设置模组功能
 
 说明
 ^^^^
-说明示例14
+Example 14

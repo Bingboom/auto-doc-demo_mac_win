@@ -1,14 +1,14 @@
 .. _cmd-at+cmgl:
 
-AT+CMGL：短信列表
-----------------
+AT+CMGL：Message List
+------------------------
 
-读取某一类存储的短信,短信会被从+CPMS 指令选取的当前的存储器中读出来。
-命令格式
+Read a certain type of stored SMS, the messages will be read from the current storage selected by the +CPMS command.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CMGL：短信列表
 
 说明
 ^^^^
-说明示例37
+See Example 37

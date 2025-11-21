@@ -3,7 +3,7 @@
 AT+CGDCONT：设置PDP格式
 ----------------------
 
-设置GPRS的PDP（Packet Data Protocol,分组数据协议）格式。APN允许设置的长度最长是50。
+设置GPRS的PDP（Packet Data Protocol,分组数据协议）格式。APN允许设置的长度最长是50。
 命令格式
 
 命令格式

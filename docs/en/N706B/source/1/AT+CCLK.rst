@@ -1,15 +1,15 @@
 .. _cmd-at+cclk:
 
-AT+CCLK：时钟管理
-----------------
+AT+CCLK：Clock Management
+----------------------------
 
-设置和查询模组的实时时钟。
-设置的时间立即生效,掉电保存,默认时钟为0时区,使用1/4时区。
-命令格式
+Set and query the module's real-time clock.
+The set time takes effect immediately, is saved during power off, and the default clock is in the 0 timezone, using 1/4 timezone.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+CCLK：时钟管理
 
 说明
 ^^^^
-说明示例16
+Example 16

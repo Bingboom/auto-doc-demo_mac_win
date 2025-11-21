@@ -1,14 +1,14 @@
 .. _cmd-at+csmp:
 
-AT+CSMP：设置文本模式参数
---------------------
+AT+CSMP：Set Text Mode Parameters
+------------------------------------
 
-文本模式下,选择需要的附加参数取值,设置从SMSC接收到该消息时算起的有效期或定义有效期终止的绝对时间。
-命令格式
+In text mode, select the required values for additional parameters, set the validity period starting from when the message is received from the SMSC, or define the absolute time that terminates the validity period.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CSMP：设置文本模式参数
 
 说明
 ^^^^
-说明示例43
+See Example 43

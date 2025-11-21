@@ -1,16 +1,15 @@
 .. _cmd-at+cmux:
 
-AT+CMUX：串口多路复用指令
---------------------
+AT+CMUX：Serial Port Multiplexing Command
+--------------------------------------------
 
-启用通信模组串口多路复用功能。
-基于一个物理通信串口,通过规范协议虚拟出两个甚至多个串口,一般虚拟三个串口,一个串口进行外部协议栈拨号上网,另外两个收发AT指令。建议使用AT+CMUX=0启用串口多路复用功能。
-建议使用AT+CMUX=0启用串口多路复用功能。
-命令格式
+Enable the communication module's serial port multiplexing function.
+Based on a physical communication serial port, virtualize two or even more serial ports through a standardized protocol, generally virtualizing three serial ports, one for external protocol stack dial-up internet access, and the other two for sending and receiving AT commands. It is recommended to use AT+CMUX=0 to enable the serial port multiplexing function.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -43,4 +42,4 @@ AT+CMUX：串口多路复用指令
 
 说明
 ^^^^
-说明示例15
+Example 15

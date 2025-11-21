@@ -1,14 +1,14 @@
 .. _cmd-at+nwpwroff:
 
-AT+NWPWROFF：模组关机指令
-----------------------
+AT+NWPWROFF：Module Power Off Command
+----------------------------------------
 
-模组关机指令。发送 AT+NWPWROFF 之前,需悬空或拉高模组 POWERKEY 管脚电平。返回 OK 后,若需重新开机,可拉低 POWERKEY 管脚电平。
-命令格式
+Module power off command. Before sending AT+NWPWROFF, the POWERKEY pin level of the module must be suspended or pulled high. After returning OK, if a reboot is needed, the POWERKEY pin level can be pulled low.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+NWPWROFF：模组关机指令
 
 说明
 ^^^^
-说明示例28
+Example 28

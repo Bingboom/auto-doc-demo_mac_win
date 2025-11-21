@@ -1,15 +1,15 @@
 .. _cmd-at+ipr:
 
-AT+IPR：设置模组波特率
-------------------
+AT+IPR：Set Module Baud Rate
+-------------------------------
 
-设置模组波特率,默认掉电保存。
-若波特率查询返回为0,表示模组波特率自适应。默认为波特率自适应（备注：自适应波特率不超过115200）。
-命令格式
+Set the module baud rate, saved by default when powered off.
+If the baud rate query returns 0, it indicates that the module baud rate is adaptive. The default is adaptive baud rate (Note: adaptive baud rate does not exceed 115200).
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -42,4 +42,4 @@ AT+IPR：设置模组波特率
 
 说明
 ^^^^
-说明示例13
+Example 13

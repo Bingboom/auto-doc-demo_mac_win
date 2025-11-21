@@ -1,14 +1,14 @@
 .. _cmd-at+cnmi:
 
-AT+CNMI：设置短信指示格式
---------------------
+AT+CNMI：Set SMS Indication Format
+-------------------------------------
 
-设置模组从网络接收到短信息后如何通知用户。
-命令格式
+Set how the module notifies the user after receiving a short message from the network.
+Command Format
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CNMI：设置短信指示格式
 
 说明
 ^^^^
-说明示例35
+Example 35

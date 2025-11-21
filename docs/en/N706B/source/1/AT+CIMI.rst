@@ -1,14 +1,14 @@
 .. _cmd-at+cimi:
 
-AT+CIMI：查询国际移动用户识别码
------------------------
+AT+CIMI：Query International Mobile Subscriber Identity Code
+---------------------------------------------------------------
 
-获取国际移动用户识别码IMSI（international mobile subscriber identification）。
-命令格式
+Obtain the International Mobile Subscriber Identity (IMSI).
+Command Syntax
 
 命令格式
 ^^^^^^^^
-**执行命令**
+**命令**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **命令：**
@@ -41,4 +41,4 @@ AT+CIMI：查询国际移动用户识别码
 
 说明
 ^^^^
-说明示例7
+See Example 7

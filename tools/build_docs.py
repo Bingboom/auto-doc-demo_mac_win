@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import shutil
+import platform   # NEW: 系统判断
 
 THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
@@ -25,6 +26,68 @@ CONF = paths.config
 LANGUAGES = ["zh_cn", "en"]
 PRODUCTS  = list(CONF["products"].keys())
 DOC_TYPES = CONF.get("doc_types", {})
+
+
+# -------------------------------------------------------------
+# NEW: 自动生成 fonts.tex
+# -------------------------------------------------------------
+def generate_fonts_tex():
+
+    cfg = paths.config   # config.yaml 全局配置
+
+    # -------------------------------
+    # 系统判断（平台统一）
+    # -------------------------------
+    os_name = platform.system().lower()
+
+    if "windows" in os_name:
+        key = "windows"
+    elif "darwin" in os_name:
+        key = "mac"
+    else:
+        key = "linux"
+
+    if "fonts" not in cfg:
+        print("[FONTS] WARNING: config.yaml 未配置 fonts 字段，跳过字体生成")
+        return
+
+    font_cfg = cfg["fonts"][key]
+
+    cjk  = font_cfg["cjk"]
+    sans = font_cfg["sans"]
+    mono = font_cfg["mono"]
+
+    # -------------------------------
+    # 生成 fonts.tex 的最终内容
+    # -------------------------------
+    fonts_tex = f"""
+% ======= AUTO GENERATED: Do NOT edit manually =======
+% Platform: {key}
+
+\\usepackage{{xeCJK}}
+\\usepackage{{fontspec}}
+
+% ---- Western ----
+\\setmainfont{{Times New Roman}}
+\\setsansfont{{{sans}}}
+\\setmonofont{{{mono}}}
+
+% ---- CJK ----
+\\setCJKmainfont{{{cjk}}}
+\\setCJKsansfont{{{cjk}}}
+\\setCJKmonofont{{{cjk}}}
+
+% ---- Fallback ----
+\\defaultCJKfontfeatures{{
+    Script=Hans,
+    Language=Chinese
+}}
+"""
+
+    out_path = paths.latex_common_path() / "fonts.tex"
+    out_path.write_text(fonts_tex, encoding="utf-8")
+
+    print(f"[FONTS] Generated fonts.tex for platform={key} → {out_path}")
 
 
 # -------------------------------------------------------------
@@ -104,7 +167,7 @@ def build_single(product: str, lang: str, doc_type: str):
     run(["sphinx-build", "-b", "latex", str(src), str(pdf_out)])
 
     # ---------------------------
-    # ③ 查找正确 main.tex
+    # ③ 查找 main.tex
     # ---------------------------
     tex_files = list(pdf_out.glob("*.tex"))
     main_tex_list = [f for f in tex_files if is_main_tex(f)]
@@ -115,6 +178,9 @@ def build_single(product: str, lang: str, doc_type: str):
 
     tex_file = main_tex_list[0]
     print(f"[TEX] Using main tex: {tex_file.name}")
+
+    # 强制 latexmk clean
+    run(["latexmk", "-C"], cwd=str(pdf_out))
 
     # ---------------------------
     # ④ PDF 编译
@@ -155,6 +221,10 @@ def build_single(product: str, lang: str, doc_type: str):
 # 构建全量
 # -------------------------------------------------------------
 def build_all():
+
+    # NEW: 每次构建前自动生成 fonts.tex
+    generate_fonts_tex()
+
     for product in PRODUCTS:
         product_cfg = CONF["products"][product]
         doc_types = product_cfg.get("doc_types", ["AT"])
