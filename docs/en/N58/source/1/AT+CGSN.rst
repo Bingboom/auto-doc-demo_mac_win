@@ -6,39 +6,72 @@ AT+CGSN：Get Communication Module IMEI Number
 Obtain the product serial number of the module, which is the IMEI number (International Mobile Equipment Identity).
 Command Syntax
 
-命令格式
+Command Format
 ^^^^^^^^
-**命令**
+
+
+
+
+
+
+
+
+**Execute Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CGSN
 
-**响应：**
-
+**Response：**
 ::
+
 
     <CR><LF>OK<CR><LF>
 
-参数
-^^^^
-- **<service>**： 短信服务模式选择
-- 0：GSM03.40/GSM03.41 Phase 2
-- 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
-- 0：不支持
-- 1：支持
-命令示例
+
+
+
+Parameters
 ^^^^^^^^
+
+
+- **<service>**： 短信服务模式选择
+
+  - 0：GSM03.40/GSM03.41 Phase 2
+
+  - 1：GSM03.40/GSM03.41 Phase 2+
+
+
+- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
+
+  - 0：不支持
+
+  - 1：支持
+
+
+
+
+Examples
+^^^^^^^^
+
+
+  
+    
+  
+
+
+
 ::
+
 
     AT+CGSN
     
     OK
 
-说明
-^^^^
+
+
+Notes
+^^^^^^^^
 See Example 8

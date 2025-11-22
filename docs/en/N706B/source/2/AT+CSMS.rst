@@ -5,20 +5,27 @@ AT+CSMS：Select SMS Service
 
 Supported short messages include: sending (SMS-MO), receiving (SMS-MT), cell broadcast (SMS-CB).
 
-命令格式
+Command Format
 ^^^^^^^^
-**命令**
+
+
+
+
+
+
+
+
+**Execute Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CSMS=<service><CR>
 
-**响应：**
-
+**Response：**
 ::
+
 
     <CR><LF>+CSMS: <mt>,<mo>,<bm>
     <CR><LF>OK<CR><LF>
@@ -27,47 +34,81 @@ Supported short messages include: sending (SMS-MO), receiving (SMS-MT), cell bro
     <CR><LF>OK<CR><LF>,<CR><LF>+CSMS: (list of supported <service>s)
     <CR><LF>OK<CR><LF>
 
-**命令**
+
+
+
+
+**Query Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CSMS?<CR>
 
-**响应：**
-
+**Response：**
 ::
+
 
     OK
 
-**命令**
+
+
+
+
+**Test Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CSMS=?<CR>
 
-**响应：**
-
+**Response：**
 ::
+
 
     OK
 
-参数
-^^^^
-- **<service>**： SMS service mode selection
-- 0：GSM03.40/GSM03.41 Phase 2
-- 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： Downlink/Uplink/Broadcast support
-- 0：Not supported
-- 1：Supported
-命令示例
+
+
+
+Parameters
 ^^^^^^^^
+
+
+- **<service>**： SMS service mode selection
+
+  - 0：GSM03.40/GSM03.41 Phase 2
+
+  - 1：GSM03.40/GSM03.41 Phase 2+
+
+
+- **<mt>,<mo>,<bm>**： Downlink/Uplink/Broadcast support
+
+  - 0：Not supported
+
+  - 1：Supported
+
+
+
+
+Examples
+^^^^^^^^
+
+
+  
+    
+  
+
+  
+
+  
+
+
+
 ::
+
 
     AT+CSMS=1
     
@@ -85,6 +126,8 @@ Supported short messages include: sending (SMS-MO), receiving (SMS-MT), cell bro
     +CSMS: (0,1)
     OK
 
-说明
-^^^^
+
+
+Notes
+^^^^^^^^
 Supports multiple short message service types

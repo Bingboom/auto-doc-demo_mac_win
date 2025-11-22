@@ -6,39 +6,72 @@ AT+CSMP：Set Text Mode Parameters
 In text mode, select the required values for additional parameters, set the validity period starting from when the message is received from the SMSC, or define the absolute time that terminates the validity period.
 Command Format
 
-命令格式
+Command Format
 ^^^^^^^^
-**命令**
+
+
+
+
+
+
+
+
+**Execute Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CSMP
 
-**响应：**
-
+**Response：**
 ::
+
 
     <CR><LF>OK<CR><LF>
 
-参数
-^^^^
-- **<service>**： 短信服务模式选择
-- 0：GSM03.40/GSM03.41 Phase 2
-- 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
-- 0：不支持
-- 1：支持
-命令示例
+
+
+
+Parameters
 ^^^^^^^^
+
+
+- **<service>**： 短信服务模式选择
+
+  - 0：GSM03.40/GSM03.41 Phase 2
+
+  - 1：GSM03.40/GSM03.41 Phase 2+
+
+
+- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
+
+  - 0：不支持
+
+  - 1：支持
+
+
+
+
+Examples
+^^^^^^^^
+
+
+  
+    
+  
+
+
+
 ::
+
 
     AT+CSMP
     
     OK
 
-说明
-^^^^
+
+
+Notes
+^^^^^^^^
 See Example 43
