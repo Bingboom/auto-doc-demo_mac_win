@@ -11,6 +11,7 @@ common:
   templates: "docs/_common/templates"
   static: "docs/_common/_static"
   latex: "docs/_common/latex_templates"
+  langs: "docs/_langs" # ★ ★ 新增：语言包目录
 
 tools_root: "tools"
 
@@ -33,7 +34,6 @@ fonts:
     cjk: "Noto Sans CJK SC"
     sans: "Noto Sans CJK SC"
     mono: "Noto Sans Mono CJK SC"
-
 
 # ============================================
 # Document Types（自动命名 PDF 使用）

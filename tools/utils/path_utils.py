@@ -44,6 +44,12 @@ def latex_common_path():
 def product_conf(product: str):
     return config["products"][product]
 
+# ============================================================
+# 新增 langs_dir()
+# ============================================================
+
+def langs_dir() -> Path:
+    return ROOT / config["common"]["langs"]
 
 # ============================================================
 # 语言优先路径渲染

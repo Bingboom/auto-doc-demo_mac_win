@@ -6,37 +6,47 @@
 from pathlib import Path
 import sys
 
+# ---------------------------------------------------------
+# 【1】加载 path_utils（核心路径体系）
+# ---------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[4]
+PROJECT_ROOT = THIS_FILE.parents[4]   # <== 保留但作为 fallback
 
+# 优先从 tools 目录导入 path_utils
+TOOLS_DIR = PROJECT_ROOT / "tools"
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "tools"))
+sys.path.insert(0, str(TOOLS_DIR))
 
-import tools.utils.path_utils as paths
+try:
+    from tools.utils import path_utils as paths
+    ROOT = paths.ROOT                     # 仓库根目录（最终权威）
+except:
+    # fallback（极端情况：如果 CI 环境未成功加载 path_utils）
+    ROOT = PROJECT_ROOT
 
 # ---------------------------------------------------------
-# 基础变量
+# 【2】注入基础参数（由 gen_conf.py 渲染）
 # ---------------------------------------------------------
-LANG = "en"
-PRODUCT = "N706B"
+LANG     = "en"
+PRODUCT  = "N706B"
 DOC_TYPE = "AT"
 
 # ---------------------------------------------------------
-# 加载语言包（自动注入 PROJECT_TITLE / ISSUE / DATE 等变量）
+# 【3】加载语言包 → 注入 PROJECT_TITLE / ISSUE / DATE
 # ---------------------------------------------------------
-lang_file = PROJECT_ROOT / "docs/_langs/en.py"
+lang_file = ROOT / "docs/_langs/en.py"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
 # ---------------------------------------------------------
-# 引入公共 Sphinx 配置
+# 【4】加载通用 Sphinx 配置（继承体系的“底座”）
 # ---------------------------------------------------------
-COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
+COMMON_CONF = ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 
 # ---------------------------------------------------------
-# 覆写标题，使其来自语言包
+# 【5】覆盖标题，使其来源于语言包（PROJECT_TITLE）
 # ---------------------------------------------------------
-project     = PROJECT_TITLE    # 语言包变量
+project     = PROJECT_TITLE
 html_title  = PROJECT_TITLE
 author      = "Neoway Technology"
 
@@ -44,14 +54,14 @@ latex_documents = [
     (
         "index",
         f"{PRODUCT}_{DOC_TYPE}.tex",
-        PROJECT_TITLE,   # 自动中文或英文
+        PROJECT_TITLE,
         author,
         "manual",
     )
 ]
 
 # ---------------------------------------------------------
-# 将语言包内容传递给封面模板 cover.tex
+# 【6】渲染封面 cover.tex（使用 Jinja2 模板）
 # ---------------------------------------------------------
 from jinja2 import Template
 
