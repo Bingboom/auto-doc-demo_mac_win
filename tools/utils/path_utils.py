@@ -83,3 +83,11 @@ def csv_path(lang: str, product: str) -> Path:
 # 默认产品
 def get_default_product():
     return config.get("default_product")
+
+# 定义输出路径
+
+def output_html_dir() -> Path:
+    return ROOT / config["output"]["html"]
+
+def output_pdf_dir() -> Path:
+    return ROOT / config["output"]["pdf"]
