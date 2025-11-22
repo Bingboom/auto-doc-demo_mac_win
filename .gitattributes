@@ -1,0 +1,17 @@
+# CSV 永远使用 LF，避免 Windows CRLF 污染仓库
+*.csv text eol=lf
+
+# Sphinx 文档统一 LF
+*.rst text eol=lf
+*.py text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+
+# 二进制文件永远保持原样
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.docx binary
+*.xlsx binary

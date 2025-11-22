@@ -49,11 +49,14 @@ def product_conf(product: str):
 # 语言优先路径渲染
 # ============================================================
 def _render_lang_path(template: str, product: str, lang: str) -> Path:
-    """将 docs/{lang}/N706B/source 这种模板渲染为真实路径"""
-    path_str = template.format(lang=lang)
+    """修正：模板中传递 product 和 lang 变量"""
+    path_str = template.format(lang=lang, product=product)
     return ROOT / path_str
 
 
+# ============================================================
+# 渲染路径函数：支持语言和产品
+# ============================================================
 def rst_source_path(product: str, lang: str = "zh_CN") -> Path:
     return _render_lang_path(product_conf(product)["source"], product, lang)
 
@@ -67,8 +70,9 @@ def build_pdf_path(product: str, lang: str = "zh_CN") -> Path:
 # ============================================================
 # CSV 路径
 # ============================================================
-def csv_path(product: str) -> Path:
-    return ROOT / product_conf(product)["csv"]
+def csv_path(lang: str, product: str) -> Path:
+    """修正：首先是语言，其次是产品"""
+    return ROOT / config["products"][product]["csv"].format(lang=lang, product=product)
 
 # 默认产品
 def get_default_product():

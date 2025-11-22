@@ -1,10 +1,35 @@
+# ======================================
+# 英文语言包
+# ======================================
+
 # ====================================
 # Language Pack: en
 # ====================================
 
 PROJECT_TITLE = "AT Commands Manual"
+
+LABELS = {
+    "command_format": "Command Format",
+    "parameters": "Parameters",
+    "examples": "Examples",
+    "note": "Notes",
+    "response": "Response",
+    "cmd": "Command"
+}
+
+FIELD_MAP = {
+    "章节名称": "章节名称_en",
+    "命令标题": "命令标题_en",
+    "功能描述": "功能描述_en",
+    "示例命令": "示例命令_en",
+    "备注": "备注_en",
+    "响应校正": "响应校正_en",
+    "参数": "参数_en",
+    "参数json": "参数json_en",
+}
+
 ISSUE = "1.0"
-DATE  = "2025-11-18"
+DATE = "2025-11-18"
 
 COMPANY_NAME = "Neoway Technology Co., Ltd. All Rights Reserved."
 COVER_TITLE_COLOR = "1F4E78"
@@ -15,7 +40,6 @@ SECTION_NAME = "Section"
 IS_CHINESE = False
 PDF_MAIN_FONT = "Times New Roman"
 
-# 英文保持 Chapter，但数字统一阿拉伯数字
 CHAPTER_FORMAT = r"""
 \renewcommand{\chaptername}{Chapter}
 \renewcommand{\thechapter}{\arabic{chapter}}

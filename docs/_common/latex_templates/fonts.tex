@@ -1,9 +1,22 @@
-% ===== Neoway LaTeX 字体统一配置 =====
+
+% ======= AUTO GENERATED: Do NOT edit manually =======
+% Platform: mac
+
 \usepackage{xeCJK}
+\usepackage{fontspec}
+
+% ---- Western ----
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}
+
+% ---- CJK ----
 \setCJKmainfont{PingFang SC}
 \setCJKsansfont{PingFang SC}
 \setCJKmonofont{PingFang SC}
 
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
+% ---- Fallback ----
+\defaultCJKfontfeatures{
+    Script=Hans,
+    Language=Chinese
+}

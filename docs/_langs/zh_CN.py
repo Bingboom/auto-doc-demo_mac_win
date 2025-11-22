@@ -2,7 +2,28 @@
 # Language Pack: zh_CN
 # ====================================
 
-PROJECT_TITLE = "AT命令手册"
+PROJECT_TITLE = "AT 命令手册"
+
+LABELS = {
+    "command_format": "命令格式",
+    "parameters": "参数",
+    "examples": "命令示例",
+    "note": "说明",
+    "response": "响应",
+    "cmd": "命令"
+}
+
+FIELD_MAP = {
+    "章节名称": "章节名称",
+    "命令标题": "命令标题",
+    "功能描述": "功能描述",
+    "示例命令": "示例命令",
+    "备注": "备注",
+    "响应校正": "响应校正",
+    "参数": "参数",
+    "参数json": "参数json",
+}
+
 ISSUE = "1.0"
 DATE  = "2025-11-18"
 

@@ -14,13 +14,61 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 import tools.utils.path_utils as paths
 
+# ---------------------------------------------------------
+# 基础变量
+# ---------------------------------------------------------
 LANG = "en"
 PRODUCT = "N706B"
 DOC_TYPE = "AT"
 
-# 载入语言包
-exec(open(PROJECT_ROOT / "docs/_langs/en.py", "r", encoding="utf-8").read(), globals())
+# ---------------------------------------------------------
+# 加载语言包（自动注入 PROJECT_TITLE / ISSUE / DATE 等变量）
+# ---------------------------------------------------------
+lang_file = PROJECT_ROOT / "docs/_langs/en.py"
+exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
-# 引入公共配置
+# ---------------------------------------------------------
+# 引入公共 Sphinx 配置
+# ---------------------------------------------------------
 COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
+
+# ---------------------------------------------------------
+# 覆写标题，使其来自语言包
+# ---------------------------------------------------------
+project     = PROJECT_TITLE    # 语言包变量
+html_title  = PROJECT_TITLE
+author      = "Neoway Technology"
+
+latex_documents = [
+    (
+        "index",
+        f"{PRODUCT}_{DOC_TYPE}.tex",
+        PROJECT_TITLE,   # 自动中文或英文
+        author,
+        "manual",
+    )
+]
+
+# ---------------------------------------------------------
+# 将语言包内容传递给封面模板 cover.tex
+# ---------------------------------------------------------
+from jinja2 import Template
+
+template_path = paths.latex_common_path() / "cover_template.tex.j2"
+output_path   = paths.latex_common_path() / "cover.tex"
+
+context = {
+    "product": PRODUCT,
+    "title": PROJECT_TITLE,
+    "issue": ISSUE,
+    "date": DATE,
+}
+
+with open(template_path, "r", encoding="utf-8") as f:
+    template = Template(f.read())
+
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(template.render(**context))
+
+print(f"[COVER] Rendered cover → {output_path}")

@@ -1,216 +1,265 @@
-# tools/render_rst.py
+# ============================================================
+# render_rst.py — Final Stable Version (Unified path + Safe import)
+# ============================================================
 
-import sys
+"""
+功能：
+    1) 将 CSV 自动转换为 RST（产品 × 语言）
+    2) 多子命令类型：执行/查询/测试/设置 + exec/read/test/set
+    3) 支持 *_en 字段 fallback
+    4) 为每个命令生成 xxx.rst
+    5) 生成 chapter/index.rst
+    6) 保留 docs/{lang}/{product}/source/index.rst（不会覆盖！）
+"""
+
 import json
-import yaml
 import pandas as pd
-from jinja2 import Environment, FileSystemLoader
-from datetime import datetime
 from pathlib import Path
+import sys
+from jinja2 import Environment, FileSystemLoader
 
-# ============================================================
-# 🔧 全局路径体系（统一从 path_utils 获取）
-# ============================================================
-from utils.path_utils import (
-    csv_path,
-    rst_source_path,
-    common_templates,
-    get_default_product,
-)
+# ------------------------------------------------------------
+# 1) 统一路径注入（必须先于 import path_utils）
+# ------------------------------------------------------------
+THIS = Path(__file__).resolve()
+TOOLS_ROOT = THIS.parent
+PROJECT_ROOT = TOOLS_ROOT.parent
+
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(TOOLS_ROOT))
+
+# ------------------------------------------------------------
+# 2) 引入 path_utils（路径体系核心）
+# ------------------------------------------------------------
+from tools.utils import path_utils as paths
 
 
-# ============================================================
-# 🔧 加载统一配置（不再在此做路径）
-# ============================================================
-def load_config():
-    with open("config.yaml", "r", encoding="utf-8") as file:
-        return yaml.load(file, Loader=yaml.FullLoader)
+# ------------------------------------------------------------
+# 3) 加载语言包（docs/_langs）
+# ------------------------------------------------------------
+LANG_DIR = paths.ROOT / "docs" / "_langs"
+sys.path.insert(0, str(LANG_DIR))
+
+def safe_import(name):
+    try:
+        return __import__(name)
+    except Exception:
+        print(f"[WARN] 无法加载语言包 {name}")
+        return None
+
+zh_mod = safe_import("zh_cn")
+en_mod = safe_import("en")
 
 
-config = load_config()
+# ------------------------------------------------------------
+# 4) 字段映射：中英文 fallback
+# ------------------------------------------------------------
+def get_field_map(module, is_en=False):
 
-PRODUCT = get_default_product()
+    if module and hasattr(module, "FIELD_MAP"):
+        return module.FIELD_MAP
 
-# 工程属性
-PROJECT_NAME = "Neoway AT 命令手册"
-VERSION = "v1.4"
-AUTHOR = "文档工程组"
-DATE = datetime.now().strftime("%Y-%m-%d")
+    if is_en:
+        return {
+            "章节名称": "章节名称_en",
+            "命令标题": "命令标题_en",
+            "功能描述": "功能描述_en",
+            "示例命令": "示例命令_en",
+            "备注": "备注_en",
+            "响应校正": "响应校正_en",
+            "参数": "参数_en",
+            "参数json": "参数json_en",
+        }
 
-# ============================================================
-# 🔧 关键路径（来自 path_utils）
-# ============================================================
-CSV_DIR = csv_path(PRODUCT)
-CSV_FILE = CSV_DIR / "at_{}.csv".format(PRODUCT)
+    return {
+        "章节名称": "章节名称",
+        "命令标题": "命令标题",
+        "功能描述": "功能描述",
+        "示例命令": "示例命令",
+        "备注": "备注",
+        "响应校正": "响应校正",
+        "参数": "参数",
+        "参数json": "参数json",
+    }
 
-RST_OUT_DIR = rst_source_path(PRODUCT, "zh_CN")
-TEMPLATE_DIR = common_templates()
 
-RST_OUT_DIR.mkdir(parents=True, exist_ok=True)
+LANG_CONFIG = {
+    "zh_cn": {
+        "module": zh_mod,
+        "is_en": False,
+        "chapter_label_tpl": "第{no}章",
+    },
+    "en": {
+        "module": en_mod,
+        "is_en": True,
+        "chapter_label_tpl": "Chapter {no}",
+    },
+}
 
-# ============================================================
-# 🔧 Jinja2 模板加载
-# ============================================================
-env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
-env.globals.update(max=max, min=min, len=len)
+# 填充字段信息
+for lang, info in LANG_CONFIG.items():
+    mod = info["module"]
+    info["FIELD_MAP"] = get_field_map(mod, info["is_en"])
+    info["LABELS"] = getattr(mod, "LABELS", {}) if mod else {}
+    info["TITLE"] = getattr(mod, "PROJECT_TITLE", "AT Commands Manual")
 
-# 主 index 模板
-main_index_tmpl = env.from_string("""
-{{ project_name }} {{ version }}
-{{ "=" * (project_name|length + version|length + 1) }}
 
-.. Author: {{ author }}
-.. Date: {{ date }}
-.. Version: {{ version }}
+# ------------------------------------------------------------
+# 5) 字段读取（自动支持 *_en fallback）
+# ------------------------------------------------------------
+def get_field(row, key, fmap):
 
-.. toctree::
-   :maxdepth: 1
-   :titlesonly:
+    mapped = fmap.get(key, key)
 
-{% for chap in chapters %}
-   {{ chap[0] }}/index
-{% endfor %}
+    # *_en 字段优先
+    if mapped in row and str(row[mapped]).strip():
+        return str(row[mapped]).strip()
 
-附录
-----
-.. toctree::
-   :maxdepth: 1
-   :titlesonly:
+    # fallback 中文
+    if key in row and str(row[key]).strip():
+        return str(row[key]).strip()
 
-   appendix/abbreviations
-   appendix/index
-""".strip())
+    return ""
 
-# 章节 index 模板
-chapter_index_tmpl = env.from_string("""
-{{ chap_name }}
-{{ "=" * max((chap_name|length + 2), 10) }}
 
-.. toctree::
-   :maxdepth: 1
-   :titlesonly:
-
-{% for cmd in cmds %}
-   {{ cmd }}
-{% endfor %}
-""".strip())
-
-# 命令模板
+# ------------------------------------------------------------
+# 6) Jinja2 模板环境
+# ------------------------------------------------------------
+env = Environment(loader=FileSystemLoader(str(paths.common_templates())))
+env.globals.update(max=max, len=len)
 cmd_tmpl = env.get_template("command_page.j2")
 
 
-# ============================================================
-# 🔧 读取 CSV
-# ============================================================
-print(f"📥 正在读取 CSV: {CSV_FILE}")
-df = pd.read_csv(CSV_FILE, dtype=str).fillna("")
+# ------------------------------------------------------------
+# 7) 主流程：生成所有 RST
+# ------------------------------------------------------------
+def render_all():
 
-# ============================================================
-# 🔧 按章节生成 RST
-# ============================================================
-chapters = []
+    cfg = paths.config
+    languages = list(cfg["doc_types"]["AT"].keys())
+    products = list(cfg["products"].keys())
 
-for chap_id, grp in df.groupby("章节", sort=True):
-    chap_name = grp["章节名称"].iloc[0].strip() or f"第{chap_id}章"
-    chapters.append((chap_id, chap_name, grp))
+    print("\n📘 开始生成 RST（双语 + 路径体系统一）\n")
 
-for chap_id, chap_name, grp in chapters:
+    for lang in languages:
+        lang_info = LANG_CONFIG[lang]
+        fmap = lang_info["FIELD_MAP"]
+        labels = lang_info["LABELS"]
 
-    chap_dir = RST_OUT_DIR / str(chap_id)
-    chap_dir.mkdir(parents=True, exist_ok=True)
+        for product in products:
+            print(f"\n🌍 [{lang}] {product}")
 
-    cmd_list = []
+            # ---------- CSV ----------
+            csv_file = paths.csv_path(lang, product) / f"at_{product}.csv"
+            df = pd.read_csv(csv_file, dtype=str).fillna("")
 
-    for _, row in grp.iterrows():
+            # ---------- rst 输出目录 ----------
+            rst_root = paths.rst_source_path(product, lang)
+            rst_root.mkdir(parents=True, exist_ok=True)
 
-        cmd_name = row["命令"].strip()
-        cmd_title = row["命令标题"].strip()
-        cmd_list.append(cmd_name)
+            # ---------- 章节分组 ----------
+            chapters = []
+            for chap_id, grp in df.groupby("章节", sort=True):
+                chap_name = get_field(grp.iloc[0], "章节名称", fmap)
+                if not chap_name:
+                    chap_name = lang_info["chapter_label_tpl"].format(no=chap_id)
+                chapters.append((chap_id, chap_name, grp))
 
-        # ---- 解析命令类型/格式/响应/示例 ----
-        types = [t.strip() for t in str(row.get("命令类型", "")).split(";") if t.strip()]
-        formats = [t.strip() for t in str(row.get("命令格式", "")).split(";")]
+            # ---------- 渲染每个章节 ----------
+            for chap_id, chap_name, grp in chapters:
 
-        raw_corr = str(row.get("响应校正", "")).strip().strip("'''")
-        if raw_corr:
-            responses = [t.strip() for t in raw_corr.split(";")]
-        else:
-            responses = [t.strip() for t in str(row.get("响应", "")).split(";")]
+                chap_dir = rst_root / str(chap_id)
+                chap_dir.mkdir(parents=True, exist_ok=True)
 
-        examples = [t.strip() for t in str(row.get("示例命令", "")).split(";")]
+                cmd_list = []
 
-        max_len = max(len(types), len(formats), len(responses), len(examples))
-        types += [""] * (max_len - len(types))
-        formats += [""] * (max_len - len(formats))
-        responses += [""] * (max_len - len(responses))
-        examples += [""] * (max_len - len(examples))
+                for _, row in grp.iterrows():
+                    cmd_name = row["命令"].strip()
+                    cmd_list.append(cmd_name)
 
-        subtypes = []
-        for i in range(max_len):
-            fmt = formats[i]
-            if fmt:
-                subtypes.append({
-                    "type": types[i],
-                    "fmt": fmt,
-                    "response": responses[i],
-                    "example": examples[i],
-                })
+                    # ---------- 多子命令类型 ----------
+                    types     = [x.strip() for x in row["命令类型"].split(";")]
+                    formats   = [x.strip() for x in row["命令格式"].split(";")]
+                    responses = [x.strip() for x in row["响应"].split(";")]
+                    examples  = [x.strip() for x in row["示例命令"].split(";")]
 
-        # ---- 解析参数 JSON ----
-        try:
-            parameters = json.loads(row.get("参数json", "{}"))
-        except:
-            parameters = {}
+                    max_len = max(len(types), len(formats), len(responses), len(examples))
+                    types     += [""] * (max_len - len(types))
+                    formats   += [""] * (max_len - len(formats))
+                    responses += [""] * (max_len - len(responses))
+                    examples  += [""] * (max_len - len(examples))
 
-        if isinstance(parameters, list):
-            param_dict = {}
-            for p in parameters:
-                name = (p.get("name") or "").strip()
-                desc = (p.get("desc") or "").strip()
-                valmap = p.get("valmap", {}) or {}
-                if name:
-                    param_dict[name] = {"__desc__": desc, **{str(k): v for k, v in valmap.items()}}
-            parameters = param_dict
+                    subtypes = []
+                    for i in range(max_len):
+                        if formats[i]:
+                            subtypes.append({
+                                "type":     types[i],
+                                "fmt":      formats[i],
+                                "response": responses[i],
+                                "example":  examples[i],
+                            })
 
-        # ---- 渲染命令页 ----
-        rendered = cmd_tmpl.render(
-            cmd_name=cmd_name,
-            cmd_title=cmd_title,
-            desc=row.get("功能描述", ""),
-            subtypes=subtypes,
-            parameters=parameters,
-            note=row.get("备注", ""),
-        )
+                    # ---------- 参数 JSON ----------
+                    param_json = get_field(row, "参数json", fmap)
+                    try:
+                        parameters = json.loads(param_json) if param_json else {}
+                    except:
+                        parameters = {}
 
-        (chap_dir / f"{cmd_name}.rst").write_text(
-            rendered.strip() + "\n", encoding="utf-8"
-        )
+                    # ---------- 渲染 command.rst ----------
+                    rendered = cmd_tmpl.render(
+                        cmd_name=cmd_name,
+                        cmd_title=get_field(row, "命令标题", fmap),
+                        desc=get_field(row, "功能描述", fmap),
+                        subtypes=subtypes,
+                        parameters=parameters,
+                        note=get_field(row, "备注", fmap),
+                        response_fix=get_field(row, "响应校正", fmap),
+                        labels=labels,
+                    )
 
-        print(f"  ✔ 已生成命令：{cmd_name}")
+                    (chap_dir / f"{cmd_name}.rst").write_text(
+                        rendered.strip() + "\n",
+                        encoding="utf-8"
+                    )
 
-    # ---- 渲染章节 index ----
-    idx_rst = chapter_index_tmpl.render(
-        chap_name=chap_name,
-        cmds=cmd_list
-    )
+                # ---------- 章节 index.rst ----------
+                chapter_index = env.from_string("""
+{{ title }}
+{{ "=" * title|length }}
 
-    (chap_dir / "index.rst").write_text(idx_rst.strip() + "\n", encoding="utf-8")
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+{% for c in cmds %}
+   {{ c }}
+{% endfor %}
+""").render(title=chap_name, cmds=cmd_list)
 
-    print(f"📘 第{chap_id}章《{chap_name}》生成完成（{len(cmd_list)} 条命令）")
+                (chap_dir / "index.rst").write_text(chapter_index, encoding="utf-8")
+
+            # ---------- （重要）保持源目录的 index.rst，不覆盖 ----------
+            # 如果 docs/.../source/index.rst 不存在，则自动生成
+            project_index = rst_root / "index.rst"
+            if not project_index.exists():
+                product_title = lang_info["TITLE"]
+                product_chapters = [str(cid) for cid, _, _ in chapters]
+
+                root_text = env.from_string("""
+{{ title }}
+{{ "=" * title|length }}
+
+.. toctree::
+   :maxdepth: 1
+{% for c in chapters %}
+   {{ c }}/index
+{% endfor %}
+""").render(title=product_title, chapters=product_chapters)
+
+                project_index.write_text(root_text, encoding="utf-8")
+
+    print("\n🏁 RST 已全部生成！\n")
 
 
-# ============================================================
-# 🔧 生成主 index.rst
-# ============================================================
-main_rst = main_index_tmpl.render(
-    project_name=PROJECT_NAME,
-    version=VERSION,
-    author=AUTHOR,
-    date=DATE,
-    chapters=chapters,
-)
-
-(RST_OUT_DIR / "index.rst").write_text(main_rst.strip() + "\n", encoding="utf-8")
-
-print(f"\n🎯 主 index.rst 生成完成 → {RST_OUT_DIR/'index.rst'}")
-print("🏁 全部 RST 内容已生成完毕！")
+if __name__ == "__main__":
+    render_all()
