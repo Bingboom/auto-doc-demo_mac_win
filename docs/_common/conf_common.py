@@ -18,13 +18,9 @@ html_static_path = [str(common_static_path)]
 LANG = globals().get("LANG", "zh_cn")
 PRODUCT = globals().get("PRODUCT")      # conf.py 注入
 
-# ============= Header Logo 读取 =============
+# ============= Header Logo =============
 header_cfg = paths.config["common"].get("header_logo", {})
-
-# 产品专用 → default → fallback
 logo_filename = header_cfg.get(PRODUCT, header_cfg.get("default", "header-logo.png"))
-
-# 最终 LaTeX 使用的路径（相对 + 绝对都可）
 HEADER_LOGO_LATEX = str(common_static_path / logo_filename)
 
 
@@ -34,9 +30,7 @@ latex_additional_files = [
     str(common_latex_path / "fonts.tex"),
     str(common_latex_path / "headerfooter.tex"),
 
-    # 加载背景图与 header logo
-    str(common_static_path / "background.png"),
-    str(common_static_path / logo_filename),
+    HEADER_LOGO_LATEX,
 ]
 
 
@@ -92,7 +86,7 @@ with open(template_file, "r", encoding="utf-8") as f:
 output_file.write_text(
     tpl.render(
         company_name=footer_text,
-        header_logo=HEADER_LOGO_LATEX,   # ★★★ 核心：传入 header_logo ★★★
+        header_logo=HEADER_LOGO_LATEX,
     ),
     encoding="utf-8"
 )
