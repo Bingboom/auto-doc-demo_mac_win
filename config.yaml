@@ -12,8 +12,9 @@ common:
   static: "docs/_common/_static"
   latex: "docs/_common/latex_templates"
   langs: "docs/_langs"
-
-tools_root: "tools"
+  copyright:
+    zh_cn: "© 2025 test Technology Co., Ltd. All Rights Reserved."
+    en: "© 2025 test Technology Co., Ltd. All Rights Reserved."
 
 # ============================================
 # Output Paths（避免 build_docs.py 硬编码）
