@@ -61,10 +61,15 @@ latex_documents = [
 ]
 
 # ---------------------------------------------------------
-# 【6】渲染封面 cover.tex（使用 Jinja2 模板）
+# 【6】解析封面背景图（必须在 cover 渲染前执行）
 # ---------------------------------------------------------
-from jinja2 import Template
+cover_cfg = paths.config["common"].get("cover_background", {})
+bg_filename = cover_cfg.get(PRODUCT, cover_cfg.get("default", "background.png"))
+COVER_BG_LATEX = str(paths.static_images_path() / bg_filename)
 
+# ---------------------------------------------------------
+# 【7】渲染封面 cover.tex（使用 Jinja2 模板）
+# ---------------------------------------------------------
 template_path = paths.latex_common_path() / "cover_template.tex.j2"
 output_path   = paths.latex_common_path() / "cover.tex"
 
@@ -73,6 +78,7 @@ context = {
     "title": PROJECT_TITLE,
     "issue": ISSUE,
     "date": DATE,
+    "cover_background": COVER_BG_LATEX,  # ★ 现在一定有值
 }
 
 with open(template_path, "r", encoding="utf-8") as f:
