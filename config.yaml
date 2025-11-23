@@ -20,6 +20,11 @@ common:
     default: "header-logo.png"
     N706B: "header-logo.png"
     N58: "header-logo.png"
+  # ★ 封面背景图（相对 static 路径）
+  cover_background:
+    default: "background.png"
+    N706B: "background-neoway.png"
+    N58: "background.png"
 
 # ============================================
 # Output Paths（避免 build_docs.py 硬编码）
