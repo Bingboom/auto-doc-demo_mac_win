@@ -15,6 +15,11 @@ common:
   copyright:
     zh_cn: "© 2025 test Technology Co., Ltd. All Rights Reserved."
     en: "© 2025 test Technology Co., Ltd. All Rights Reserved."
+  # ★ 值是相对 static 的路径
+  header_logo:
+    default: "header-logo.png"
+    N706B: "header-logo.png"
+    N58: "header-logo.png"
 
 # ============================================
 # Output Paths（避免 build_docs.py 硬编码）
