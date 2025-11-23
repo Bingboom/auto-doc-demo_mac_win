@@ -89,19 +89,28 @@ latex_elements = {
 # 渲染 headerfooter.tex（基于 Jinja2 模板）
 # ==========================================
 from jinja2 import Template
-import os
 
 template_file = common_latex_path / "headerfooter.tex.j2"
 output_file   = common_latex_path / "headerfooter.tex"
 
-# 语言文件注入的 COMPANY_NAME
-company_name = globals().get("COMPANY_NAME", "Neoway Technology")
+# ----------------------------------------------------------
+# ★★★ 从 config.yaml 读取版权信息（绝对正确的方式） ★★★
+# ----------------------------------------------------------
+# paths.config 即 path_utils.config
+# LANG 来自上方（conf.py 注入）
+copyright_map = paths.config["common"].get("copyright", {})
 
-# 渲染
+# 若该语言未定义版权，则 fallback 为英文
+footer_text = copyright_map.get(LANG, copyright_map.get("en", ""))
+
+# ----------------------------------------------------------
+# 渲染 Jinja2 模板
+# ----------------------------------------------------------
 with open(template_file, "r", encoding="utf-8") as f:
     tpl = Template(f.read())
 
 output_file.write_text(
-    tpl.render(company_name=company_name),
+    tpl.render(company_name=footer_text),
     encoding="utf-8"
 )
+
