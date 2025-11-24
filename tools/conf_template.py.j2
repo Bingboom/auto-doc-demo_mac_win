@@ -10,41 +10,39 @@ import sys
 # 【1】加载 path_utils（核心路径体系）
 # ---------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[4]   # <== 保留但作为 fallback
+PROJECT_ROOT = THIS_FILE.parents[4]
 
-# 优先从 tools 目录导入 path_utils
 TOOLS_DIR = PROJECT_ROOT / "tools"
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(TOOLS_DIR))
 
 try:
     from tools.utils import path_utils as paths
-    ROOT = paths.ROOT                     # 仓库根目录（最终权威）
+    ROOT = paths.ROOT
 except:
-    # fallback（极端情况：如果 CI 环境未成功加载 path_utils）
     ROOT = PROJECT_ROOT
 
 # ---------------------------------------------------------
-# 【2】注入基础参数（由 gen_conf.py 渲染）
+# 【2】基础参数
 # ---------------------------------------------------------
 LANG     = "{{ LANG }}"
 PRODUCT  = "{{ PRODUCT }}"
 DOC_TYPE = "{{ DOC_TYPE }}"
 
 # ---------------------------------------------------------
-# 【3】加载语言包 → 注入 PROJECT_TITLE / ISSUE / DATE
+# 【3】加载语言包
 # ---------------------------------------------------------
 lang_file = ROOT / "{{ lang_file }}"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
 # ---------------------------------------------------------
-# 【4】加载通用 Sphinx 配置（继承体系的“底座”）
+# 【4】继承通用配置
 # ---------------------------------------------------------
 COMMON_CONF = ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 
 # ---------------------------------------------------------
-# 【5】覆盖标题，使其来源于语言包（PROJECT_TITLE）
+# 【5】标题覆盖
 # ---------------------------------------------------------
 project     = PROJECT_TITLE
 html_title  = PROJECT_TITLE
@@ -61,31 +59,32 @@ latex_documents = [
 ]
 
 # ---------------------------------------------------------
-# 【6】解析封面背景图（必须在 cover 渲染前执行）
+# 【6】解析封面背景图（强制 POSIX）
 # ---------------------------------------------------------
 cover_cfg = paths.config["common"].get("cover_background", {})
 bg_filename = cover_cfg.get(PRODUCT, cover_cfg.get("default", "background.png"))
-COVER_BG_LATEX = str(paths.static_images_path() / bg_filename)
+COVER_BG_LATEX = (paths.static_images_path() / bg_filename).as_posix()
 
 # ---------------------------------------------------------
-# 【7】渲染封面 cover.tex（使用 Jinja2 模板）
+# 【7】渲染封面 cover.tex
 # ---------------------------------------------------------
 template_path = paths.latex_common_path() / "cover_template.tex.j2"
 output_path   = paths.latex_common_path() / "cover.tex"
+
+template_path = Path(template_path)
+output_path   = Path(output_path)
+
+from jinja2 import Template
 
 context = {
     "product": PRODUCT,
     "title": PROJECT_TITLE,
     "issue": ISSUE,
     "date": DATE,
-    "cover_background": COVER_BG_LATEX,  # ★ 现在一定有值
+    "cover_background": COVER_BG_LATEX,
 }
 
-with open(template_path, "r", encoding="utf-8") as f:
-    template = Template(f.read())
-
-with open(output_path, "w", encoding="utf-8") as f:
-    f.write(template.render(**context))
+tpl = Template(template_path.read_text(encoding="utf-8"))
+output_path.write_text(tpl.render(**context), encoding="utf-8")
 
 print(f"[COVER] Rendered cover → {output_path}")
-
