@@ -1,5 +1,5 @@
 # ============================================================
-# render_rst.py — Final Version (Timeout table merged into intro_ch2)
+# render_rst.py — Final Version (Intro CN/EN templates + Timeout merged)
 # ============================================================
 
 from pathlib import Path
@@ -90,17 +90,24 @@ def get_field(row, key, fmap):
     return ""
 
 # ------------------------------------------------------------
-# 6) templates
+# 6) Jinja2 templates
 # ------------------------------------------------------------
 env = Environment(loader=FileSystemLoader(str(paths.common_templates())))
 env.globals.update(max=max, len=len)
 
-cmd_tmpl     = env.get_template("command_page.j2")
-intro1_tmpl  = env.get_template("intro_ch1.j2")
-intro2_tmpl  = env.get_template("intro_ch2.j2")   # <-- timeout 将注入这里
+cmd_tmpl = env.get_template("command_page.j2")
+
+# 动态加载 intro 模板
+def load_intro_template(base, lang):
+    """
+    CN → base.j2
+    EN → base_en.j2
+    """
+    name = f"{base}.j2" if lang == "zh_cn" else f"{base}_en.j2"
+    return env.get_template(name)
 
 # ------------------------------------------------------------
-# 7）主流程
+# 7）main render
 # ------------------------------------------------------------
 def render_all():
 
@@ -120,13 +127,13 @@ def render_all():
             print(f"\n🌍 [{lang}] {product}")
 
             # ===============================
-            # ① load main at_XX.csv
+            # ① load at_XX.csv
             # ===============================
             csv_path = paths.csv_path(lang, product) / f"at_{product}.csv"
             df = pd.read_csv(csv_path, dtype=str).fillna("")
 
             # ===============================
-            # ② rst output path
+            # ② output path
             # ===============================
             rst_root = paths.rst_source_path(product, lang)
             rst_root.mkdir(parents=True, exist_ok=True)
@@ -137,13 +144,14 @@ def render_all():
             # ===============================
             # ③ intro_ch1
             # ===============================
+            intro1_tmpl = load_intro_template("intro_ch1", lang)
             (intro_dir / "1_intro_log.rst").write_text(
-                intro1_tmpl.render(labels=labels), 
+                intro1_tmpl.render(labels=labels),
                 encoding="utf-8"
             )
 
             # ===============================
-            # ④ load intro_timeout.csv（CN → fallback）
+            # ④ load timeout.csv（fallback to zh_cn）
             # ===============================
             timeout_csv = paths.csv_path(lang, product) / "intro_timeout.csv"
             if not timeout_csv.exists():
@@ -160,18 +168,16 @@ def render_all():
                     })
 
             # ===============================
-            # ⑤ intro_ch2 (timeout 表格将自动插入模板)
+            # ⑤ intro_ch2 (timeout merged)
             # ===============================
+            intro2_tmpl = load_intro_template("intro_ch2", lang)
             (intro_dir / "2_intro_syntax.rst").write_text(
-                intro2_tmpl.render(
-                    labels=labels, 
-                    timeout_rows=timeout_rows  # 关键！
-                ),
+                intro2_tmpl.render(labels=labels, timeout_rows=timeout_rows),
                 encoding="utf-8"
             )
 
             # ===============================
-            # ⑥ render AT chapters
+            # ⑥ chapters
             # ===============================
             chapters = []
             for chap_id, grp in df.groupby("章节", sort=True):
@@ -190,7 +196,9 @@ def render_all():
                     cmd_name = row["命令"].strip()
                     cmd_list.append(cmd_name)
 
-                    # subcommands
+                    # ---------------------------
+                    # 子命令
+                    # ---------------------------
                     types     = [x.strip() for x in row["命令类型"].split(";")]
                     formats   = [x.strip() for x in row["命令格式"].split(";")]
                     responses = [x.strip() for x in row["响应"].split(";")]
@@ -231,10 +239,10 @@ def render_all():
                     )
 
                     (chap_dir / f"{cmd_name}.rst").write_text(
-                        rendered + "\n",
-                        encoding="utf-8"
+                        rendered + "\n", encoding="utf-8"
                     )
 
+                # index.rst
                 chapter_index = env.from_string("""
 {{ title }}
 {{ "=" * title|length }}
@@ -250,7 +258,7 @@ def render_all():
                 (chap_dir / "index.rst").write_text(chapter_index, encoding="utf-8")
 
             # ===============================
-            # ⑦ root index (不再包含 timeout 章节)
+            # ⑦ root index
             # ===============================
             root_index = rst_root / "index.rst"
             root_index.write_text(
@@ -271,7 +279,7 @@ def render_all():
                 encoding="utf-8"
             )
 
-    print("\n🏁 DONE — timeout table embedded into intro_ch2!\n")
+    print("\n🏁 DONE — CN/EN intro templates + timeout merged!\n")
 
 
 if __name__ == "__main__":
