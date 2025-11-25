@@ -1,0 +1,32 @@
+Code,Meaning
+601,Operation successful
+602,Unknown error
+603,FTP(S) server blocked
+604,FTP(S) server busy
+605,DNS parse failed
+606,Network error
+607,Control connection closed
+608,Data connection closed
+609,Socket closed by peer
+610,Timeout error
+611,Invalid parameter
+612,Failed to open file
+613,File position invalid
+614,File error
+615,Service not available
+616,Open data connection failed
+617,Connection closed; transfer aborted
+618,Requested file action not taken
+619,Requested action aborted: local error
+620,Insufficient storage
+621,Syntax error
+622,Syntax error in parameters
+623,Command not implemented
+624,Bad sequence of commands
+625,Command parameter not implemented
+626,Not logged in
+627,Need account for storing files
+628,Request failed
+629,Unknown page type
+631,Requested file action aborted
+640,SSL authentication failed

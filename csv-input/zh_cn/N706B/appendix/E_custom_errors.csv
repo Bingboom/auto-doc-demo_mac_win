@@ -1,0 +1,13 @@
+Code,Description
+900,Authentication rejected (APN error)
+901,PDP not activated
+902,PDP already activated
+910,TCP refused
+911,TCP timeout
+912,Socket exists
+913,Socket not exist
+914,Buffer full
+915,Send timeout
+916,Domain not exist
+917,DNS timeout
+918,Unknown DNS error

@@ -45,7 +45,7 @@ The response field may contain multiple lines/messages depending on the command.
 
 **OK** indicates successful execution, while **ERROR** indicates failure.
 
-3. Command Types
+Command Types
 ----------------
 
 .. csv-table::
@@ -58,7 +58,7 @@ The response field may contain multiple lines/messages depending on the command.
    "Query", "AT+CMD?<CR>", "response + OK", "Return current stored value"
    "URC", "<CR><LF>+CMD:<VALUE><CR><LF>", "N/A", "Unsolicited report from module"
 
-4. Command Response Time
+Command Response Time
 ------------------------
 
 After receiving an AT command, the module requires some time to process it internally.  
