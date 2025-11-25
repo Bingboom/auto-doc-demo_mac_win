@@ -1,0 +1,12 @@
+Power-On LOG Description
+====================
+
+The module outputs “+PBREADY” after boot.
+
+If the module starts in auto-baud mode, wait 10 seconds after power-on before sending “AT”.
+If AT initialization is completed, the module will reply “OK”. When the phonebook is ready, “+PBREADY” will be displayed.
+
+Network indicator:
+   - No network service: Off  
+   - Registered but PPP not activated: Solid on  
+   - PPP activated: blinking cycle of 0.2s on and 1.8s off  
