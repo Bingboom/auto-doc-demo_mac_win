@@ -52,3 +52,24 @@ AT 命令格式说明
 有方模组的每条命令在下发之后，模组内部需要一定得时间进行处理及响应，其响应时长取决于具体的 AT 命令。
 模组内部参数设置或读写的命令在下发后，模组会立即作出响应，默认最大响应时间为 300ms。其他涉及 SIM/USIM 卡、网络交互、外设控制的命令，模组可能需要花费数秒到数十秒的时间才会作出响应，具体视 SIM/USIM 卡配置（例如，电话簿中存储的联系人数量，存储的短信数量）、模组所处的网
 络环境（网络质量、拥堵情况等）或者外设类型而异。
+
+{% if timeout_rows %}
+{{ labels.timeout_desc if labels.timeout_desc else "
+下表列出相关指令的响应时间，其它未在下表中列出的命令，最大响应时间约为 300ms。
+" }}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 45 20
+   :align: center
+
+   * - {{ labels.timeout_no if labels.timeout_no else "No." }}
+     - {{ labels.timeout_cmd if labels.timeout_cmd else "命令" }}
+     - {{ labels.timeout_value if labels.timeout_value else "超时时间（单位：s）" }}
+
+{% for row in timeout_rows %}
+   * - {{ row.no }}
+     - {{ row.cmd }}
+     - {{ row.timeout }}
+{% endfor %}
+{% endif %}
