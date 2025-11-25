@@ -1,6 +1,7 @@
 # ============================================================
-# render_rst.py — Final Stable Version (No Hardcoded Paths)
+# render_rst.py — Final Stable Version (With Intro Chapters)
 # 全路径统一使用 path_utils（语言包也走 config.yaml + path_utils）
+# 新增：前两章 intro 模板自动生成
 # ============================================================
 
 """
@@ -9,8 +10,9 @@
     2) 多子命令类型 Execute / Query / Test / Set
     3) *_en 字段 fallback
     4) 自动生成章节 index.rst
-    5) 自动生成项目 index.rst（如不存在）
-    6) 不允许任何硬编码路径
+    5) 自动生成项目 index.rst（含 intro 固定章节）
+    6) intro_ch1 / intro_ch2 模板自动渲染
+    7) 无任何硬编码路径
 """
 
 from pathlib import Path
@@ -19,7 +21,7 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
 # ------------------------------------------------------------
-# 1) 注入搜索路径（必须先于 import path_utils）
+# 1) 注入搜索路径
 # ------------------------------------------------------------
 THIS = Path(__file__).resolve()
 TOOLS_ROOT = THIS.parent
@@ -35,10 +37,9 @@ from tools.utils import path_utils as paths
 
 
 # ------------------------------------------------------------
-# 3) 加载语言包路径（来自 config.yaml，而不是硬编码）
+# 3) 加载语言包路径
 # ------------------------------------------------------------
-LANG_DIR = paths.langs_dir()   # <—— 完全改为 path_utils 提供
-
+LANG_DIR = paths.langs_dir()
 sys.path.insert(0, str(LANG_DIR))
 
 def safe_import(lang):
@@ -48,21 +49,17 @@ def safe_import(lang):
         print(f"[WARN] 无法加载语言包 {lang}: {e}")
         return None
 
-
 zh_mod = safe_import("zh_cn")
 en_mod = safe_import("en")
 
 
 # ------------------------------------------------------------
-# 4) 字段映射规则（支持 *_en fallback）
+# 4) 字段映射规则（含英文 fallback）
 # ------------------------------------------------------------
 def get_field_map(module, is_en=False):
-
-    # 语言包自己定义 FIELD_MAP（最高优先级）
     if module and hasattr(module, "FIELD_MAP"):
         return module.FIELD_MAP
 
-    # 自动 fallback
     if is_en:
         return {
             "章节名称": "章节名称_en",
@@ -87,7 +84,9 @@ def get_field_map(module, is_en=False):
     }
 
 
+# ------------------------------------------------------------
 # 语言配置
+# ------------------------------------------------------------
 LANG_CONFIG = {
     "zh_cn": {
         "module": zh_mod,
@@ -101,7 +100,6 @@ LANG_CONFIG = {
     },
 }
 
-# 语言包补全
 for lang, info in LANG_CONFIG.items():
     mod = info["module"]
     info["FIELD_MAP"] = get_field_map(mod, info["is_en"])
@@ -110,7 +108,7 @@ for lang, info in LANG_CONFIG.items():
 
 
 # ------------------------------------------------------------
-# 5) 字段获取（支持英文优先）
+# 5) 字段获取（fallback）
 # ------------------------------------------------------------
 def get_field(row, key, fmap):
     mapped_key = fmap.get(key, key)
@@ -125,11 +123,14 @@ def get_field(row, key, fmap):
 
 
 # ------------------------------------------------------------
-# 6) Jinja2 模板（路径同样来自 path_utils）
+# 6) Jinja 模板环境
 # ------------------------------------------------------------
 env = Environment(loader=FileSystemLoader(str(paths.common_templates())))
 env.globals.update(max=max, len=len)
+
 cmd_tmpl = env.get_template("command_page.j2")
+intro1_tmpl = env.get_template("intro_ch1.j2")
+intro2_tmpl = env.get_template("intro_ch2.j2")
 
 
 # ------------------------------------------------------------
@@ -141,7 +142,7 @@ def render_all():
     languages = list(cfg["doc_types"]["AT"].keys())
     products = list(cfg["products"].keys())
 
-    print("\n📘 开始生成 RST（完全统一路径体系）\n")
+    print("\n📘 生成 RST 中（路径体系完整统一）\n")
 
     for lang in languages:
         lang_info = LANG_CONFIG[lang]
@@ -152,25 +153,38 @@ def render_all():
 
             print(f"\n🌍 [{lang}] {product}")
 
-            # ① 获取 CSV
+            # === ① 读取 CSV ===
             csv_path = paths.csv_path(lang, product) / f"at_{product}.csv"
             df = pd.read_csv(csv_path, dtype=str).fillna("")
 
-            # ② 输出 rst 根目录
+            # === ② RST 输出根目录 ===
             rst_root = paths.rst_source_path(product, lang)
             rst_root.mkdir(parents=True, exist_ok=True)
 
-            # ③ 分章节
+            # === ③ 生成 intro/ 模板章节 ===
+            intro_dir = rst_root / "intro"
+            intro_dir.mkdir(exist_ok=True)
+
+            (intro_dir / "1_intro_log.rst").write_text(
+                intro1_tmpl.render(labels=labels),
+                encoding="utf-8"
+            )
+            (intro_dir / "2_intro_syntax.rst").write_text(
+                intro2_tmpl.render(labels=labels),
+                encoding="utf-8"
+            )
+
+            # === ④ 按 CSV 分章节 ===
             chapters = []
             for chap_id, grp in df.groupby("章节", sort=True):
-                chap_name = get_field(grp.iloc[0], "章节名称", fmap)
 
+                chap_name = get_field(grp.iloc[0], "章节名称", fmap)
                 if not chap_name:
                     chap_name = lang_info["chapter_label_tpl"].format(no=chap_id)
 
                 chapters.append((chap_id, chap_name, grp))
 
-            # ④ 渲染章节
+            # === ⑤ 渲染每个 CSV 章节 ===
             for chap_id, chap_name, grp in chapters:
 
                 chap_dir = rst_root / str(chap_id)
@@ -179,10 +193,11 @@ def render_all():
                 cmd_list = []
 
                 for _, row in grp.iterrows():
+
                     cmd_name = row["命令"].strip()
                     cmd_list.append(cmd_name)
 
-                    # 子命令拆分
+                    # 拆子命令
                     types = [x.strip() for x in row["命令类型"].split(";")]
                     formats = [x.strip() for x in row["命令格式"].split(";")]
                     responses = [x.strip() for x in row["响应"].split(";")]
@@ -211,7 +226,6 @@ def render_all():
                     except:
                         parameters = {}
 
-                    # 渲染 rst
                     rendered = cmd_tmpl.render(
                         cmd_name=cmd_name,
                         cmd_title=get_field(row, "命令标题", fmap),
@@ -228,7 +242,7 @@ def render_all():
                         encoding="utf-8"
                     )
 
-                # 章节 index.rst
+                # index.rst for chapter
                 chapter_index = env.from_string("""
 {{ title }}
 {{ "=" * title|length }}
@@ -241,29 +255,35 @@ def render_all():
 {% endfor %}
 """).render(title=chap_name, cmds=cmd_list)
 
-                (chap_dir / "index.rst").write_text(chapter_index, encoding="utf-8")
+                (chap_dir / "index.rst").write_text(
+                    chapter_index, encoding="utf-8"
+                )
 
-            # ⑤ 根 index.rst（仅在不存在时创建）
+            # === ⑥ 根 index.rst — 永远强制覆盖（保证前两章插入） ===
             root_index = rst_root / "index.rst"
-            if not root_index.exists():
-                root_index.write_text(
-                    env.from_string("""
+
+            root_index.write_text(
+                env.from_string("""
 {{ title }}
 {{ "=" * title|length }}
 
 .. toctree::
    :maxdepth: 1
+
+   intro/1_intro_log
+   intro/2_intro_syntax
+
 {% for c in chapters %}
    {{ c }}/index
 {% endfor %}
 """).render(
-                        title=lang_info["TITLE"],
-                        chapters=[str(cid) for cid, _, _ in chapters]
-                    ),
-                    encoding="utf-8"
-                )
+                    title=lang_info["TITLE"],
+                    chapters=[str(cid) for cid, _, _ in chapters]
+                ),
+                encoding="utf-8"
+            )
 
-    print("\n🏁 RST 生成完成（无硬编码路径）！\n")
+    print("\n🏁 RST 生成完成（含 intro 模板）！\n")
 
 
 if __name__ == "__main__":
