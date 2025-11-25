@@ -1,5 +1,6 @@
 # ============================================================
-# render_rst.py — Intro CN/EN + Timeout + Appendix A–G (Fixed Template Paths)
+# render_rst.py — Intro CN/EN + Timeout + Appendix (2–4 columns auto)
+# Final version — Appendix title without “附录 A/B/C”
 # ============================================================
 
 from pathlib import Path
@@ -8,7 +9,7 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
 # ------------------------------------------------------------
-# 1) inject search paths
+# 1) Inject search paths
 # ------------------------------------------------------------
 THIS = Path(__file__).resolve()
 TOOLS_ROOT = THIS.parent
@@ -18,12 +19,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(TOOLS_ROOT))
 
 # ------------------------------------------------------------
-# 2) unified path system
+# 2) Unified path system
 # ------------------------------------------------------------
 from tools.utils import path_utils as paths
 
 # ------------------------------------------------------------
-# 3) load language packs
+# 3) Load language packs
 # ------------------------------------------------------------
 LANG_DIR = paths.langs_dir()
 sys.path.insert(0, str(LANG_DIR))
@@ -38,7 +39,7 @@ zh_mod = safe_import("zh_cn")
 en_mod = safe_import("en")
 
 # ------------------------------------------------------------
-# 4) field mapping
+# 4) Field mapping
 # ------------------------------------------------------------
 def get_field_map(module, is_en=False):
     if module and hasattr(module, "FIELD_MAP"):
@@ -67,7 +68,6 @@ def get_field_map(module, is_en=False):
         "参数json": "参数json",
     }
 
-
 LANG_CONFIG = {
     "zh_cn": {"module": zh_mod, "is_en": False, "chapter_label_tpl": "第{no}章"},
     "en":    {"module": en_mod, "is_en": True,  "chapter_label_tpl": "Chapter {no}"},
@@ -79,9 +79,8 @@ for lang, info in LANG_CONFIG.items():
     info["LABELS"]     = getattr(mod, "LABELS", {}) if mod else {}
     info["TITLE"]      = getattr(mod, "PROJECT_TITLE", "AT Commands Manual")
 
-
 # ------------------------------------------------------------
-# 5) field getter
+# 5) Field getter
 # ------------------------------------------------------------
 def get_field(row, key, fmap):
     mapped = fmap.get(key, key)
@@ -91,52 +90,47 @@ def get_field(row, key, fmap):
         return str(row[key]).strip()
     return ""
 
-
 # ------------------------------------------------------------
-# 6) templates loader  (only use paths.common_templates)
+# 6) Templates loader
 # ------------------------------------------------------------
 env = Environment(loader=FileSystemLoader(str(paths.common_templates())))
 env.globals.update(max=max, len=len)
 
-# command page template
 cmd_tmpl = env.get_template("command_page.j2")
+appendix_generic_tmpl = env.get_template("appendix_generic.j2")
 
-# intro templates loader
 def load_intro_template(base, lang):
     name = f"{base}.j2" if lang == "zh_cn" else f"{base}_en.j2"
     return env.get_template(name)
 
-# appendix template loader  (目录不再使用 f"appendix/xxx")
-def load_appendix_template(name):
-    return env.get_template(name)
-
-
 # ------------------------------------------------------------
-# 7) main render
+# 7) Main renderer
 # ------------------------------------------------------------
 def render_all():
 
     cfg = paths.config
     languages = list(cfg["doc_types"]["AT"].keys())
-    products  = list(cfg["products"].keys())
+    products = list(cfg["products"].keys())
 
-    print("\n📘 Generating RST (Intro + Timeout + Appendix A–G)\n")
+    print("\n📘 Generating RST (Intro + Timeout + Appendix) ...\n")
 
     for lang in languages:
-        info  = LANG_CONFIG[lang]
-        fmap  = info["FIELD_MAP"]
+        info = LANG_CONFIG[lang]
+        fmap = info["FIELD_MAP"]
         labels = info["LABELS"]
 
         for product in products:
 
             print(f"\n🌍 [{lang}] {product}")
 
+            # ========== 主 AT CSV ==========
             csv_path = paths.csv_path(lang, product) / f"at_{product}.csv"
             df = pd.read_csv(csv_path, dtype=str).fillna("")
 
             rst_root = paths.rst_source_path(product, lang)
             rst_root.mkdir(parents=True, exist_ok=True)
 
+            # ========== Intro Chapter 1 ==========
             intro_dir = rst_root / "intro"
             intro_dir.mkdir(exist_ok=True)
 
@@ -146,6 +140,7 @@ def render_all():
                 encoding="utf-8"
             )
 
+            # ========== Intro Chapter 2（语法） ==========
             timeout_csv = paths.csv_path(lang, product) / "intro_timeout.csv"
             if not timeout_csv.exists():
                 timeout_csv = paths.csv_path("zh_cn", product) / "intro_timeout.csv"
@@ -155,8 +150,8 @@ def render_all():
                 df_t = pd.read_csv(timeout_csv, dtype=str).fillna("")
                 for _, r in df_t.iterrows():
                     timeout_rows.append({
-                        "no":      r.get("No.", r.get("no", "")),
-                        "cmd":     r.get("命令", r.get("Command", "")),
+                        "no": r.get("No.", r.get("no", "")),
+                        "cmd": r.get("命令", r.get("Command", "")),
                         "timeout": r.get("超时_s", r.get("Timeout_s", "")),
                     })
 
@@ -166,6 +161,7 @@ def render_all():
                 encoding="utf-8"
             )
 
+            # ========== AT 章节 ==========
             chapters = []
             for chap_id, grp in df.groupby("章节", sort=True):
                 chap_name = get_field(grp.iloc[0], "章节名称", fmap)
@@ -183,16 +179,16 @@ def render_all():
                     cmd_name = row["命令"].strip()
                     cmd_list.append(cmd_name)
 
-                    types     = [x.strip() for x in row["命令类型"].split(";")]
-                    formats   = [x.strip() for x in row["命令格式"].split(";")]
+                    types = [x.strip() for x in row["命令类型"].split(";")]
+                    formats = [x.strip() for x in row["命令格式"].split(";")]
                     responses = [x.strip() for x in row["响应"].split(";")]
-                    examples  = [x.strip() for x in row["示例命令"].split(";")]
+                    examples = [x.strip() for x in row["示例命令"].split(";")]
 
                     max_len = max(len(types), len(formats), len(responses), len(examples))
-                    types     += [""] * (max_len - len(types))
-                    formats   += [""] * (max_len - len(formats))
+                    types += [""] * (max_len - len(types))
+                    formats += [""] * (max_len - len(formats))
                     responses += [""] * (max_len - len(responses))
-                    examples  += [""] * (max_len - len(examples))
+                    examples += [""] * (max_len - len(examples))
 
                     subtypes = []
                     for i in range(max_len):
@@ -211,13 +207,13 @@ def render_all():
                         parameters = {}
 
                     rendered = cmd_tmpl.render(
-                        cmd_name   = cmd_name,
-                        cmd_title  = get_field(row, "命令标题", fmap),
-                        desc       = get_field(row, "功能描述", fmap),
-                        subtypes   = subtypes,
-                        parameters = parameters,
-                        note       = get_field(row, "备注", fmap),
-                        response_fix = get_field(row, "响应校正", fmap),
+                        cmd_name=cmd_name,
+                        cmd_title=get_field(row, "命令标题", fmap),
+                        desc=get_field(row, "功能描述", fmap),
+                        subtypes=subtypes,
+                        parameters=parameters,
+                        note=get_field(row, "备注", fmap),
+                        response_fix=get_field(row, "响应校正", fmap),
                         labels=labels,
                     )
 
@@ -237,50 +233,57 @@ def render_all():
 {% endfor %}
 """).render(title=chap_name, cmds=cmd_list)
 
-                (chap_dir / "index.rst").write_text(chapter_index, encoding="utf-8")
-
+                (chap_dir / "index.rst").write_text(
+                    chapter_index, encoding="utf-8"
+                )
 
             # ====================================================
-            # ⑦ 附录（修复模板路径）
+            #  附录 — 自动支持 2–4 列 CSV
+            #  标题不再包含“附录 A/B/C”
             # ====================================================
             appendix_dir_csv = paths.csv_path(lang, product) / "appendix"
             appendix_dir_rst = rst_root / "appendix"
             appendix_dir_rst.mkdir(exist_ok=True)
 
-            appendix_map = {
-                "A_error_codes.csv": ("appendix_A.j2", "附录 A 错误码说明" if lang=="zh_cn" else "Appendix A Error Codes"),
-                "B_atv.csv": ("appendix_B.j2", "附录 B ATV 命令集" if lang=="zh_cn" else "Appendix B ATV Commands"),
-                "C_band_list.csv": ("appendix_C.j2", "附录 C 频段列表" if lang=="zh_cn" else "Appendix C Band List"),
-                "D_result_codes.csv": ("appendix_D.j2", "附录 D 结果码" if lang=="zh_cn" else "Appendix D Result Codes"),
-                "E_cme_cms_errors.csv": ("appendix_E1.j2", "附录 E1 CME/CMS 错误码" if lang=="zh_cn" else "Appendix E1 CME/CMS Errors"),
-                "E_custom_errors.csv": ("appendix_E2.j2", "附录 E2 自定义错误码" if lang=="zh_cn" else "Appendix E2 Custom Errors"),
-                "F_urc.csv": ("appendix_F.j2", "附录 F URC 列表" if lang=="zh_cn" else "Appendix F URCs"),
-                "G_reference.csv": ("appendix_G.j2", "附录 G 参考资料" if lang=="zh_cn" else "Appendix G Reference"),
+            # 文件名保证顺序（A_xxx、B_xxx ...)
+            appendix_title_map = {
+                "A_error_codes.csv": "错误码说明" if lang=="zh_cn" else "Error Codes",
+                "B_atv.csv": "ATV 命令集" if lang=="zh_cn" else "ATV Commands",
+                "C_band_list.csv": "频段列表" if lang=="zh_cn" else "Band List",
+                "D_result_codes.csv": "结果码" if lang=="zh_cn" else "Result Codes",
+                "E_cme_cms_errors.csv": "CME/CMS 错误码" if lang=="zh_cn" else "CME/CMS Errors",
+                "E_custom_errors.csv": "自定义错误码" if lang=="zh_cn" else "Custom Errors",
+                "F_urc.csv": "URC 列表" if lang=="zh_cn" else "URC List",
+                "G_reference.csv": "参考资料" if lang=="zh_cn" else "References",
             }
 
             appendix_pages = []
 
-            for csv_name, (tmpl_name, title) in appendix_map.items():
+            for csv_name, pure_title in appendix_title_map.items():
                 csv_file = appendix_dir_csv / csv_name
                 if not csv_file.exists():
                     continue
 
-                df_app = pd.read_csv(csv_file, dtype=str, encoding="utf-8-sig", engine="python").fillna("")
+                df_app = pd.read_csv(csv_file, dtype=str, encoding="utf-8-sig").fillna("")
                 headers = list(df_app.columns)
                 rows = df_app.values.tolist()
 
-                tmpl = load_appendix_template(tmpl_name)
-                out_text = tmpl.render(
-                    title=title,
+                # ⚠️ 注意：标题不再包含 “附录 A”
+                out_text = appendix_generic_tmpl.render(
+                    title=pure_title,
                     headers=headers,
                     rows=rows,
                     labels=labels
                 )
 
-                out_path = appendix_dir_rst / f"{csv_name.replace('.csv','')}.rst"
-                out_path.write_text(out_text, encoding="utf-8")
-                appendix_pages.append(out_path.stem)
+                rst_name = csv_name.replace(".csv", "")
+                (appendix_dir_rst / f"{rst_name}.rst").write_text(
+                    out_text, encoding="utf-8"
+                )
 
+                appendix_pages.append(rst_name)
+
+            # 附录 index
             (appendix_dir_rst / "index.rst").write_text(
                 env.from_string("""
 附录
@@ -294,7 +297,7 @@ def render_all():
                 encoding="utf-8"
             )
 
-            # root index
+            # -------- Root index --------
             root_index = rst_root / "index.rst"
             root_index.write_text(
                 env.from_string("""
@@ -302,21 +305,34 @@ def render_all():
 {{ "=" * title|length }}
 
 .. toctree::
+   :caption: {{ "目录" if lang=="zh_cn" else "Contents" }}
    :maxdepth: 1
 
    intro/1_intro_log
    intro/2_intro_syntax
 
+.. toctree::
+   :caption: {{ "AT 命令章节" if lang=="zh_cn" else "AT Command Chapters" }}
+   :maxdepth: 1
+
 {% for c in chapters %}
    {{ c }}/index
 {% endfor %}
 
+.. toctree::
+   :caption: {{ "附录" if lang=="zh_cn" else "Appendix" }}
+   :maxdepth: 1
+
    appendix/index
-""").render(title=info["TITLE"], chapters=[str(cid) for cid, _, _ in chapters]),
+""").render(
+                    title=info["TITLE"],
+                    chapters=[str(cid) for cid, _, _ in chapters],
+                    lang=lang
+                ),
                 encoding="utf-8"
             )
 
-    print("\n🏁 DONE — Intro CN/EN + Timeout + Appendix A–G 完成构建！\n")
+    print("\n🏁 DONE — All RST Generated ✔\n")
 
 
 if __name__ == "__main__":

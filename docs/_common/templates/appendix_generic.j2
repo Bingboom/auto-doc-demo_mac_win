@@ -1,0 +1,63 @@
+{{ title }}
+{{ "=" * (title|length+1) }}
+
+{% set col_count = headers|length %}
+
+{% if col_count == 1 %}
+
+.. list-table::
+   :widths: 100
+   :header-rows: 1
+   :align: center
+
+   * - {{ headers[0] }}
+{% for row in rows %}
+   * - {{ row[0] }}
+{% endfor %}
+
+{% elif col_count == 2 %}
+
+.. list-table::
+   :header-rows: 1
+   :align: center
+   :widths: 50 50
+
+   * - {{ headers[0] }}
+     - {{ headers[1] }}
+
+{% for row in rows %}
+   * - {{ row[0] }}
+     - {{ row[1] }}
+{% endfor %}
+
+{% elif col_count == 3 %}
+
+.. list-table::
+   :header-rows: 1
+   :align: center
+   :widths: 20 50 30
+
+   * - {{ headers[0] }}
+     - {{ headers[1] }}
+     - {{ headers[2] }}
+
+{% for row in rows %}
+   * - {{ row[0] }}
+     - {{ row[1] }}
+     - {{ row[2] }}
+{% endfor %}
+
+{% else %}
+
+.. list-table::
+   :header-rows: 1
+   :align: center
+   :widths: {% for i in range(col_count) %}{{ 100 // col_count }} {% endfor %}
+
+   *{% for h in headers %} - {{ h }}{% endfor %}
+
+{% for row in rows %}
+   *{% for col in row %} - {{ col }}{% endfor %}
+{% endfor %}
+
+{% endif %}
