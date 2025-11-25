@@ -44,6 +44,12 @@ def latex_common_path():
 def product_conf(product: str):
     return config["products"][product]
 
+# ============================================================
+# 新增 langs_dir()
+# ============================================================
+
+def langs_dir() -> Path:
+    return ROOT / config["common"]["langs"]
 
 # ============================================================
 # 语言优先路径渲染
@@ -77,3 +83,11 @@ def csv_path(lang: str, product: str) -> Path:
 # 默认产品
 def get_default_product():
     return config.get("default_product")
+
+# 定义输出路径
+
+def output_html_dir() -> Path:
+    return ROOT / config["output"]["html"]
+
+def output_pdf_dir() -> Path:
+    return ROOT / config["output"]["pdf"]

@@ -10,68 +10,79 @@
 
 {{ desc }}
 
-命令格式
+{{ labels.command_format or "命令格式" }}
 ^^^^^^^^
-{% set label_map = {"执行":"执行命令", "查询":"查询命令", "测试":"测试命令", "设置":"设置命令"} -%}
-{% for st in subtypes -%}
-{% set label = label_map.get(st.type, "命令") -%}
+
+{# ---- 命令类型中英映射，不改变你原来的逻辑 ---- #}
+{% set label_map = {
+    
+    "执行": "执行命令",
+    "查询": "查询命令",
+    "测试": "测试命令",
+    "设置": "设置命令",
+
+    
+    "Execute": "Execute Command",
+    "Query": "Query Command",
+    "Test": "Test Command",
+    "Set": "Set Command",
+} %}
+
+{# ---- 保留全部子命令类型（你之前剪掉了） ---- #}
+{% for st in subtypes %}
+{% set label = label_map.get(st.type, labels.cmd or "命令") %}
+
 **{{ label }}**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**{{ labels.cmd or "命令" }}：**
 ::
 
 {{ indent4(st.fmt) }}
 
-**响应：**
-
+**{{ labels.response or "响应" }}：**
 ::
 
-{% if st.response.strip() -%}
+{% if st.response.strip() %}
 {{ indent4(st.response) }}
-
-{% else -%}
+{% else %}
 {{ indent4('OK') }}
+{% endif %}
 
-{% endif -%}
-{% endfor -%}
+{% endfor %}
 
-参数
-^^^^
-{% if parameters -%}
-{% for k, v in parameters.items() -%}
-- **{{ k }}**： {{ (v.get('__desc__') or '')|trim }}
-{% for opt, text in v.items() if opt != '__desc__' -%}
-  - {{ opt }}：{{ text }}
-{% endfor -%}
-{% endfor -%}
-{% else -%}
-(无参数)
-{% endif -%}
-
-
-命令示例
+{{ labels.parameters or "参数" }}
 ^^^^^^^^
-{% set examples = [] -%}
-{% for st in subtypes -%}
-  {% if st.example and st.example.strip() -%}
-    {% set _ = examples.append(st.example.strip()) -%}
-  {% endif -%}
-{% endfor -%}
-{% if examples and examples|join('')|trim -%}
+{% if parameters %}
+{% for k, v in parameters.items() %}
+- **{{ k }}**： {{ (v.get('__desc__') or '')|trim }}
+{% for opt, text in v.items() if opt != '__desc__' %}
+  - {{ opt }}：{{ text }}
+{% endfor %}
+{% endfor %}
+{% else %}
+(无参数)
+{% endif %}
+
+{{ labels.examples or "命令示例" }}
+^^^^^^^^
+{% set examples = [] %}
+{% for st in subtypes %}
+  {% if st.example and st.example.strip() %}
+    {% set _ = examples.append(st.example.strip()) %}
+  {% endif %}
+{% endfor %}
+
+{% if examples and examples|join('')|trim %}
 ::
 
-{% for ex in examples -%}
+{% for ex in examples %}
 {{ indent4(ex) }}
-
-{% endfor -%}
-{% else -%}
+{% endfor %}
+{% else %}
 (无示例)
-{% endif -%}
+{% endif %}
 
-
-说明
-^^^^
+{{ labels.note or "说明" }}
+^^^^^^^^
 {{ note.strip() if note else "(无说明)" }}
-

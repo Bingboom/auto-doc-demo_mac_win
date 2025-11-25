@@ -6,7 +6,7 @@
 \setlength{\headsep}{12pt}
 
 \newcommand{\neowayheaderlogo}{%
-  \includegraphics[height=14pt]{header-logo.png}
+  \includegraphics[height=14pt]{ {% endraw %}{{ header_logo }}{% raw %} }
 }
 
 % ================================
@@ -17,7 +17,7 @@
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{\nouppercase{\leftmark}}
     \fancyfoot[L]{ 
-{% endraw %}{{ company_name }}{% raw %} 
+{% endraw %}{{ company_name }}{% raw %}
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
@@ -32,13 +32,12 @@
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{}
     \fancyfoot[L]{ 
-{% endraw %}{{ company_name }}{% raw %} 
+{% endraw %}{{ company_name }}{% raw %}
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
     \renewcommand{\footrulewidth}{0.4pt}
 }
 
-% 默认页式
 \pagestyle{normal}
 {% endraw %}

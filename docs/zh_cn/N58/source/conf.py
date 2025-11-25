@@ -6,37 +6,45 @@
 from pathlib import Path
 import sys
 
+# ---------------------------------------------------------
+# 【1】加载 path_utils（核心路径体系）
+# ---------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[4]
 
+TOOLS_DIR = PROJECT_ROOT / "tools"
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "tools"))
+sys.path.insert(0, str(TOOLS_DIR))
 
-import tools.utils.path_utils as paths
+try:
+    from tools.utils import path_utils as paths
+    ROOT = paths.ROOT
+except:
+    ROOT = PROJECT_ROOT
 
 # ---------------------------------------------------------
-# 基础变量
+# 【2】基础参数
 # ---------------------------------------------------------
-LANG = "zh_cn"
-PRODUCT = "N58"
+LANG     = "zh_cn"
+PRODUCT  = "N58"
 DOC_TYPE = "AT"
 
 # ---------------------------------------------------------
-# 加载语言包（自动注入 PROJECT_TITLE / ISSUE / DATE 等变量）
+# 【3】加载语言包
 # ---------------------------------------------------------
-lang_file = PROJECT_ROOT / "docs/_langs/zh_cn.py"
+lang_file = ROOT / "docs\_langs\zh_cn.py"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
 # ---------------------------------------------------------
-# 引入公共 Sphinx 配置
+# 【4】继承通用配置
 # ---------------------------------------------------------
-COMMON_CONF = PROJECT_ROOT / "docs" / "_common" / "conf_common.py"
+COMMON_CONF = ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 
 # ---------------------------------------------------------
-# 覆写标题，使其来自语言包
+# 【5】标题覆盖
 # ---------------------------------------------------------
-project     = PROJECT_TITLE    # 语言包变量
+project     = PROJECT_TITLE
 html_title  = PROJECT_TITLE
 author      = "Neoway Technology"
 
@@ -44,31 +52,39 @@ latex_documents = [
     (
         "index",
         f"{PRODUCT}_{DOC_TYPE}.tex",
-        PROJECT_TITLE,   # 自动中文或英文
+        PROJECT_TITLE,
         author,
         "manual",
     )
 ]
 
 # ---------------------------------------------------------
-# 将语言包内容传递给封面模板 cover.tex
+# 【6】解析封面背景图（强制 POSIX）
 # ---------------------------------------------------------
-from jinja2 import Template
+cover_cfg = paths.config["common"].get("cover_background", {})
+bg_filename = cover_cfg.get(PRODUCT, cover_cfg.get("default", "background.png"))
+COVER_BG_LATEX = (paths.static_images_path() / bg_filename).as_posix()
 
+# ---------------------------------------------------------
+# 【7】渲染封面 cover.tex
+# ---------------------------------------------------------
 template_path = paths.latex_common_path() / "cover_template.tex.j2"
 output_path   = paths.latex_common_path() / "cover.tex"
+
+template_path = Path(template_path)
+output_path   = Path(output_path)
+
+from jinja2 import Template
 
 context = {
     "product": PRODUCT,
     "title": PROJECT_TITLE,
     "issue": ISSUE,
     "date": DATE,
+    "cover_background": COVER_BG_LATEX,
 }
 
-with open(template_path, "r", encoding="utf-8") as f:
-    template = Template(f.read())
-
-with open(output_path, "w", encoding="utf-8") as f:
-    f.write(template.render(**context))
+tpl = Template(template_path.read_text(encoding="utf-8"))
+output_path.write_text(tpl.render(**context), encoding="utf-8")
 
 print(f"[COVER] Rendered cover → {output_path}")

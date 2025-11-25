@@ -2,78 +2,68 @@
 # Neoway Sphinx 通用配置（paths 由 conf.py 注入）
 # ==========================================
 
-# ---------- 路径（保持原逻辑，来自 path_utils） ----------
+from pathlib import Path
+from jinja2 import Template
+
 common_templates_path = paths.common_templates()
 common_static_path    = paths.static_images_path()
 common_latex_path     = paths.latex_common_path()
+
+# 强制 POSIX 化路径
+common_templates_path = Path(common_templates_path).as_posix()
+common_static_path    = Path(common_static_path).as_posix()
+common_latex_path     = Path(common_latex_path).as_posix()
 
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
 ]
 
-templates_path   = [str(common_templates_path)]
-html_static_path = [str(common_static_path)]
+templates_path   = [common_templates_path]
+html_static_path = [common_static_path]
 
+# ============= Language + Product =============
+LANG = globals().get("LANG", "zh_cn")
+PRODUCT = globals().get("PRODUCT")
 
-# ==========================================
-#   Language Support (zh_CN / en)
-# ==========================================
-# conf.py 注入变量 LANG
-LANG = globals().get("LANG", "zh_CN")
+# ============= Header Logo =============
+header_cfg = paths.config["common"].get("header_logo", {})
+logo_filename = header_cfg.get(PRODUCT, header_cfg.get("default", "header-logo.png"))
 
-IS_CHINESE = LANG.lower() in ("zh_cn", "zh-hans")
+HEADER_LOGO_LATEX = Path(paths.static_images_path() / logo_filename).as_posix()
 
-
-# ==========================================
-#   LaTeX 资源（保持你的原文件结构）
-# ==========================================
+# ============= LaTeX Resource List =============
 latex_additional_files = [
-    str(common_latex_path / "cover.tex"),
-    str(common_latex_path / "fonts.tex"),
-    str(common_latex_path / "headerfooter.tex"),
-
-    # 静态资源（保持不变）
-    str(common_static_path / "background.png"),
-    str(common_static_path / "header-logo.png"),
+    Path(paths.latex_common_path() / "cover.tex").as_posix(),
+    Path(paths.latex_common_path() / "fonts.tex").as_posix(),
+    Path(paths.latex_common_path() / "headerfooter.tex").as_posix(),
+    HEADER_LOGO_LATEX,   # 已经是 POSIX
 ]
 
+# ============= 字体逻辑 =============
+IS_CHINESE = LANG.lower() in ("zh_cn", "zh-hans")
 
-# ==========================================
-# 字体逻辑（不丢失你的中文字体方案）
-# ==========================================
 if IS_CHINESE:
-    # 使用你仓库中 fonts.tex（提供中文字体）
     fontpkg = r"\input{fonts.tex}"
 else:
-    # 英文模式采用原生系统字体
     fontpkg = r"""
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 """
 
-# <<< 添加：强制 sphinx 使用 xelatex >>>
 latex_engine = "xelatex"
 
-
-# ==========================================
-# 关键：禁用默认 maketitle，使用 cover.tex
-# ==========================================
+# ============= preamble =============
 preamble = r"""
-    % ===== Header & Footer =====
-    \input{headerfooter.tex}
-
-    % ===== Extra Packages =====
-    \usepackage{tikz}
-    \usepackage{eso-pic}
-    \usepackage{graphicx}
-
-    \makeatletter
-    \let\cleardoublepage\clearpage
-    \makeatother
+\input{headerfooter.tex}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\makeatletter
+\let\cleardoublepage\clearpage
+\makeatother
 """
 
-# 语言包提供 CHAPTER_FORMAT 时自动注入
 chapter_fmt = globals().get("CHAPTER_FORMAT")
 if chapter_fmt:
     preamble += "\n" + chapter_fmt + "\n"
@@ -84,24 +74,21 @@ latex_elements = {
     "maketitle": r"\input{cover.tex}",
 }
 
+# ============= 渲染 headerfooter.tex =============
+template_file = paths.latex_common_path() / "headerfooter.tex.j2"
+output_file   = paths.latex_common_path() / "headerfooter.tex"
 
-# ==========================================
-# 渲染 headerfooter.tex（基于 Jinja2 模板）
-# ==========================================
-from jinja2 import Template
-import os
+template_file = Path(template_file)
+output_file   = Path(output_file)
 
-template_file = common_latex_path / "headerfooter.tex.j2"
-output_file   = common_latex_path / "headerfooter.tex"
+copyright_map = paths.config["common"].get("copyright", {})
+footer_text = copyright_map.get(LANG, copyright_map.get("en", ""))
 
-# 语言文件注入的 COMPANY_NAME
-company_name = globals().get("COMPANY_NAME", "Neoway Technology")
-
-# 渲染
-with open(template_file, "r", encoding="utf-8") as f:
-    tpl = Template(f.read())
-
+tpl = Template(template_file.read_text(encoding="utf-8"))
 output_file.write_text(
-    tpl.render(company_name=company_name),
+    tpl.render(
+        company_name=footer_text,
+        header_logo=HEADER_LOGO_LATEX,
+    ),
     encoding="utf-8"
 )

@@ -6,39 +6,72 @@ AT+CEREG：Get EPS Network Registration Status
 Query EPS network registration status.
 Command Format
 
-命令格式
+Command Format
 ^^^^^^^^
-**命令**
+
+
+
+
+
+
+
+
+**Execute Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+CEREG
 
-**响应：**
-
+**Response：**
 ::
+
 
     <CR><LF>OK<CR><LF>
 
-参数
-^^^^
-- **<service>**： 短信服务模式选择
-- 0：GSM03.40/GSM03.41 Phase 2
-- 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
-- 0：不支持
-- 1：支持
-命令示例
+
+
+
+Parameters
 ^^^^^^^^
+
+
+- **<service>**： 短信服务模式选择
+
+  - 0：GSM03.40/GSM03.41 Phase 2
+
+  - 1：GSM03.40/GSM03.41 Phase 2+
+
+
+- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
+
+  - 0：不支持
+
+  - 1：支持
+
+
+
+
+Examples
+^^^^^^^^
+
+
+  
+    
+  
+
+
+
 ::
+
 
     AT+CEREG
     
     OK
 
-说明
-^^^^
+
+
+Notes
+^^^^^^^^
 See Example 5

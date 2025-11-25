@@ -2,19 +2,32 @@
 # 英文语言包
 # ======================================
 
-# 字段映射：使用 *_n 字段，如果不存在，render_rst.py 会 fallback
-FIELD_MAP = {
-    "章节名称": "章节名称",
-    "命令标题": "命令标题",
-    "功能描述": "功能描述",
-    "示例命令": "示例命令",
-    "备注": "备注",
-    "响应校正": "响应校正",
-    "参数": "参数",
-    "参数json": "参数json",
-}
+# ====================================
+# Language Pack: en
+# ====================================
 
 PROJECT_TITLE = "AT Commands Manual"
+
+LABELS = {
+    "command_format": "Command Format",
+    "parameters": "Parameters",
+    "examples": "Examples",
+    "note": "Notes",
+    "response": "Response",
+    "cmd": "Command"
+}
+
+FIELD_MAP = {
+    "章节名称": "章节名称_en",
+    "命令标题": "命令标题_en",
+    "功能描述": "功能描述_en",
+    "示例命令": "示例命令_en",
+    "备注": "备注_en",
+    "响应校正": "响应校正_en",
+    "参数": "参数_en",
+    "参数json": "参数json_en",
+}
+
 ISSUE = "1.0"
 DATE = "2025-11-18"
 

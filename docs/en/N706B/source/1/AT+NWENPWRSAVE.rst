@@ -8,39 +8,72 @@ The module DTR signal is low by default:
 After sending the command to allow entering sleep mode, and the module DTR signal is low (or high), all circuits of the module must be allowed to enter sleep state for the module to enter sleep.
 Command format
 
-命令格式
+Command Format
 ^^^^^^^^
-**命令**
+
+
+
+
+
+
+
+
+**Execute Command**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
-
+**Command：**
 ::
 
     AT+NWENPWRSAVE
 
-**响应：**
-
+**Response：**
 ::
+
 
     <CR><LF>OK<CR><LF>
 
-参数
-^^^^
-- **<service>**： 短信服务模式选择
-- 0：GSM03.40/GSM03.41 Phase 2
-- 1：GSM03.40/GSM03.41 Phase 2+
-- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
-- 0：不支持
-- 1：支持
-命令示例
+
+
+
+Parameters
 ^^^^^^^^
+
+
+- **<service>**： 短信服务模式选择
+
+  - 0：GSM03.40/GSM03.41 Phase 2
+
+  - 1：GSM03.40/GSM03.41 Phase 2+
+
+
+- **<mt>,<mo>,<bm>**： 下行/上行/广播支持
+
+  - 0：不支持
+
+  - 1：支持
+
+
+
+
+Examples
+^^^^^^^^
+
+
+  
+    
+  
+
+
+
 ::
+
 
     AT+NWENPWRSAVE
     
     OK
 
-说明
-^^^^
+
+
+Notes
+^^^^^^^^
 See Example 27
