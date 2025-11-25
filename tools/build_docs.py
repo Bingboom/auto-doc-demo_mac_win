@@ -74,7 +74,10 @@ def generate_fonts_tex():
 # =============================================================
 def run(cmd, cwd=None):
     print(f"[RUN] {' '.join(cmd)}")
-    subprocess.run(cmd, cwd=cwd, check=True)
+    result = subprocess.run(cmd, cwd=cwd)
+    if result.returncode not in (0, 12):
+        raise subprocess.CalledProcessError(result.returncode, cmd)
+
 
 
 # =============================================================
