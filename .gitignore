@@ -49,11 +49,12 @@ docs/*/*/latexmk/
 **/*.blg
 
 # Auto generated rst/json/csv (if any)
-generated/
-autogen/
-auto_doc_output/
-*.generated.rst
-*.gen.rst
+
+docs/zh_cn/*/source/*.rst
+docs/en/*/source/*.rst
+docs/zh_cn/*/source/*/*.rst
+docs/en/*/source//*/*.rst
+
 
 ###############################################################################
 # 📄 LaTeX Cover/Header/Footer Workflow

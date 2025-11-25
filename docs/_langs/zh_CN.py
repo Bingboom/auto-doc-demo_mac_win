@@ -10,7 +10,11 @@ LABELS = {
     "examples": "命令示例",
     "note": "说明",
     "response": "响应",
-    "cmd": "命令"
+    "cmd": "命令",
+    "timeout_no": "序号",
+    "timeout_cmd": "命令",
+    "timeout_value": "超时时间（秒）",
+    "timeout_title": "常用命令超时时间表",
 }
 
 FIELD_MAP = {
@@ -23,6 +27,8 @@ FIELD_MAP = {
     "参数": "参数",
     "参数json": "参数json",
 }
+
+
 
 ISSUE = "1.0"
 DATE  = "2025-11-18"
