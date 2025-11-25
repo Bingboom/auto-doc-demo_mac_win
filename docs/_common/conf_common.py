@@ -59,15 +59,44 @@ preamble = r"""
 \usepackage{tikz}
 \usepackage{eso-pic}
 \usepackage{graphicx}
+
+% --------- Prevent endless rerun warnings ------------
 \makeatletter
 \let\cleardoublepage\clearpage
+\def\@test@re-run{false}
+\def\@latex@warning#1{}
+\def\@latex@warning@no@line#1{}
 \makeatother
 """
 
+# ============= 允许 conf.py 覆盖的章节格式 =============
 chapter_fmt = globals().get("CHAPTER_FORMAT")
 if chapter_fmt:
     preamble += "\n" + chapter_fmt + "\n"
 
+# ==============================================================
+# 🔥 中文文档：覆盖附录格式为 “附录 A”
+# ==============================================================
+
+if IS_CHINESE:
+    preamble += r"""
+% ---------------------------------------------------------
+%   中文附录章节格式（替换原有 Chapter Title）
+% ---------------------------------------------------------
+\usepackage{titlesec}
+
+% 主章节标题格式：显示为 "附录 A"
+\titleformat{\chapter}
+  {\huge\bfseries}%
+  {附录\ \thechapter}%
+  {1em}{}
+
+% Section/subsection 自动编号：A.1, A.2 …
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+"""
+
+# ============= 输出 latex_elements =============
 latex_elements = {
     "fontpkg": fontpkg,
     "preamble": preamble,
