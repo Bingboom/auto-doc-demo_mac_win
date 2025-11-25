@@ -1,6 +1,6 @@
 # ============================================================
 # render_rst.py — Intro CN/EN + Timeout + Appendix (2–4 columns auto)
-# Final version — Appendix title without “附录 A/B/C”
+# Final version — Appendix auto-numbered (A/B/C)
 # ============================================================
 
 from pathlib import Path
@@ -104,7 +104,7 @@ def load_intro_template(base, lang):
     return env.get_template(name)
 
 # ------------------------------------------------------------
-# 7) Main renderer
+# 7) Main renderer (start)
 # ------------------------------------------------------------
 def render_all():
 
@@ -118,7 +118,6 @@ def render_all():
         info = LANG_CONFIG[lang]
         fmap = info["FIELD_MAP"]
         labels = info["LABELS"]
-
         for product in products:
 
             print(f"\n🌍 [{lang}] {product}")
@@ -236,16 +235,14 @@ def render_all():
                 (chap_dir / "index.rst").write_text(
                     chapter_index, encoding="utf-8"
                 )
-
             # ====================================================
             #  附录 — 自动支持 2–4 列 CSV
-            #  标题不再包含“附录 A/B/C”
+            #  标题不再包含“附录 A/B/C”（编号由 LaTeX 自动生成）
             # ====================================================
             appendix_dir_csv = paths.csv_path(lang, product) / "appendix"
             appendix_dir_rst = rst_root / "appendix"
             appendix_dir_rst.mkdir(exist_ok=True)
 
-            # 文件名保证顺序（A_xxx、B_xxx ...)
             appendix_title_map = {
                 "A_error_codes.csv": "错误码说明" if lang=="zh_cn" else "Error Codes",
                 "B_atv.csv": "ATV 命令集" if lang=="zh_cn" else "ATV Commands",
@@ -268,7 +265,6 @@ def render_all():
                 headers = list(df_app.columns)
                 rows = df_app.values.tolist()
 
-                # ⚠️ 注意：标题不再包含 “附录 A”
                 out_text = appendix_generic_tmpl.render(
                     title=pure_title,
                     headers=headers,
@@ -283,7 +279,7 @@ def render_all():
 
                 appendix_pages.append(rst_name)
 
-            # 附录 index
+            # 附录 index.rst
             (appendix_dir_rst / "index.rst").write_text(
                 env.from_string("""
 附录
@@ -319,6 +315,19 @@ def render_all():
    {{ c }}/index
 {% endfor %}
 
+
+.. raw:: latex
+
+   \\newpage
+   \\appendix
+   \\renewcommand{\\thechapter}{\Alph{chapter}}
+   \\renewcommand{\\thefigure}{\Alph{chapter}\\arabic{figure}}
+   \\renewcommand{\\thetable}{\Alph{chapter}\\arabic{table}}
+   \\setcounter{figure}{0}
+   \\setcounter{table}{0}
+
+
+
 .. toctree::
    :caption: {{ "附录" if lang=="zh_cn" else "Appendix" }}
    :maxdepth: 1
@@ -331,7 +340,6 @@ def render_all():
                 ),
                 encoding="utf-8"
             )
-
     print("\n🏁 DONE — All RST Generated ✔\n")
 
 
