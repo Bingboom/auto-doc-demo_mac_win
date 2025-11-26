@@ -155,3 +155,5 @@ target/
 *.docx binary
 *.xlsx binary
 
+docs/zh_cn/N58/source/1/AT+CEREG.rst
+*.rst
