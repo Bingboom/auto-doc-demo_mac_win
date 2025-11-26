@@ -61,6 +61,8 @@ preamble = r"""
 \usepackage{graphicx}
 \makeatletter
 \let\cleardoublepage\clearpage
+% 旧版本兼容
+\renewcommand{\sphinxtablecontinued}[1]{}
 \makeatother
 """
 
