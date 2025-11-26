@@ -1,11 +1,26 @@
+% =====================================
+% Neoway Pro 标题体系
+% =====================================
 \RequirePackage{titlesec}
 
+% ---- Chapter ----
 \titleformat{\chapter}
-  {\Huge\bfseries\color{espTitleRed}}
+  {\color{nwyChapter}\bfseries\Huge}
   {\thechapter\quad}
-  {0pt}{}
+  {0pt}
+  {}
 
 \titlespacing*{\chapter}
-  {0pt}{20pt plus 4pt minus 4pt}{18pt}
+  {0pt}{22pt plus 4pt minus 4pt}{14pt}
 
-% section/subsection 同理……
+% ---- Section ----
+\titleformat{\section}
+  {\color{nwySection}\bfseries\Large}
+  {\thesection\quad}
+  {0pt}{}
+
+% ---- Subsection ----
+\titleformat{\subsection}
+  {\color{nwySection}\bfseries\large}
+  {\thesubsection\quad}
+  {0pt}{}

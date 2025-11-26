@@ -1,17 +1,27 @@
-% ---------- ESP-AT Color + Verbatim Style ----------
+% =====================================
+% Neoway Pro 色彩规范
+% =====================================
 \RequirePackage{xcolor}
 
-% === 这里补上 espTitleRed 定义 ===
-\definecolor{espTitleRed}{HTML}{B71C1C}  % 你要的红色，也可改
+% ---- 品牌主色（Neoway green） ----
+\definecolor{nwyGreen}{HTML}{70AD47}
 
+% ---- 章节标题深蓝黑 ----
+\definecolor{nwyChapter}{RGB}{40,55,90}
+
+% ---- 小节标题深蓝 ----
+\definecolor{nwySection}{RGB}{0,90,158}
+
+% ---- 代码框背景、边框 ----
+\definecolor{nwyCodeBg}{RGB}{245,245,245}
+\definecolor{nwyCodeBorder}{RGB}{210,210,210}
+
+% ---- Sphinx 颜色映射 ----
 \sphinxsetup{
-  TitleColor={rgb}{0.70,0.00,0.00},
-  InnerLinkColor={rgb}{0.0,0.27,0.55},
-  OuterLinkColor={rgb}{0.0,0.27,0.55},
+  InnerLinkColor={rgb}{0,0.35,0.62},
+  OuterLinkColor={rgb}{0,0.35,0.62},
 
-  VerbatimColor={RGB}{247,247,247},
-  VerbatimBorderColor={RGB}{204,204,204},
-  verbatimwithframe=true,
-  verbatimsep=6pt,
-  verbatimborder=0.6pt
-}
+  VerbatimColor={RGB}{245,245,245},
+  VerbatimBorderColor={RGB}{210,210,210},
+
+  verbatimwit

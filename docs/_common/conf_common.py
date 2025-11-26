@@ -1,5 +1,5 @@
 # ==========================================
-# Neoway Sphinx 通用配置（paths 由 conf.py 注入）
+# Neoway Sphinx 通用配置（启用 ESP 视觉包）
 # ==========================================
 
 from pathlib import Path
@@ -23,15 +23,19 @@ LANG    = globals().get("LANG", "zh_cn")
 PRODUCT = globals().get("PRODUCT")
 
 # ---------------- Header Logo ----------------
-header_cfg   = paths.config["common"].get("header_logo", {})
-logo_file    = header_cfg.get(PRODUCT, header_cfg.get("default", "header-logo.png"))
-HEADER_LOGO  = Path(paths.static_images_path() / logo_file).as_posix()
+header_cfg  = paths.config["common"].get("header_logo", {})
+logo_file   = header_cfg.get(PRODUCT, header_cfg.get("default", "header-logo.png"))
+HEADER_LOGO = Path(paths.static_images_path() / logo_file).as_posix()
 
 # ---------------- Additional LaTeX Files ----------------
 latex_additional_files = [
     Path(paths.latex_common_path() / "cover.tex").as_posix(),
     Path(paths.latex_common_path() / "fonts.tex").as_posix(),
     Path(paths.latex_common_path() / "headerfooter.tex").as_posix(),
+    Path(paths.latex_common_path() / "esp_colors.tex").as_posix(),
+    Path(paths.latex_common_path() / "esp_titles.tex").as_posix(),
+    Path(paths.latex_common_path() / "esp_verbatim.tex").as_posix(),
+    Path(paths.latex_common_path() / "esp_headerfooter.tex").as_posix(),
     HEADER_LOGO,
 ]
 
@@ -51,7 +55,8 @@ latex_engine = "xelatex"
 # =====================================================
 # ---------------------- Preamble ---------------------
 # =====================================================
-# 核心：所有 \usepackage 必须在这里（不能在语言包）
+# 【必须注意】所有包加载只能放在 preamble，禁止语言包加载包
+# 这样才能避免 xcolor / titlesec 内容跑到 PDF 第二页
 preamble = r"""
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -59,26 +64,37 @@ preamble = r"""
 \usepackage{eso-pic}
 \usepackage{graphicx}
 
-% Sphinx 节点统一颜色（避免 literal node 跑到正文）
-\definecolor{nwyLink}{RGB}{0,90,158}
-\sphinxsetup{
-  InnerLinkColor={rgb}{0,0.27,0.55},
-  OuterLinkColor={rgb}{0,0.27,0.55},
-  VerbatimColor={RGB}{247,247,247},
-  VerbatimBorderColor={RGB}{204,204,204},
-  verbatimwithframe=true,
-  verbatimsep=6pt,
-  verbatimborder=0.6pt,
-}
-
+% =============================
+% 通用 header/footer
+% =============================
 \input{headerfooter.tex}
 
+% =============================
+% ESP 样式包（颜色、标题、code框）
+% 必须在这里加载，顺序不能乱
+% =============================
+\input{esp_colors.tex}
+\input{esp_titles.tex}
+\input{esp_verbatim.tex}
+\input{esp_headerfooter.tex}
+
+% =============================
+% Sphinx literal/link 样式兼容
+% =============================
+\sphinxsetup{
+  InnerLinkColor={rgb}{0,0.27,0.55},
+  OuterLinkColor={rgb}{0,0.27,0.55}
+}
+
+% =============================
+% 禁止双页清空
+% =============================
 \makeatletter
 \let\cleardoublepage\clearpage
 \makeatother
 """
 
-# 章节格式由语言包提供（但不包含任何 package）
+# ---------------- Chapter Format（语言包提供） ----------------
 chapter_fmt = globals().get("CHAPTER_FORMAT")
 if chapter_fmt:
     preamble += "\n" + chapter_fmt + "\n"
@@ -88,6 +104,9 @@ latex_elements = {
     "fontpkg": fontpkg,
     "preamble": preamble,
     "maketitle": r"\input{cover.tex}",
+    "papersize": "a4paper",
+    "pointsize": "11pt",
+    "tocdepth": "2",
 }
 
 # =====================================================
