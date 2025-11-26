@@ -47,28 +47,17 @@ CHAPTER_FORMAT = r"""
 \usepackage{titlesec}
 \usepackage{xcolor}
 
-% 深红色（与目前文档一致）
+% 蓝黑色
 \definecolor{chaptercolor}{RGB}{20,25,70}
 
 % ------------------------------
-% 一级标题：第X章（小号）
+% 一级标题：第X章（中号）
 % ------------------------------
 \titleformat{\chapter}
-  {\color{chaptercolor}\bfseries\Large}
+  {\color{chaptercolor}\bfseries\huge}
   {第\thechapter 章}
   {1em}
   {}
-
-% ------------------------------
-% 主标题（巨大号）
-% ------------------------------
-\titleformat{name=\chapter,numberless}
-  {\color{chaptercolor}\bfseries\Huge}
-  {}
-  {0pt}
-  {}
-
-\titlespacing*{\chapter}{0pt}{3ex plus 1ex}{2ex}
 
 % =====================================================
 %   页眉（Header）格式 → 中文必须保持原样
@@ -77,21 +66,4 @@ CHAPTER_FORMAT = r"""
   \markboth{第\thechapter 章\ #1}{}%
 }
 
-% ------------------------------
-% 二级标题（4.1）
-% ------------------------------
-\titleformat{\section}
-  {\color{chaptercolor}\bfseries\large}
-  {\thesection}
-  {0.75em}
-  {}
-
-% ------------------------------
-% 三级标题（4.1.1）
-% ------------------------------
-\titleformat{\subsection}
-  {\bfseries\normalsize}
-  {\thesubsection}
-  {0.75em}
-  {}
 """
