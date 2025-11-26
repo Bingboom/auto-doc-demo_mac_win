@@ -1,0 +1,7 @@
+{% macro indent4(s) -%}
+{%- set t = s|trim -%}
+{%- if not t -%}
+{%- else -%}
+{{ '    ' + t.replace('\r\n','\n').replace('\n','\n    ') }}
+{%- endif -%}
+{%- endmacro %}

@@ -1,0 +1,22 @@
+{% import "command/_macros.j2" as M %}
+{% set indent4 = M.indent4 %}
+
+{% include "command/header.j2" %}
+
+{# ---- 子命令区 ---- #}
+{% include "command/types.j2" %}
+
+{# ---- 参数区 ---- #}
+{{ labels.parameters or "参数" }}
+^^^^^^^^
+{% include "command/parameters.j2" %}
+
+{# ---- 示例区 ---- #}
+{{ labels.examples or "命令示例" }}
+^^^^^^^^
+{% include "command/examples.j2" %}
+
+{# ---- 说明区 ---- #}
+{{ labels.note or "说明" }}
+^^^^^^^^
+{% include "command/note.j2" %}

@@ -96,7 +96,7 @@ def get_field(row, key, fmap):
 env = Environment(loader=FileSystemLoader(str(paths.common_templates())))
 env.globals.update(max=max, len=len)
 
-cmd_tmpl = env.get_template("command_page.j2")
+cmd_tmpl = env.get_template("command/command_page.j2")
 appendix_generic_tmpl = env.get_template("appendix_generic.j2")
 
 def load_intro_template(base, lang):
@@ -215,6 +215,9 @@ def render_all():
                         note=get_field(row, "备注", fmap),
                         response_fix=get_field(row, "响应校正", fmap),
                         labels=labels,
+                        # ⭐⭐⭐ 必须加的两个参数 ⭐⭐⭐
+                        lang=lang,
+                        product=product,
                     )
 
                     (chap_dir / f"{cmd_name}.rst").write_text(

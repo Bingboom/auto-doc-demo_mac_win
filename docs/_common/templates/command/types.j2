@@ -1,0 +1,27 @@
+{% set label_map = {
+    "执行": "执行命令", "查询": "查询命令",
+    "测试": "测试命令", "设置": "设置命令",
+    "Execute": "Execute Command", "Query": "Query Command",
+    "Test": "Test Command", "Set": "Set Command",
+} %}
+
+{% for st in subtypes %}
+{% set label = label_map.get(st.type, labels.cmd or "命令") %}
+
+**{{ label }}**
+
+{{ labels.cmd or "命令" }}：
+::
+
+{{ indent4(st.fmt) }}
+
+{{ labels.response or "响应" }}：
+::
+
+{% if st.response.strip() %}
+{{ indent4(st.response) }}
+{% else %}
+{{ indent4('OK') }}
+{% endif %}
+
+{% endfor %}
