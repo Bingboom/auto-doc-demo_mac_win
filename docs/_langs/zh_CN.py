@@ -41,29 +41,17 @@ IS_CHINESE = True
 PDF_MAIN_FONT = "SimSun"
 
 # =========================================================
-# ★ 全新章节格式
+# ★章节格式（不能包含 \usepackage）
 # =========================================================
 CHAPTER_FORMAT = r"""
-\usepackage{titlesec}
-\usepackage{xcolor}
-
-% 蓝黑色
 \definecolor{chaptercolor}{RGB}{20,25,70}
 
-% ------------------------------
-% 一级标题：第X章（中号）
-% ------------------------------
 \titleformat{\chapter}
   {\color{chaptercolor}\bfseries\huge}
   {第\thechapter 章}
-  {1em}
-  {}
+  {1em}{}
 
-% =====================================================
-%   页眉（Header）格式 → 中文必须保持原样
-% =====================================================
 \renewcommand{\chaptermark}[1]{%
   \markboth{第\thechapter 章\ #1}{}%
 }
-
 """

@@ -1,0 +1,47 @@
+% ==========================================================
+% 强制 Sphinx 所有标题也使用 CJK 字体
+% ==========================================================
+
+% 使用 CJK 字体覆盖所有标题字体
+\setCJKfamilyfont{heading}{PingFang SC}
+\newcommand{\CJKheading}{\CJKfamily{heading}}
+
+% Chapter
+\titleformat{\chapter}
+  {\CJKheading\Huge\bfseries}
+  {\thechapter}
+  {1em}
+  {}
+
+% Section
+\titleformat{\section}
+  {\CJKheading\Large\bfseries}
+  {\thesection}
+  {0.8em}
+  {}
+
+% Subsection
+\titleformat{\subsection}
+  {\CJKheading\large\bfseries}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+  {\CJKheading\normalsize\bfseries}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+% Caption（图表标题）
+\usepackage{caption}
+\captionsetup{
+    font={CJKheading, bf},
+    labelfont={CJKheading, bf}
+}
+
+% 页眉页脚字体修正
+\fancyhead[L]{\CJKheading \neowayheaderlogo}
+\fancyhead[R]{\CJKheading \nouppercase{\leftmark}}
+\fancyfoot[L]{\CJKheading {{ company_name }}}

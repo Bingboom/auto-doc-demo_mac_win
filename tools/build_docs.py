@@ -74,7 +74,15 @@ def generate_fonts_tex():
 # =============================================================
 def run(cmd, cwd=None):
     print(f"[RUN] {' '.join(cmd)}")
-    subprocess.run(cmd, cwd=cwd, check=True)
+    try:
+        subprocess.run(cmd, cwd=cwd, check=True)
+    except subprocess.CalledProcessError as e:
+        # Exit code 12 = rerun needed (common in index builds), but not fatal.
+        if e.returncode == 12:
+            print("[INFO] latexmk exit code 12 ignored (PDF already generated or rerun needed)")
+        else:
+            raise
+
 
 
 # =============================================================
@@ -116,6 +124,10 @@ def build_single(product: str, lang: str, doc_type: str):
 
     run(["sphinx-build", "-b", "html", str(src), str(html_out)])
     run(["sphinx-build", "-b", "latex", str(src), str(pdf_out)])
+    # ===== Copy latex common templates (fonts.tex / header / footer / esp_at_style.tex etc.) =====
+    latex_common = paths.latex_common_path()     # docs/_common/latex_templates
+    for tex in latex_common.glob("*.tex"):
+        shutil.copy2(tex, pdf_out)    
 
     tex_files = list(pdf_out.glob("*.tex"))
     main_list = [f for f in tex_files if is_main_tex(f)]
@@ -129,6 +141,10 @@ def build_single(product: str, lang: str, doc_type: str):
     run(["latexmk", "-C"], cwd=pdf_out)
     run(["latexmk", "-xelatex", "-interaction=nonstopmode", "-f", tex_file.name],
         cwd=pdf_out)
+    
+    run(["latexmk", "-xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_file.name],
+    cwd=pdf_out)
+
 
     pdf_candidates = [f for f in pdf_out.glob("*.pdf")
                       if not f.name.startswith("sphinx")]

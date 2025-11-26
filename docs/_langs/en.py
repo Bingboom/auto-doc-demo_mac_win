@@ -1,5 +1,5 @@
 # ======================================
-# 英文语言包
+# Language Pack: en
 # ======================================
 
 PROJECT_TITLE = "AT Commands Manual"
@@ -29,7 +29,7 @@ FIELD_MAP = {
 }
 
 ISSUE = "1.0"
-DATE = "2025-11-18"
+DATE  = "2025-11-18"
 
 COMPANY_NAME = "Neoway Technology Co., Ltd. All Rights Reserved."
 COVER_TITLE_COLOR = "1F4E78"
@@ -41,26 +41,17 @@ IS_CHINESE = False
 PDF_MAIN_FONT = "Times New Roman"
 
 # =========================================================
-# ★ 全新章节格式
+# ★章节格式（不能包含 \usepackage）
 # =========================================================
 CHAPTER_FORMAT = r"""
-\renewcommand{\chaptername}{}
-\renewcommand{\thechapter}{\arabic{chapter}}
-
 \definecolor{chaptercolor}{RGB}{20,25,70}
 
-% ------------------------------
-% 一级标题：Chapter X
-% ------------------------------
 \titleformat{\chapter}
   {\color{chaptercolor}\bfseries\huge}
   {Chapter\ \thechapter}
-  {1em}
-  {}
+  {1em}{}
 
-% 英文页眉
 \renewcommand{\chaptermark}[1]{%
   \markboth{Chapter\ \thechapter\ #1}{}%
 }
-
 """
