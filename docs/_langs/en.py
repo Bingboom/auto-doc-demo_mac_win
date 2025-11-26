@@ -2,10 +2,6 @@
 # 英文语言包
 # ======================================
 
-# ====================================
-# Language Pack: en
-# ====================================
-
 PROJECT_TITLE = "AT Commands Manual"
 
 LABELS = {
@@ -44,17 +40,55 @@ SECTION_NAME = "Section"
 IS_CHINESE = False
 PDF_MAIN_FONT = "Times New Roman"
 
+# =========================================================
+# ★ 全新章节格式
+# =========================================================
 CHAPTER_FORMAT = r"""
-\renewcommand{\chaptername}{Chapter}
-\renewcommand{\thechapter}{\arabic{chapter}}
+\usepackage{titlesec}
+\usepackage{xcolor}
 
+\definecolor{chaptercolor}{RGB}{20,25,70}
+
+% ------------------------------
+% 一级标题：Chapter X
+% ------------------------------
 \titleformat{\chapter}
-  {\Huge\bfseries}
-  {\chaptername\ \thechapter}
+  {\color{chaptercolor}\bfseries\Large}
+  {Chapter\ \thechapter}
   {1em}
   {}
 
+% ------------------------------
+% 主标题（巨大号）
+% ------------------------------
+\titleformat{name=\chapter,numberless}
+  {\color{chaptercolor}\bfseries\Huge}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\chapter}{0pt}{3ex plus 1ex}{2ex}
+
+% 英文页眉
 \renewcommand{\chaptermark}[1]{%
-  \markboth{\chaptername\ \thechapter\ #1}{}%
+  \markboth{Chapter\ \thechapter\ #1}{}%
 }
+
+% ------------------------------
+% 二级标题（4.1）
+% ------------------------------
+\titleformat{\section}
+  {\color{chaptercolor}\bfseries\large}
+  {\thesection}
+  {0.75em}
+  {}
+
+% ------------------------------
+% 三级标题（4.1.1）
+% ------------------------------
+\titleformat{\subsection}
+  {\bfseries\normalsize}
+  {\thesubsection}
+  {0.75em}
+  {}
 """

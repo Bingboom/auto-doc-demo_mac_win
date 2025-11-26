@@ -28,8 +28,6 @@ FIELD_MAP = {
     "参数json": "参数json",
 }
 
-
-
 ISSUE = "1.0"
 DATE  = "2025-11-18"
 
@@ -42,18 +40,58 @@ SECTION_NAME  = "节"
 IS_CHINESE = True
 PDF_MAIN_FONT = "SimSun"
 
-# 中文章节首页 & 页眉控制
+# =========================================================
+# ★ 全新章节格式
+# =========================================================
 CHAPTER_FORMAT = r"""
-\renewcommand{\chaptername}{}
-\renewcommand{\thechapter}{\arabic{chapter}}
+\usepackage{titlesec}
+\usepackage{xcolor}
 
+% 深红色（与目前文档一致）
+\definecolor{chaptercolor}{RGB}{20,25,70}
+
+% ------------------------------
+% 一级标题：第X章（小号）
+% ------------------------------
 \titleformat{\chapter}
-  {\Huge\bfseries}
+  {\color{chaptercolor}\bfseries\Large}
   {第\thechapter 章}
   {1em}
   {}
 
+% ------------------------------
+% 主标题（巨大号）
+% ------------------------------
+\titleformat{name=\chapter,numberless}
+  {\color{chaptercolor}\bfseries\Huge}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\chapter}{0pt}{3ex plus 1ex}{2ex}
+
+% =====================================================
+%   页眉（Header）格式 → 中文必须保持原样
+% =====================================================
 \renewcommand{\chaptermark}[1]{%
   \markboth{第\thechapter 章\ #1}{}%
 }
+
+% ------------------------------
+% 二级标题（4.1）
+% ------------------------------
+\titleformat{\section}
+  {\color{chaptercolor}\bfseries\large}
+  {\thesection}
+  {0.75em}
+  {}
+
+% ------------------------------
+% 三级标题（4.1.1）
+% ------------------------------
+\titleformat{\subsection}
+  {\bfseries\normalsize}
+  {\thesubsection}
+  {0.75em}
+  {}
 """
