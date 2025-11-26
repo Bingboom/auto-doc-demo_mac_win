@@ -44,8 +44,8 @@ PDF_MAIN_FONT = "Times New Roman"
 # ★ 全新章节格式
 # =========================================================
 CHAPTER_FORMAT = r"""
-\usepackage{titlesec}
-\usepackage{xcolor}
+\renewcommand{\chaptername}{}
+\renewcommand{\thechapter}{\arabic{chapter}}
 
 \definecolor{chaptercolor}{RGB}{20,25,70}
 
@@ -53,42 +53,14 @@ CHAPTER_FORMAT = r"""
 % 一级标题：Chapter X
 % ------------------------------
 \titleformat{\chapter}
-  {\color{chaptercolor}\bfseries\Large}
+  {\color{chaptercolor}\bfseries\huge}
   {Chapter\ \thechapter}
   {1em}
   {}
-
-% ------------------------------
-% 主标题（巨大号）
-% ------------------------------
-\titleformat{name=\chapter,numberless}
-  {\color{chaptercolor}\bfseries\Huge}
-  {}
-  {0pt}
-  {}
-
-\titlespacing*{\chapter}{0pt}{3ex plus 1ex}{2ex}
 
 % 英文页眉
 \renewcommand{\chaptermark}[1]{%
   \markboth{Chapter\ \thechapter\ #1}{}%
 }
 
-% ------------------------------
-% 二级标题（4.1）
-% ------------------------------
-\titleformat{\section}
-  {\color{chaptercolor}\bfseries\large}
-  {\thesection}
-  {0.75em}
-  {}
-
-% ------------------------------
-% 三级标题（4.1.1）
-% ------------------------------
-\titleformat{\subsection}
-  {\bfseries\normalsize}
-  {\thesubsection}
-  {0.75em}
-  {}
 """
