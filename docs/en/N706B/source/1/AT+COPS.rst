@@ -18,20 +18,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+COPS
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -56,6 +55,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -68,10 +68,10 @@ Examples
 
 ::
 
-
     AT+COPS
     
     OK
+
 
 
 

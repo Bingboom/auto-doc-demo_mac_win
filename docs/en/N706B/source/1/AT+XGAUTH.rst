@@ -22,20 +22,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+XGAUTH
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -60,6 +59,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -72,10 +72,10 @@ Examples
 
 ::
 
-
     AT+XGAUTH
     
     OK
+
 
 
 

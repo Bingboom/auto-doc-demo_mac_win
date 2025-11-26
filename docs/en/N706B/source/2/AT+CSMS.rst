@@ -17,16 +17,14 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+CSMS=<service><CR>
 
-**Response：**
+Response：
 ::
 
 
@@ -42,14 +40,13 @@ Command Format
 
 
 **Query Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+CSMS?<CR>
 
-**Response：**
+Response：
 ::
 
 
@@ -60,18 +57,18 @@ Command Format
 
 
 **Test Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+CSMS=?<CR>
 
-**Response：**
+Response：
 ::
 
 
     OK
+
 
 
 
@@ -96,6 +93,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -112,7 +110,6 @@ Examples
 
 ::
 
-
     AT+CSMS=1
     
     +CSMS: 1,1,1
@@ -128,6 +125,7 @@ Examples
     
     +CSMS: (0,1)
     OK
+
 
 
 

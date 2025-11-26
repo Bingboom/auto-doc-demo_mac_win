@@ -21,20 +21,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+CGATT
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -59,6 +58,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -71,10 +71,10 @@ Examples
 
 ::
 
-
     AT+CGATT
     
     OK
+
 
 
 

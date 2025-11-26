@@ -18,20 +18,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+GMR
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -56,6 +55,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -68,11 +68,11 @@ Examples
 
 ::
 
-
     AT+CSMS=1
     
     +CSMS: 1,1,1
     OK
+
 
 
 

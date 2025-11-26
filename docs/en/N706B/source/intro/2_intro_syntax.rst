@@ -84,6 +84,7 @@ Commands not listed usually have a maximum response time of approximately **300 
    :header-rows: 1
    :widths: 15 45 20
    :align: center
+   :class: longtable
 
    * - No.
      - Command

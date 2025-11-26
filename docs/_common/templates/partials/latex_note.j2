@@ -1,7 +1,0 @@
-{% macro render(note) %}
-{% if note %}
-{{ note|trim|replace('\n', '\n\n') }}
-{% else %}
-(无说明)
-{% endif %}
-{% endmacro %}

@@ -20,20 +20,19 @@ AT+NWENPWRSAVE：休眠（Sleep）设置
 
 
 
-
 **执行命令**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**命令：**
+命令：
 ::
 
     AT+NWENPWRSAVE
 
-**响应：**
+响应：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -58,6 +57,7 @@ AT+NWENPWRSAVE：休眠（Sleep）设置
 
 
 
+
 命令示例
 ^^^^^^^^
 
@@ -70,10 +70,10 @@ AT+NWENPWRSAVE：休眠（Sleep）设置
 
 ::
 
-
     AT+NWENPWRSAVE
     
     OK
+
 
 
 

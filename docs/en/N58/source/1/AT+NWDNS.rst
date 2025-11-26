@@ -20,20 +20,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+NWDNS
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -58,6 +57,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -70,10 +70,10 @@ Examples
 
 ::
 
-
     AT+NWDNS
     
     OK
+
 
 
 

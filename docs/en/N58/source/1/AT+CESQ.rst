@@ -17,20 +17,19 @@ Command Format
 
 
 
-
 **Execute Command**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Command：**
+Command：
 ::
 
     AT+CESQ
 
-**Response：**
+Response：
 ::
 
 
     <CR><LF>OK<CR><LF>
+
 
 
 
@@ -55,6 +54,7 @@ Parameters
 
 
 
+
 Examples
 ^^^^^^^^
 
@@ -67,10 +67,10 @@ Examples
 
 ::
 
-
     AT+CESQ
     
     OK
+
 
 
 
