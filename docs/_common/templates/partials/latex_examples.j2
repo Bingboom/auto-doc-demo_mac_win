@@ -1,0 +1,21 @@
+{% macro render(subtypes) %}
+{% set examples = [] %}
+{% for st in subtypes %}
+{% if st.example and st.example.strip() %}
+    {% set _ = examples.append(st.example.strip()) %}
+{% endif %}
+{% endfor %}
+
+{% if examples %}
+\atsubtitle{Examples}
+\begin{atbox}
+\texttt{
+{% for ex in examples %}
+{{ ex|replace('\n', '\\\\') }}\\\\
+{% endfor %}
+}
+\end{atbox}
+{% else %}
+(无示例)
+{% endif %}
+{% endmacro %}

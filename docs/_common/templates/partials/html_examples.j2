@@ -1,0 +1,17 @@
+{% macro render(subtypes) %}
+{% set examples = [] %}
+{% for st in subtypes %}
+{% if st.example and st.example.strip() %}
+    {% set _ = examples.append(st.example.strip()) %}
+{% endif %}
+{% endfor %}
+
+{% if examples and examples|join('')|trim %}
+::
+{% for ex in examples %}
+{{ caller.indent4(ex) }}
+{% endfor %}
+{% else %}
+(无示例)
+{% endif %}
+{% endmacro %}

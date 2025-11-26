@@ -1,0 +1,3 @@
+{% macro render(note) %}
+{{ note.strip() if note else "(无说明)" }}
+{% endmacro %}

@@ -1,0 +1,12 @@
+{% macro render(parameters) %}
+{% if parameters %}
+{% for k, v in parameters.items() %}
+- **{{ k }}**： {{ (v.get("__desc__") or '')|trim }}
+{% for opt, text in v.items() if opt != "__desc__" %}
+  - {{ opt }}：{{ text }}
+{% endfor %}
+{% endfor %}
+{% else %}
+(无参数)
+{% endif %}
+{% endmacro %}
