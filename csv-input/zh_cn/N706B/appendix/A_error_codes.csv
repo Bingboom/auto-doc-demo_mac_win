@@ -1,0 +1,53 @@
+Code,Description
+0,Phone failure
+1,No connection to phone
+2,Phone-adaptor link reserved
+3,Operation not allowed
+4,Operation not supported
+5,PH-SIM PIN required
+6,PH-FSIM PIN required
+7,PH-FSIM PUK required
+10,SIM not inserted
+11,SIM PIN required
+12,SIM PUK required
+13,SIM failure
+14,SIM busy
+15,SIM wrong
+16,Incorrect password
+17,SIM PIN2 required
+18,SIM PUK2 required
+20,Memory full
+21,Invalid index
+22,Not found
+23,Memory failure
+24,Text string too long
+25,Invalid characters in text string
+26,Dial string too long
+27,Invalid characters in dial string
+30,No network service
+31,Network timeout
+32,Network not allowed - emergency calls only
+40,Network personalization PIN required
+41,Network personalization PUK required
+42,Network subset personalization PIN required
+43,Network subset personalization PUK required
+44,Service provider personalization PIN required
+45,Service provider personalization PUK required
+46,Corporate personalization PIN required
+47,Corporate personalization PUK required
+48,Hidden key required
+49,EAP method not supported
+50,Incorrect parameters
+51,Command implemented but currently disabled
+52,Command aborted by user
+53,Not attached to network
+54,Modem not allowed - emergency calls only
+55,Operation not allowed (MT functionality restriction)
+56,Fixed dial number only allowed
+57,Temporarily out of service
+58,Language/alphabet not supported
+59,Unexpected data value
+60,System failure
+61,Data missing
+62,Call barred
+100,Message waiting indication subscription failure

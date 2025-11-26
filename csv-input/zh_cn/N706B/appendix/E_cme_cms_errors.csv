@@ -1,0 +1,41 @@
+Code,Description
+0,Phone failure
+1,No connection to phone
+2,Phone-adaptor link reserved
+3,Operation not allowed
+4,Operation not supported
+5,PH-SIM PIN required
+6,PH-FSIM PIN required
+7,PH-FSIM PUK required
+10,SIM not inserted
+11,SIM PIN required
+12,SIM PUK required
+13,SIM failure
+14,SIM busy
+15,SIM wrong
+16,Incorrect password
+17,SIM PIN2 required
+18,SIM PUK2 required
+20,Memory full
+21,Invalid index
+22,Not found
+23,Memory failure
+300,ME failure
+301,SMS service of ME reserved
+302,Operation not allowed
+303,Operation not supported
+304,Invalid PDU mode parameter
+305,Invalid text mode parameter
+310,(U)SIM not inserted
+900,Authentication rejected (APN error)
+901,PDP not activated
+902,PDP already activated
+910,TCP refused
+911,TCP timeout
+912,Socket exists
+913,Socket not exist
+914,Buffer full
+915,Send timeout
+916,Domain not exist
+917,DNS timeout
+918,Unknown DNS error

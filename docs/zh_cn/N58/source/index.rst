@@ -1,13 +1,17 @@
-Neoway AT 命令手册 v1.4
-===================
 
-.. Author: 文档工程组
-.. Date: 2025-11-21
-.. Version: v1.4
+AT Commands Manual
+==================
 
 .. toctree::
+   :caption: 目录
    :maxdepth: 1
-   :titlesonly:
+
+   intro/1_intro_log
+   intro/2_intro_syntax
+
+.. toctree::
+   :caption: AT 命令章节
+   :maxdepth: 1
 
 
    1/index
@@ -15,11 +19,21 @@ Neoway AT 命令手册 v1.4
    2/index
 
 
-附录
-----
-.. toctree::
-   :maxdepth: 1
-   :titlesonly:
 
-   appendix/abbreviations
+.. raw:: latex
+
+   \newpage
+   \appendix
+   \renewcommand{\thechapter}{\Alph{chapter}}
+   \renewcommand{\thefigure}{\Alph{chapter}\arabic{figure}}
+   \renewcommand{\thetable}{\Alph{chapter}\arabic{table}}
+   \setcounter{figure}{0}
+   \setcounter{table}{0}
+
+
+
+.. toctree::
+   :caption: 附录
+   :maxdepth: 1
+
    appendix/index

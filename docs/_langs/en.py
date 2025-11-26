@@ -14,7 +14,11 @@ LABELS = {
     "examples": "Examples",
     "note": "Notes",
     "response": "Response",
-    "cmd": "Command"
+    "cmd": "Command",
+    "timeout_no": "No.",
+    "timeout_cmd": "Command",
+    "timeout_value": "Timeout (s)",
+    "timeout_title": "Command Timeout Table",
 }
 
 FIELD_MAP = {

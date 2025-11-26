@@ -1,0 +1,11 @@
+Item,Description
+0,OK
+1,CONNECT
+2,RING
+3,NO CARRIER
+4,ERROR
+6,NO DIALTONE
+7,BUSY
+8,NO ANSWER
+9,PROCEEDING
+manufacturer specific,CONNECT <text>
