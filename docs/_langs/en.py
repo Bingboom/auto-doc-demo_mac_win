@@ -44,7 +44,7 @@ PDF_MAIN_FONT = "Times New Roman"
 # ★章节格式（不能包含 \usepackage）
 # =========================================================
 CHAPTER_FORMAT = r"""
-\definecolor{chaptercolor}{RGB}{20,25,70}
+\definecolor{chaptercolor}{RGB}{0,0,20}
 
 \titleformat{\chapter}
   {\color{chaptercolor}\bfseries\huge}

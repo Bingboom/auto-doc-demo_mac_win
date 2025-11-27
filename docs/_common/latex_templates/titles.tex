@@ -2,29 +2,30 @@
 \RequirePackage{xcolor}
 
 % ---------------------------------------------------------
-% 颜色（根据 Neoway + ESP 风格统一
+% 定义 Neoway 深绿（适合 PDF 的正式商务色）
 % ---------------------------------------------------------
-\definecolor{espRed}{RGB}{176, 24, 32}     % 标题红色（ESP 同款）
-\definecolor{espGray}{RGB}{120, 120, 120}  % 预留给 Chapter（但不使用）
+\definecolor{nwyTitle}{RGB}{0,0,20}     % 主标题绿 (#2D6032)
+\definecolor{nwyTitle2}{RGB}{0,0,20}   % 二级标题绿 (#336C38)
+\definecolor{nwyTitle3}{RGB}{0,0,20}   % 三级标题绿 (#3D7A42)
+
 
 % ---------------------------------------------------------
-% ★ Section（一级标题：例如 3.1 …）
-%   —— 红色编号 + 红色标题，无左竖线
+% Section 一级标题（3.1）
 % ---------------------------------------------------------
 \titleformat{\section}
-  {\Large\bfseries\color{espRed}}   % 风格：大一点、红色粗体
-  {\thesection}                     % 显示编号“3.1”
-  {0.8em}                           % 编号与标题的间距
-  {}                                % 无竖线
+  {\Large\bfseries\color{nwyTitle}}
+  {\thesection}
+  {0.8em}
+  {}
 
 \titlespacing*{\section}
   {0pt}{18pt plus 4pt minus 4pt}{10pt}
 
 % ---------------------------------------------------------
-% ★ Subsection（二级标题：例如 3.1.1 …）
+% Subsection 二级标题（3.1.1）
 % ---------------------------------------------------------
 \titleformat{\subsection}
-  {\bfseries\large\color{espRed}}
+  {\bfseries\large\color{nwyTitle2}}
   {\thesubsection}
   {0.6em}
   {}
@@ -33,11 +34,10 @@
   {0pt}{14pt plus 3pt minus 3pt}{6pt}
 
 % ---------------------------------------------------------
-% ★ Subsubsection （三级标题：例如 3.1.1.1）
-%   —— 建议也保持红色以维持一致性
+% Subsubsection 三级标题（3.1.1.1）
 % ---------------------------------------------------------
 \titleformat{\subsubsection}
-  {\bfseries\normalsize\color{espRed}}
+  {\bfseries\normalsize\color{nwyTitle3}}
   {\thesubsubsection}
   {0.6em}
   {}

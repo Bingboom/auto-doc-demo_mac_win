@@ -33,9 +33,7 @@ latex_additional_files = [
     Path(paths.latex_common_path() / "cover.tex").as_posix(),
     Path(paths.latex_common_path() / "fonts.tex").as_posix(),
     Path(paths.latex_common_path() / "headerfooter.tex").as_posix(),
-    Path(paths.latex_common_path() / "esp_colors.tex").as_posix(),
-    Path(paths.latex_common_path() / "esp_titles.tex").as_posix(),
-    Path(paths.latex_common_path() / "esp_verbatim.tex").as_posix(),
+    Path(paths.latex_common_path() / "titles.tex").as_posix(),
     HEADER_LOGO,
 ]
 
@@ -73,9 +71,7 @@ preamble = r"""
 % ESP 样式包（颜色、标题、code框）
 % 必须在这里加载，顺序不能乱
 % =============================
-\input{esp_colors.tex}
-\input{esp_titles.tex}
-\input{esp_verbatim.tex}
+\input{titles.tex}
 
 % =============================
 % Sphinx literal/link 样式兼容
