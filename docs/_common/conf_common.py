@@ -76,7 +76,6 @@ preamble = r"""
 \input{esp_colors.tex}
 \input{esp_titles.tex}
 \input{esp_verbatim.tex}
-\input{esp_headerfooter.tex}
 
 % =============================
 % Sphinx literal/link 样式兼容
