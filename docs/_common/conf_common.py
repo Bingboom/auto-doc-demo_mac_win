@@ -13,6 +13,7 @@ common_latex_path     = Path(paths.latex_common_path()).as_posix()
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    "sphinx.ext.autosectionlabel"
 ]
 
 templates_path   = [common_templates_path]
@@ -35,7 +36,6 @@ latex_additional_files = [
     Path(paths.latex_common_path() / "esp_colors.tex").as_posix(),
     Path(paths.latex_common_path() / "esp_titles.tex").as_posix(),
     Path(paths.latex_common_path() / "esp_verbatim.tex").as_posix(),
-    Path(paths.latex_common_path() / "esp_headerfooter.tex").as_posix(),
     HEADER_LOGO,
 ]
 
