@@ -1,0 +1,7 @@
+header_color: [ 0, 90, 158 ]
+title_color: [ 0, 90, 158 ]
+footer_color: [ 0, 90, 158 ]
+
+logo_height: 14
+cover_background: "background-neoway.png"
+extra_tex: ""

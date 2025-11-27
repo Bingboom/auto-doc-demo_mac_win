@@ -97,13 +97,12 @@ if chapter_fmt:
 # ---------------- Final LaTeX Config ----------------
 latex_elements = {
     "fontpkg": fontpkg,
-    "preamble": preamble,
-    "maketitle": r"\input{cover.tex}",
-    "papersize": "a4paper",
-    "pointsize": "11pt",
-    "tocdepth": "2",
-}
 
+    # 原来的 preamble + theme.tex 组合在一起
+    "preamble": preamble + "\n" + r"\input{theme.tex}" + "\n",
+
+    "maketitle": r"\input{cover.tex}",
+}
 # =====================================================
 # ---------------- Render headerfooter.tex ------------
 # =====================================================

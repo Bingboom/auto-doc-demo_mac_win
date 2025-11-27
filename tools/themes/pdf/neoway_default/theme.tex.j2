@@ -1,0 +1,59 @@
+% ===========================================================
+% Neoway PDF Theme (SUPER SAFE VERSION)
+% ===========================================================
+
+% --------- 颜色变量（LaTeX 宏） ---------
+\def\HeaderColorRGB{ {{ theme.header_color | join(',') }} }
+\def\TitleColorRGB{ {{ theme.title_color | join(',') }} }
+\def\FooterColorRGB{ {{ theme.footer_color | join(',') }} }
+
+% --------- Logo / 字体宏 ---------
+\def\LogoHeight{ {{ theme.logo_height }} }
+\def\LogoFile{ {{ header_logo }} }
+
+
+
+% 可选封面背景
+\def\ThemeCoverBG{ {{ theme.cover_background | default("") }} }
+
+% ===========================================================
+% 颜色系统
+% ===========================================================
+\definecolor{headercolor}{RGB}{\HeaderColorRGB}
+\definecolor{titlecolor}{RGB}{\TitleColorRGB}
+\definecolor{footcolor}{RGB}{\FooterColorRGB}
+
+% ===========================================================
+% Fancyhdr 页眉页脚
+% ===========================================================
+\fancypagestyle{normal}{
+    \fancyhf{}
+
+    % Logo
+    \fancyhead[L]{\includegraphics[height=\LogoHeight pt]{\LogoFile}}
+
+    % 右上角章节名
+    \fancyhead[R]{\textcolor{headercolor}{\nouppercase{\leftmark}}}
+
+    \fancyfoot[R]{\thepage}
+
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% ===========================================================
+% 标题格式
+% ===========================================================
+\titleformat{\chapter}
+  {\Huge\bfseries\color{titlecolor}}
+  {\thechapter}{1em}{}
+
+\titleformat{\section}
+  {\Large\bfseries}
+  {\thesection}{0.8em}{}
+
+
+% ===========================================================
+% 额外扩展
+% ===========================================================
+{{ theme.extra_tex | default("") }}

@@ -92,3 +92,6 @@ products:
     build_pdf: "docs/{lang}/N58/build/pdf"
     csv: "csv-input/{lang}/N58"
     doc_types: [ "AT" ]
+
+theme:
+  pdf_default: "neoway_default"

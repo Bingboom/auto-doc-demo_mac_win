@@ -37,6 +37,11 @@ def static_images_path():
 def latex_common_path():
     return ROOT / config["common"]["latex"]
 
+# ============================================================
+# pdf 主题目录
+# ============================================================
+def pdf_theme_dir(theme_name: str) -> Path:
+    return ROOT / "tools/themes/pdf" / theme_name
 
 # ============================================================
 # 产品配置读取

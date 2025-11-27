@@ -1,183 +1,188 @@
 #!/usr/bin/env python3
 # =============================================================
-# Neoway auto-doc | Universal Builder (NO hard-coded paths)
+# Auto-Doc Next-Gen | Ultra-Stable PDF Builder (3-Pass XeLaTeX)
 # =============================================================
+# ✔ 不使用 latexmk（避免 TL2025 错误）
+# ✔ 三次 XeLaTeX 稳定排版（封面·目录·引用）
+# ✔ 清理 latex 临时文件（第一次构建最关键）
+# ✔ theme.tex 不含字体，字体全部在 fonts.tex
+# =============================================================
+
 from pathlib import Path
 import subprocess
 import shutil
-import platform
 import sys
+from jinja2 import Template
 
-# -------------------------------------------------------------
-# ① 初始化路径（必须放前面）
-# -------------------------------------------------------------
-THIS_FILE = Path(__file__).resolve()
-TOOLS_DIR = THIS_FILE.parent
-PROJECT_ROOT = TOOLS_DIR.parent
+# ---------------- Path Bootstrapping ----------------
+THIS = Path(__file__).resolve()
+TOOLS = THIS.parent
+ROOT = TOOLS.parent
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(TOOLS))
 
-sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(TOOLS_DIR))
-
-# -------------------------------------------------------------
-# ② path_utils（中央路径管理）
-# -------------------------------------------------------------
 from tools.utils import path_utils as paths
+from tools.utils.theme_loader import load_pdf_theme
 
-ROOT = paths.ROOT
 CONF = paths.config
-
-LANGUAGES = CONF["languages"]                 # ← 从 config.yaml 读
-PRODUCTS  = list(CONF["products"].keys())
+LANGUAGES = CONF["languages"]
+PRODUCTS = list(CONF["products"].keys())
 DOC_TYPES = CONF.get("doc_types", {})
 
 # =============================================================
-# ③ 自动生成 fonts.tex
+# run_live：实时输出（不吞日志）
 # =============================================================
-def generate_fonts_tex():
-    cfg = CONF
-    os_name = platform.system().lower()
-
-    if "windows" in os_name:
-        key = "windows"
-    elif "darwin" in os_name:
-        key = "mac"
-    else:
-        key = "linux"
-
-    font_cfg = cfg["fonts"][key]
-
-    fonts_tex = f"""
-% ======= AUTO GENERATED =======
-% Platform: {key}
-
-\\usepackage{{xeCJK}}
-\\usepackage{{fontspec}}
-
-\\setmainfont{{Times New Roman}}
-\\setsansfont{{{font_cfg['sans']}}}
-\\setmonofont{{{font_cfg['mono']}}}
-
-\\setCJKmainfont{{{font_cfg['cjk']}}}
-\\setCJKsansfont{{{font_cfg['cjk']}}}
-\\setCJKmonofont{{{font_cfg['cjk']}}}
-
-\\defaultCJKfontfeatures{{ Script=Hans, Language=Chinese }}
-"""
-
-    out_path = paths.latex_common_path() / "fonts.tex"
-    out_path.write_text(fonts_tex, encoding="utf-8")
-    print(f"[FONTS] Generated → {out_path}")
+def run_live(cmd, cwd=None):
+    print(f"\n[CMD] {' '.join(cmd)}\n")
+    proc = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+    for line in proc.stdout:
+        print(line, end="")
+    proc.wait()
+    return proc.returncode
 
 
 # =============================================================
-# ④ run()
+# 清理 LaTeX 临时文件 + 删除 latexmkrc
 # =============================================================
-def run(cmd, cwd=None):
-    print(f"[RUN] {' '.join(cmd)}")
-    try:
-        subprocess.run(cmd, cwd=cwd, check=True)
-    except subprocess.CalledProcessError as e:
-        # Exit code 12 = rerun needed (common in index builds), but not fatal.
-        if e.returncode == 12:
-            print("[INFO] latexmk exit code 12 ignored (PDF already generated or rerun needed)")
-        else:
-            raise
+TEMP_EXT = [
+    "*.aux", "*.log", "*.toc", "*.out", "*.idx", "*.ind", "*.ilg",
+    "*.lof", "*.lot", "*.fls", "*.fdb_latexmk", "*.nav", "*.snm",
+    "*.bbl", "*.blg", "*.synctex.gz"
+]
 
+def clean_latex_temp(pdf_dir: Path):
+    for pattern in TEMP_EXT:
+        for f in pdf_dir.glob(pattern):
+            try:
+                f.unlink()
+            except:
+                pass
 
-
-# =============================================================
-# ⑤ 判断 main.tex
-# =============================================================
-def is_main_tex(f: Path) -> bool:
-    if f.name.startswith(("sphinx", "latexmk")):
-        return False
-    if f.name in {"headerfooter.tex", "python.tex", "footer.tex"}:
-        return False
-    try:
-        text = f.read_text(encoding="utf-8", errors="ignore")
-        return r"\begin{document}" in text
-    except:
-        return False
+    for f in pdf_dir.glob("latexmkrc"):
+        f.unlink()
+        print("[FIX] removed latexmkrc")
 
 
 # =============================================================
-# ⑥ 构建单个组合
+# 渲染 theme.tex（不注入 fonts）
 # =============================================================
-def build_single(product: str, lang: str, doc_type: str):
+def render_theme(theme_name, product, lang, pdf_dir):
+    theme_cfg, theme_files = load_pdf_theme(theme_name)
+    tpl_file = theme_files["theme"]
 
+    # logo 路径
+    logo = CONF["common"]["header_logo"].get(product, CONF["common"]["header_logo"]["default"])
+    header_logo = (paths.static_images_path() / logo).as_posix()
+
+    # cover 背景
+    bg = CONF["common"]["cover_background"].get(product, CONF["common"]["cover_background"]["default"])
+    cover_bg = (paths.static_images_path() / bg).as_posix()
+
+    # ⚠ 不再把 fonts 注入 theme.tex
+    ctx = {
+        "header_logo": header_logo,
+        "theme": theme_cfg,
+        "cover_background": cover_bg,
+    }
+
+    tpl = Template(tpl_file.read_text(encoding="utf-8"))
+    out = pdf_dir / "theme.tex"
+    out.write_text(tpl.render(**ctx), encoding="utf-8")
+    print(f"[THEME] written → {out}")
+
+
+# =============================================================
+# 查找 main.tex
+# =============================================================
+def find_main_tex(pdf_dir: Path):
+    for f in pdf_dir.glob("*.tex"):
+        if "\\begin{document}" in f.read_text(encoding="utf-8", errors="ignore"):
+            return f
+    return None
+
+
+# =============================================================
+# 三次 xelatex
+# =============================================================
+def run_xelatex_3pass(tex_main: str, cwd: Path):
+    for i in range(3):
+        print(f"\n[XELATEX] pass {i+1}/3 ...")
+        code = run_live(["xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_main], cwd=cwd)
+        if code != 0:
+            print(f"[ERROR] xelatex failed at pass {i+1}")
+            return False
+    return True
+
+
+# =============================================================
+# 构建单文档
+# =============================================================
+def build_single(product, lang, doc_type):
     src = paths.rst_source_path(product, lang)
     if not src.exists():
-        print(f"[SKIP] Source 不存在: {src}")
+        print(f"[SKIP] no source: {src}")
         return
 
-    # 生成 conf.py
     from tools.gen_conf import generate_conf
     generate_conf(product, lang, doc_type)
 
     html_out = paths.build_html_path(product, lang)
     pdf_out  = paths.build_pdf_path(product, lang)
-
     html_out.mkdir(parents=True, exist_ok=True)
     pdf_out.mkdir(parents=True, exist_ok=True)
 
     print(f"\n==== Building {product} [{lang}] <{doc_type}> ====")
 
-    run(["sphinx-build", "-b", "html", str(src), str(html_out)])
-    run(["sphinx-build", "-b", "latex", str(src), str(pdf_out)])
-    # ===== Copy latex common templates (fonts.tex / header / footer / esp_at_style.tex etc.) =====
-    latex_common = paths.latex_common_path()     # docs/_common/latex_templates
-    for tex in latex_common.glob("*.tex"):
-        shutil.copy2(tex, pdf_out)    
+    run_live(["sphinx-build", "-b", "html", str(src), str(html_out)])
+    run_live(["sphinx-build", "-b", "latex", str(src), str(pdf_out)])
 
-    tex_files = list(pdf_out.glob("*.tex"))
-    main_list = [f for f in tex_files if is_main_tex(f)]
-    if not main_list:
-        print("[WARN] main.tex 未找到")
+    clean_latex_temp(pdf_out)
+
+    theme = CONF["products"][product].get("pdf_theme", CONF["theme"]["pdf_default"])
+    render_theme(theme, product, lang, pdf_out)
+
+    tex_main = find_main_tex(pdf_out)
+    if not tex_main:
+        print("[ERROR] main.tex not found")
+        return
+    print(f"[TEX] using → {tex_main.name}")
+
+    ok = run_xelatex_3pass(tex_main.name, pdf_out)
+    if not ok:
+        print("[ERROR] PDF compile failed")
         return
 
-    tex_file = main_list[0]
-    print(f"[TEX] Using: {tex_file.name}")
-
-    run(["latexmk", "-C"], cwd=pdf_out)
-    run(["latexmk", "-xelatex", "-interaction=nonstopmode", "-f", tex_file.name],
-        cwd=pdf_out)
-    
-    run(["latexmk", "-xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_file.name],
-    cwd=pdf_out)
-
-
-    pdf_candidates = [f for f in pdf_out.glob("*.pdf")
-                      if not f.name.startswith("sphinx")]
-
-    if not pdf_candidates:
-        print("[WARN] PDF 未生成")
+    pdf_files = list(pdf_out.glob("*.pdf"))
+    if not pdf_files:
+        print("[ERROR] no PDF produced")
         return
 
-    final_pdf = pdf_candidates[0]
-
+    final_pdf = pdf_files[0]
     pdf_name = DOC_TYPES[doc_type][lang]
+    out_dir = paths.output_pdf_dir()
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-    publish_dir = paths.output_pdf_dir()        # ← 从 config.yaml
-    publish_dir.mkdir(parents=True, exist_ok=True)
-
-    renamed = publish_dir / f"{product}_{pdf_name}_{lang}.pdf"
-    shutil.copy2(final_pdf, renamed)
-
-    print(f"[OK] PDF → {renamed}")
+    out = out_dir / f"{product}_{pdf_name}_{lang}.pdf"
+    shutil.copy2(final_pdf, out)
+    print(f"[OK] PDF exported → {out}")
 
 
 # =============================================================
-# ⑦ 构建全量
+# 全量构建
 # =============================================================
 def build_all():
-
-    generate_fonts_tex()
-
     for product in PRODUCTS:
-        doc_types = CONF["products"][product].get("doc_types", ["AT"])
-        for doc_type in doc_types:
+        for doc_type in CONF["products"][product].get("doc_types", ["AT"]):
             for lang in LANGUAGES:
                 build_single(product, lang, doc_type)
+
 
 if __name__ == "__main__":
     build_all()
