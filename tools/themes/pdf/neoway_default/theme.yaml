@@ -1,5 +1,5 @@
-header_color: [ 0, 90, 158 ]
-title_color: [ 0, 90, 158 ]
+header_color: [ 0, 0, 0 ]
+title_color: [ 0, 0, 0 ]
 footer_color: [ 0, 90, 158 ]
 
 logo_height: 14
