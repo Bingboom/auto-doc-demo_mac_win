@@ -41,22 +41,27 @@ DOC_TYPES = CONF.get("doc_types", {})
 # ② run_live：实时输出命令行，避免卡住
 # =============================================================
 def run_live(cmd, cwd=None):
-    """
-    实时输出 stdout + stderr（不吞日志）
-    解决 subprocess.run 卡住的问题。
-    """
     print(f"\n[CMD] {' '.join(cmd)}\n")
+
     proc = subprocess.Popen(
         cmd,
         cwd=cwd,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        text=True,
+        text=False,       # ❗ 改为字节流
     )
-    for line in proc.stdout:
+
+    for raw in proc.stdout:
+        try:
+            line = raw.decode("utf-8", errors="ignore")
+        except:
+            line = raw.decode("utf-8", errors="ignore")
+
         print(line, end="")
+
     proc.wait()
     return proc.returncode
+
 
 
 # =============================================================
@@ -219,11 +224,22 @@ def build_single(product, lang, doc_type):
 # =============================================================
 # ⑧ 全量构建
 # =============================================================
+# =============================================================
+# ⑧ 全量构建
+# =============================================================
 def build_all():
+
+    # ① 自动生成 fonts.tex —— 必须放最前面！
+    #    负责跨平台字体（mac / windows / linux）适配
+    from tools.generate_fonts_tex import generate_fonts_tex
+    generate_fonts_tex()
+
+    # ② 开始构建所有产品/语言/文档类型
     for product in PRODUCTS:
         for doc_type in CONF["products"][product].get("doc_types", ["AT"]):
             for lang in LANGUAGES:
                 build_single(product, lang, doc_type)
+
 
 
 # =============================================================
