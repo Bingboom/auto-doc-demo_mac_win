@@ -1,0 +1,31 @@
+{% raw %}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\setlength{\headheight}{20pt}
+\setlength{\headsep}{12pt}
+
+\newcommand{\headerlogo}{%
+  \includegraphics[height=14pt]{ {% endraw %}{{ header_logo }}{% raw %} }
+}
+
+\fancypagestyle{normal}{
+    \fancyhf{}
+    \fancyhead[L]{\headerlogo}
+    \fancyhead[R]{\textcolor{headercolor}{\small\nouppercase{\leftmark}}}
+    \fancyfoot[L]{\textcolor{footcolor}{\scriptsize {{ company_name }} }}
+    \fancyfoot[R]{\textcolor{footcolor}{\thepage}}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{\headerlogo}
+    \fancyfoot[R]{\textcolor{footcolor}{\thepage}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+\pagestyle{normal}
+{% endraw %}

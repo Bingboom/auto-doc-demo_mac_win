@@ -1,0 +1,5 @@
+cover_background: "background.png"
+title_color: [ 153, 0, 0 ]
+header_color: [ 0, 0, 0 ]
+footer_color: [ 90, 90, 90 ]
+tikz_background: false

@@ -1,0 +1,80 @@
+\thispagestyle{empty}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+
+  % =========================================================
+  % 背景层（整页背景图 + 左侧色条）
+  % =========================================================
+  \begin{tikzpicture}[remember picture, overlay]
+
+    % ---------------------------
+    % 整页背景
+    % ---------------------------
+    {% if cover_background %}
+    \node[anchor=north west] at (current page.north west)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{ {{ cover_background }} }};
+    {% endif %}
+
+    % ---------------------------
+    % 左侧色条（精确参照 ESP-AT）
+    % 高度约 48 mm，适合 A4
+    % ---------------------------
+    {% if title_color is defined %}
+    \fill[
+      color={rgb,255:
+        red,{{ title_color[0] }};
+        green,{{ title_color[1] }};
+        blue,{{ title_color[2] }}
+      }
+    ]
+      ([xshift=0cm,yshift=-1.2cm]current page.north west)
+      rectangle ++(1.8cm,-5.0cm);
+    {% endif %}
+
+  \end{tikzpicture}
+
+  % =========================================================
+  % 内容层（标题块）
+  % =========================================================
+  % 和 ESP-AT 对齐：从顶部 50mm 开始
+  \vspace*{5.0cm}
+
+  % ---------------------------
+  % 主标题（产品名）
+  % ---------------------------
+  {% if title_color is defined %}
+  {\hspace*{2.5cm}
+    \color[rgb]{ {{ title_color[0]/255 }},{{ title_color[1]/255 }},{{ title_color[2]/255 }} }
+    \fontsize{40}{46}\selectfont \textbf{ {{ product }} }
+  }
+  {% else %}
+  {\hspace*{2.5cm}
+    \fontsize{40}{46}\selectfont \textbf{ {{ product }} }
+  }
+  {% endif %}
+
+  \vskip 0.6cm
+
+  % ---------------------------
+  % 副标题（深灰 + 半粗体）
+  % ---------------------------
+  {\hspace*{2.5cm}
+    \color{gray!60}
+    \fontsize{28}{32}\selectfont \textbf{ {{ title }} }
+  }
+
+  % =========================================================
+  % Issue / Date（底部左对齐）
+  % =========================================================
+  \vfill
+
+  {\hspace*{2.5cm}
+    \fontsize{12}{14}\selectfont
+    Issue {{ issue }} \qquad Date {{ date }}
+  }
+
+\end{titlepage}
+
+\clearpage
+\pagenumbering{roman}

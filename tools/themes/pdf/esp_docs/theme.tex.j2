@@ -1,0 +1,78 @@
+% ===========================================================
+% ESP-AT Style PDF Theme (chapters, headers, links)
+% ===========================================================
+
+% --------- 颜色变量（来自 theme.yaml） ---------
+\def\HeaderColorRGB{ {{ theme.header_color | join(',') }} }
+\def\TitleColorRGB{  {{ theme.title_color  | join(',') }} }
+\def\FooterColorRGB{ {{ theme.footer_color | join(',') }} }
+
+\def\LogoHeight{ {{ theme.logo_height }} }
+\def\LogoFile{ {{ header_logo }} }
+
+\definecolor{espheader}{RGB}{\HeaderColorRGB}
+\definecolor{esptitle}{RGB}{\TitleColorRGB}
+\definecolor{espfooter}{RGB}{\FooterColorRGB}
+\definecolor{esplink}{RGB}{0, 51, 153}   % TOC / 链接蓝，大概接近截图里的蓝
+
+% ===========================================================
+% 页眉页脚（参考 ESP-AT 内页）
+% ===========================================================
+\fancypagestyle{normal}{
+    \fancyhf{}
+
+    % ESP 文档一般不在上方放大 Logo，而是简洁页眉
+    % 这里保留一个简单的 header（可按需要调整或清空）
+    \fancyhead[L]{}
+    \fancyhead[R]{\textcolor{espheader}{\small\nouppercase{\leftmark}}}
+
+    % 页脚：中间页码，左侧可选公司名
+    \fancyfoot[L]{\textcolor{espfooter}{\scriptsize {{ company_name }} }}
+    \fancyfoot[C]{\textcolor{espfooter}{\thepage}}
+    \fancyfoot[R]{}
+
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\textcolor{espfooter}{\thepage}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+
+\pagestyle{normal}
+
+% ===========================================================
+% 标题格式（接近 ESP-AT 的红色 Chapter / Section）
+% ===========================================================
+
+% Chapter：红色 “Chapter 2 / AT 固件”
+\titleformat{\chapter}
+  {\Huge\bfseries\color{esptitle}}
+  {\thechapter}{1em}{}
+
+% Section：2.1 / 2.1.1 标题使用红色，加粗
+\titleformat{\section}
+  {\Large\bfseries\color{esptitle}}
+  {\thesection}{0.8em}{}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{esptitle}}
+  {\thesubsection}{0.6em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{black}}
+  {\thesubsubsection}{0.6em}{}
+
+% ===========================================================
+% 链接 / TOC 颜色（蓝色）
+% ===========================================================
+\sphinxsetup{
+  InnerLinkColor={RGB}{0,51,153},
+  OuterLinkColor={RGB}{0,51,153}
+}
+
+% 预留额外扩展
+{{ theme.extra_tex | default("") }}
