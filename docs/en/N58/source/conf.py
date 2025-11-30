@@ -5,86 +5,82 @@
 
 from pathlib import Path
 import sys
+from jinja2 import Template
 
 # ---------------------------------------------------------
-# 【1】加载 path_utils（核心路径体系）
+# 【1】路径初始化
 # ---------------------------------------------------------
 THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parents[4]
-
+PROJECT_ROOT = THIS_FILE.parents[4]     # docs/<lang>/<product>/source/conf.py
 TOOLS_DIR = PROJECT_ROOT / "tools"
+
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(TOOLS_DIR))
 
-try:
-    from tools.utils import path_utils as paths
-    ROOT = paths.ROOT
-except:
-    ROOT = PROJECT_ROOT
+from tools.utils import path_utils as paths
 
 
 # ---------------------------------------------------------
 # 【2】基础参数
 # ---------------------------------------------------------
-LANG     = "en"
-PRODUCT  = "N58"
-DOC_TYPE = "AT"
+LANG       = "en"
+PRODUCT    = "N58"
+DOC_TYPE   = "AT"
+PDF_THEME  = "esp_docs"     # 当前 product 的主题名称（来自 config.yaml）
 
 
 # ---------------------------------------------------------
 # 【3】加载语言包
 # ---------------------------------------------------------
-lang_file = ROOT / "docs/_langs/en.py"
+lang_file = paths.ROOT / "docs/_langs/en.py"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
 
 # ---------------------------------------------------------
-# 【4】继承通用配置
+# 【4】加载通用配置（extensions / latex_elements等）
 # ---------------------------------------------------------
-COMMON_CONF = ROOT / "docs" / "_common" / "conf_common.py"
+COMMON_CONF = paths.ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
 
 
 # ---------------------------------------------------------
-# 【5】标题覆盖
+# 【5】加载主题（theme.yaml）
 # ---------------------------------------------------------
-project     = PROJECT_TITLE
-html_title  = PROJECT_TITLE
-author      = "Neoway Technology"
+theme_cfg = paths.load_pdf_theme_cfg(PDF_THEME) or {}
 
-latex_documents = [
-    (
-        "index",
-        f"{PRODUCT}_{DOC_TYPE}.tex",
-        PROJECT_TITLE,
-        author,
-        "manual",
-    )
-]
+title_color   = theme_cfg.get("title_color",  [0, 0, 0])
+header_color  = theme_cfg.get("header_color", [0, 0, 0])
+footer_color  = theme_cfg.get("footer_color", [0, 0, 0])
+tikz_bg       = theme_cfg.get("tikz_background", False)
+
+bg_file = theme_cfg.get("cover_background", "")
 
 
 # ---------------------------------------------------------
-# 【6】解析封面背景图（强制 POSIX）
+# 【6】主题路径
 # ---------------------------------------------------------
-cover_cfg = paths.config["common"].get("cover_background", {})
-bg_filename = cover_cfg.get(PRODUCT, cover_cfg.get("default", "background.png"))
-COVER_BG_LATEX = (paths.static_images_path() / bg_filename).as_posix()
+PDF_THEME_ROOT = paths.pdf_theme_root() / PDF_THEME
 
 
 # ---------------------------------------------------------
-# 【7】渲染封面 cover.tex ——（写入 Sphinx latex 输出目录）
+# 【7】封面背景图路径
+# ---------------------------------------------------------
+if bg_file:
+    COVER_BG_LATEX = (PDF_THEME_ROOT / "_static" / bg_file).as_posix()
+else:
+    COVER_BG_LATEX = ""
+
+
+# ---------------------------------------------------------
+# 【8】渲染 cover.tex —— 写入 Sphinx latex 输出目录
 # ---------------------------------------------------------
 LATEX_OUT = Path(__file__).parent.parent / "build" / "pdf"
+LATEX_OUT.mkdir(parents=True, exist_ok=True)
 
-template_path = (
-    paths.latex_theme_path() / "cover_template.tex.j2"
-)
-output_path = LATEX_OUT / "cover.tex"
+template_path = PDF_THEME_ROOT / "cover_template.tex.j2"
+output_path   = LATEX_OUT / "cover.tex"
 
-template_path = Path(template_path)
-output_path = Path(output_path)
-
-from jinja2 import Template
+HEADER_LOGO = (PDF_THEME_ROOT / "_static" / "header-logo.png").as_posix()
 
 context = {
     "product": PRODUCT,
@@ -92,11 +88,17 @@ context = {
     "issue": ISSUE,
     "date": DATE,
     "cover_background": COVER_BG_LATEX,
-}
+    "header_logo": HEADER_LOGO,
+    "company_name": footer_text,
 
-LATEX_OUT.mkdir(parents=True, exist_ok=True)
+    # ★ 来自 theme.yaml
+    "title_color": title_color,
+    "header_color": header_color,
+    "footer_color": footer_color,
+    "tikz_background": tikz_bg,
+}
 
 tpl = Template(template_path.read_text(encoding="utf-8"))
 output_path.write_text(tpl.render(**context), encoding="utf-8")
 
-print(f"[COVER] Rendered cover → {output_path}")
+print(f"[COVER] Rendered cover from theme '{PDF_THEME}' → {output_path}")

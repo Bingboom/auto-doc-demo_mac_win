@@ -9,7 +9,7 @@ default_product: "N706B"
 # ============================================
 common:
   templates: "docs/_common/templates"
-  static: "docs/_common/_static"
+  static: "tools/themes/pdf/{theme}/_static"
 
   # ❗ 已废弃：旧 latex 目录，不要再用
   # latex: "docs/_common/latex_templates"
@@ -30,7 +30,7 @@ common:
 
   cover_background:
     default: "background.png"
-    N706B: "background-neoway.png"
+    N706B: "background.png"
     N58: "background.png"
 
 # ============================================
@@ -92,6 +92,7 @@ products:
     build_pdf: "docs/{lang}/N706B/build/pdf"
     csv: "csv-input/{lang}/N706B"
     doc_types: [ "AT" ]
+    pdf_theme: neoway_default
 
   N58:
     source: "docs/{lang}/N58/source"
@@ -99,6 +100,7 @@ products:
     build_pdf: "docs/{lang}/N58/build/pdf"
     csv: "csv-input/{lang}/N58"
     doc_types: [ "AT" ]
+    pdf_theme: esp_docs
 
 # ============================================
 # Theme System（新增）

@@ -9,12 +9,13 @@ ROOT = paths.ROOT
 PDF_THEME_ROOT = ROOT / "tools" / "themes" / "pdf"
 
 
+
+
 def _template_key(f: Path) -> str:
     """
     根据文件名生成 key：
       - theme.tex.j2      -> "theme"
       - headerfooter.tex.j2 -> "headerfooter"
-      - titles.tex.j2     -> "titles"
       - fonts.tex.j2      -> "fonts"
       - colors.tex.j2     -> "colors"
     """

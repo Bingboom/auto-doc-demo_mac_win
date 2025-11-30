@@ -30,8 +30,22 @@ config, ROOT = load_config()
 def common_templates():
     return ROOT / config["common"]["templates"]
 
-def static_images_path():
-    return ROOT / config["common"]["static"]
+def static_images_path() -> Path:
+    """返回当前主题的 _static 目录，而不是 common.static 的固定值"""
+    theme_name = config.get("theme", {}).get("pdf_default", "neoway_default")
+    return ROOT / "tools" / "themes" / "pdf" / theme_name / "_static"
+
+
+# ========================================
+# PDF Theme Root
+#   tools/themes/pdf/
+# ========================================
+def pdf_theme_root() -> Path:
+    """
+    返回 PDF 主题根目录，例如：
+    ROOT / tools / themes / pdf
+    """
+    return ROOT / "tools" / "themes" / "pdf"
 
 
 # ============================================================
@@ -104,3 +118,24 @@ def output_html_dir() -> Path:
 
 def output_pdf_dir() -> Path:
     return ROOT / config["output"]["pdf"]
+
+# ============================================================
+# PDF Theme Loader: load theme.yaml
+# ============================================================
+import yaml
+
+def load_pdf_theme_cfg(theme_name: str) -> dict:
+    """
+    读取 tools/themes/pdf/<theme_name>/theme.yaml
+    不存在则返回 {}（绝不抛异常）
+    """
+    try:
+        root = ROOT / "tools" / "themes" / "pdf" / theme_name
+        cfg_file = root / "theme.yaml"
+
+        if cfg_file.exists():
+            return yaml.safe_load(cfg_file.read_text(encoding="utf-8")) or {}
+        else:
+            return {}  # 无 theme.yaml 返回空
+    except Exception:
+        return {}
