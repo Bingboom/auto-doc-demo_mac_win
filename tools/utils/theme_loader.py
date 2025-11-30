@@ -17,7 +17,6 @@ def _template_key(f: Path) -> str:
       - theme.tex.j2      -> "theme"
       - headerfooter.tex.j2 -> "headerfooter"
       - fonts.tex.j2      -> "fonts"
-      - colors.tex.j2     -> "colors"
     """
     name = f.name
 
