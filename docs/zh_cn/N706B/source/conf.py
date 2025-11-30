@@ -22,6 +22,7 @@ try:
 except:
     ROOT = PROJECT_ROOT
 
+
 # ---------------------------------------------------------
 # 【2】基础参数
 # ---------------------------------------------------------
@@ -29,17 +30,20 @@ LANG     = "zh_cn"
 PRODUCT  = "N706B"
 DOC_TYPE = "AT"
 
+
 # ---------------------------------------------------------
 # 【3】加载语言包
 # ---------------------------------------------------------
 lang_file = ROOT / "docs/_langs/zh_cn.py"
 exec(open(lang_file, "r", encoding="utf-8").read(), globals())
 
+
 # ---------------------------------------------------------
 # 【4】继承通用配置
 # ---------------------------------------------------------
 COMMON_CONF = ROOT / "docs" / "_common" / "conf_common.py"
 exec(COMMON_CONF.read_text(encoding="utf-8"), globals())
+
 
 # ---------------------------------------------------------
 # 【5】标题覆盖
@@ -58,6 +62,7 @@ latex_documents = [
     )
 ]
 
+
 # ---------------------------------------------------------
 # 【6】解析封面背景图（强制 POSIX）
 # ---------------------------------------------------------
@@ -65,14 +70,19 @@ cover_cfg = paths.config["common"].get("cover_background", {})
 bg_filename = cover_cfg.get(PRODUCT, cover_cfg.get("default", "background.png"))
 COVER_BG_LATEX = (paths.static_images_path() / bg_filename).as_posix()
 
+
 # ---------------------------------------------------------
-# 【7】渲染封面 cover.tex
+# 【7】渲染封面 cover.tex ——（写入 Sphinx latex 输出目录）
 # ---------------------------------------------------------
-template_path = paths.latex_common_path() / "cover_template.tex.j2"
-output_path   = paths.latex_common_path() / "cover.tex"
+LATEX_OUT = Path(__file__).parent.parent / "build" / "pdf"
+
+template_path = (
+    paths.latex_theme_path() / "cover_template.tex.j2"
+)
+output_path = LATEX_OUT / "cover.tex"
 
 template_path = Path(template_path)
-output_path   = Path(output_path)
+output_path = Path(output_path)
 
 from jinja2 import Template
 
@@ -83,6 +93,8 @@ context = {
     "date": DATE,
     "cover_background": COVER_BG_LATEX,
 }
+
+LATEX_OUT.mkdir(parents=True, exist_ok=True)
 
 tpl = Template(template_path.read_text(encoding="utf-8"))
 output_path.write_text(tpl.render(**context), encoding="utf-8")

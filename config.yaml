@@ -10,17 +10,24 @@ default_product: "N706B"
 common:
   templates: "docs/_common/templates"
   static: "docs/_common/_static"
-  latex: "docs/_common/latex_templates"
+
+  # ❗ 已废弃：旧 latex 目录，不要再用
+  # latex: "docs/_common/latex_templates"
+
+  # 改为主题化 latex 目录（相对于 ROOT）
+  latex_theme: "tools/themes/pdf/neoway_default"
+
   langs: "docs/_langs"
+
   copyright:
     zh_cn: "© 2025 test Technology Co., Ltd. All Rights Reserved."
     en: "© 2025 test Technology Co., Ltd. All Rights Reserved."
-  # ★ 值是相对 static 的路径
+
   header_logo:
     default: "header-logo.png"
     N706B: "header-logo.png"
     N58: "header-logo.png"
-  # ★ 封面背景图（相对 static 路径）
+
   cover_background:
     default: "background.png"
     N706B: "background-neoway.png"
@@ -93,5 +100,8 @@ products:
     csv: "csv-input/{lang}/N58"
     doc_types: [ "AT" ]
 
+# ============================================
+# Theme System（新增）
+# ============================================
 theme:
   pdf_default: "neoway_default"

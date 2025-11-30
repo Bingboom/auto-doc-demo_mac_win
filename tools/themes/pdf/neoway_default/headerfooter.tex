@@ -1,4 +1,4 @@
-{% raw %}
+
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
@@ -6,7 +6,7 @@
 \setlength{\headsep}{12pt}
 
 \newcommand{\neowayheaderlogo}{%
-  \includegraphics[height=14pt]{ {% endraw %}{{ header_logo }}{% raw %} }
+  \includegraphics[height=14pt]{ /Users/pika/Documents/GitHub/auto-doc-demo_mac_win/docs/_common/_static/header-logo.png }
 }
 
 % ================================
@@ -17,7 +17,7 @@
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{\nouppercase{\leftmark}}
     \fancyfoot[L]{ 
-{% endraw %}{{ company_name }}{% raw %}
+© 2025 test Technology Co., Ltd. All Rights Reserved.
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
@@ -32,7 +32,7 @@
     \fancyhead[L]{\neowayheaderlogo}
     \fancyhead[R]{}
     \fancyfoot[L]{ 
-{% endraw %}{{ company_name }}{% raw %}
+© 2025 test Technology Co., Ltd. All Rights Reserved.
     }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0.4pt}
@@ -41,4 +41,3 @@
 
 
 \pagestyle{normal}
-{% endraw %}

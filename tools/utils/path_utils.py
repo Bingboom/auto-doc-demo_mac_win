@@ -24,7 +24,6 @@ def load_config():
 
 config, ROOT = load_config()
 
-
 # ============================================================
 # 公共资源
 # ============================================================
@@ -34,14 +33,23 @@ def common_templates():
 def static_images_path():
     return ROOT / config["common"]["static"]
 
-def latex_common_path():
-    return ROOT / config["common"]["latex"]
 
 # ============================================================
 # pdf 主题目录
 # ============================================================
-def pdf_theme_dir(theme_name: str) -> Path:
-    return ROOT / "tools/themes/pdf" / theme_name
+def latex_theme_path() -> Path:
+    """
+    返回当前 PDF 主题的 LaTeX 目录路径。
+    优先使用 common.latex_theme，没有则回退到 common.latex（兼容旧版）。
+    """
+    common_cfg = config.get("common", {})
+    latex_dir = common_cfg.get("latex_theme") or common_cfg.get("latex")
+
+    if not latex_dir:
+        # 最兜底：防止 key 写错导致直接爆炸
+        latex_dir = "docs/_common/latex_templates"
+
+    return ROOT / latex_dir
 
 # ============================================================
 # 产品配置读取

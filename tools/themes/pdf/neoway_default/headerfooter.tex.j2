@@ -1,11 +1,44 @@
-\\definecolor{headercolor}{RGB}{ {{ header_color }} }
+{% raw %}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 
+\setlength{\headheight}{20pt}
+\setlength{\headsep}{12pt}
 
-\\fancypagestyle{normal}{%
-\\fancyhf{}
-\\fancyhead[L]{\\includegraphics[height={{ logo_height }}pt]{ {{ header_logo }} }}
-\\fancyhead[R]{\\textcolor{headercolor}{\\nouppercase{\\leftmark}}}
-\\fancyfoot[R]{\\thepage}
-\\renewcommand{\\headrulewidth}{0.4pt}
-\\renewcommand{\\footrulewidth}{0.4pt}
+\newcommand{\neowayheaderlogo}{%
+  \includegraphics[height=14pt]{ {% endraw %}{{ header_logo }}{% raw %} }
 }
+
+% ================================
+% normal：普通页面样式
+% ================================
+\fancypagestyle{normal}{
+    \fancyhf{}
+    \fancyhead[L]{\neowayheaderlogo}
+    \fancyhead[R]{\nouppercase{\leftmark}}
+    \fancyfoot[L]{ 
+{% endraw %}{{ company_name }}{% raw %}
+    }
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% ================================
+% plain：TOC / Chapter 起始页
+% ================================
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{\neowayheaderlogo}
+    \fancyhead[R]{}
+    \fancyfoot[L]{ 
+{% endraw %}{{ company_name }}{% raw %}
+    }
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+\pagestyle{normal}
+{% endraw %}

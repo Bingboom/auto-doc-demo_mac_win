@@ -44,6 +44,6 @@ def generate_fonts_tex():
 }}
     """
 
-    out_path = paths.latex_common_path() / "fonts.tex"
+    out_path = paths.latex_theme_path() / "fonts.tex"
     out_path.write_text(fonts_tex, encoding="utf-8")
     print(f"[FONTS] Generated fonts.tex ({key}) → {out_path}")
