@@ -30,10 +30,14 @@ config, ROOT = load_config()
 def common_templates():
     return ROOT / config["common"]["templates"]
 
-def static_images_path() -> Path:
-    """返回当前主题的 _static 目录，而不是 common.static 的固定值"""
-    theme_name = config.get("theme", {}).get("pdf_default", "neoway_default")
-    return ROOT / "tools" / "themes" / "pdf" / theme_name / "_static"
+def static_images_path(theme_name: str | None = None) -> Path:
+    if theme_name is None:
+        theme_name = config.get("theme", {}).get("pdf_default", "neoway_default")
+
+    template = config["common"]["static"]  # "tools/themes/pdf/{theme}/_static"
+    path_str = template.format(theme=theme_name)
+    return ROOT / path_str
+
 
 
 # ========================================
@@ -51,19 +55,14 @@ def pdf_theme_root() -> Path:
 # ============================================================
 # pdf 主题目录
 # ============================================================
-def latex_theme_path() -> Path:
-    """
-    返回当前 PDF 主题的 LaTeX 目录路径。
-    优先使用 common.latex_theme，没有则回退到 common.latex（兼容旧版）。
-    """
-    common_cfg = config.get("common", {})
-    latex_dir = common_cfg.get("latex_theme") or common_cfg.get("latex")
+def latex_theme_path(product: str | None = None) -> Path:
+    theme_name = None
+    if product:
+        theme_name = config["products"][product].get("pdf_theme")
 
-    if not latex_dir:
-        # 最兜底：防止 key 写错导致直接爆炸
-        latex_dir = "docs/_common/latex_templates"
+    theme_name = theme_name or config.get("theme", {}).get("pdf_default", "neoway_default")
+    return ROOT / "tools" / "themes" / "pdf" / theme_name
 
-    return ROOT / latex_dir
 
 # ============================================================
 # 产品配置读取
@@ -90,13 +89,13 @@ def _render_lang_path(template: str, product: str, lang: str) -> Path:
 # ============================================================
 # 渲染路径函数：支持语言和产品
 # ============================================================
-def rst_source_path(product: str, lang: str = "zh_CN") -> Path:
+def rst_source_path(product: str, lang: str = "zh_cn") -> Path:
     return _render_lang_path(product_conf(product)["source"], product, lang)
 
-def build_html_path(product: str, lang: str = "zh_CN") -> Path:
+def build_html_path(product: str, lang: str = "zh_cn") -> Path:
     return _render_lang_path(product_conf(product)["build_html"], product, lang)
 
-def build_pdf_path(product: str, lang: str = "zh_CN") -> Path:
+def build_pdf_path(product: str, lang: str = "zh_cn") -> Path:
     return _render_lang_path(product_conf(product)["build_pdf"], product, lang)
 
 
@@ -122,7 +121,6 @@ def output_pdf_dir() -> Path:
 # ============================================================
 # PDF Theme Loader: load theme.yaml
 # ============================================================
-import yaml
 
 def load_pdf_theme_cfg(theme_name: str) -> dict:
     """
